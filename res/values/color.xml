@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="blue">#33799D</color>
+    <color name="green">#00FF00</color>
+    <color name="grey">#999999</color>
+    <color name="red">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="orange">#FF9955</color>
+    <color name="light_grey">#DFDEDE</color>
+	<color  name="background_slider">#99000000</color>
+    <drawable name="translucent_background">#00000000</drawable>
+    <color name="transparent_grey">#99000000</color>
+    <color name="green_sky_landing">#26A2D8</color>
+    <color name="blue_landing">#3D5D98</color>
+    <color name="grey_app">#676767</color>
+    <color name="button_past_history">#c7eeff</color>
+    <color name="button_past_history_press">#EDF9FE</color>
+
+    <color name="bg_color">#f3f3f3</color>
+    <color name="line_booking">#939599</color>
+    <color name="calling_step">#3c5b96</color>
+    <color name="divider_line_popup">#bbb</color>
+</resources>
+

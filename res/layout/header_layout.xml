@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/height_header"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:id="@+id/llHeader">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green_sky_landing" />
+    <TextView
+        android:text="@string/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/tvTitleHeader"
+        android:textColor="@color/green_sky_landing"
+        android:minWidth="60dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size_title_header"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginRight="@dimen/pad_left_header" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green_sky_landing" />
+</LinearLayout>
