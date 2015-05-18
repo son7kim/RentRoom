@@ -1,12 +1,16 @@
 package com.coolsx.rentroom;
 
 import com.coolsx.constants.MConstants;
+import com.coolsx.utils.UtilDroid;
 import com.parse.ParseObject;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,51 +57,104 @@ public class AddNewPostActivity extends Activity {
 		tvError = (TextView) findViewById(R.id.tv_error_add_new_post);
 		btnPost = (Button)findViewById(R.id.btn_post);
 		
+		spCityAddNew.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				spDistrictAddNew.setAdapter(UtilDroid.getAdapterDistrict(AddNewPostActivity.this, position));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {				
+			}
+		});
+		
 		btnPost.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				addPost(0);
 				tvError.setVisibility(View.GONE);
-				if(!edFullName.getText().toString().trim().isEmpty()){
-					if(!edPhone.getText().toString().trim().isEmpty()){
-						if(!edAddress.getText().toString().trim().isEmpty()){
-							if(!edCostMin.getText().toString().trim().isEmpty()){
-								if(!edDescription.getText().toString().trim().isEmpty()){
-									if(!edCostMax.getText().toString().trim().isEmpty()){
-										if(Integer.parseInt(edCostMax.getText().toString()) >= Integer.parseInt(edCostMin.getText().toString())){
-											
-											// Check area
-//											ParseObject newPost = new ParseObject("Post");
-//											newPost.put(MConstants.kName, edFullName.getText().toString().trim());
-//											newPost.put(MConstants.kPhoneNumber, edPhone.getText().toString().trim());
-//											newPost.put(MConstants.kAddress, edAddress.getText().toString().trim());
-//											newPost.put(MConstants.kCostMin, edCostMin.getText().toString().trim());											
-										} else {
-											tvError.setVisibility(View.VISIBLE);
-											tvError.setText(R.string.incorrect_cost);
-										}
-									}
-								} else {
-									tvError.setVisibility(View.VISIBLE);
-									tvError.setText(R.string.empty_disctiption);
-								}
-							} else {
-								tvError.setVisibility(View.VISIBLE);
-								tvError.setText(R.string.empty_cost);
-							}
-						} else {
-							tvError.setVisibility(View.VISIBLE);
-							tvError.setText(R.string.empty_address);
-						}
-					} else {
-						tvError.setVisibility(View.VISIBLE);
-						tvError.setText(R.string.empty_phone_number);
-					}
-				}else{
+				
+				// Check validate
+				if(edFullName.getText().toString().trim().isEmpty()){
 					tvError.setVisibility(View.VISIBLE);
 					tvError.setText(R.string.empty_full_name);
+					return;
 				}
+				
+				if(edPhone.getText().toString().trim().isEmpty()){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.empty_phone_number);
+					return;
+				}
+				
+				if(edAddress.getText().toString().trim().isEmpty()){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.empty_address);
+					return;
+				}
+				
+				if(edCostMin.getText().toString().trim().isEmpty()){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.empty_cost);
+					return;
+				}
+				
+				if(edDescription.getText().toString().trim().isEmpty()){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.empty_disctiption);
+					return;
+				}
+				
+				if(!edCostMax.getText().toString().trim().isEmpty() && (Integer.parseInt(edCostMax.getText().toString()) < Integer.parseInt(edCostMin.getText().toString()))){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.incorrect_cost);
+					return;
+				}				
+				
+				if(edAreaMin.getText().toString().trim().isEmpty() && edAreaMax.getText().toString().trim().isEmpty()){
+					// Add post with no Area
+					addPost(0);
+				} else {
+					if(edAreaMin.getText().toString().trim().isEmpty() && !edAreaMax.getText().toString().trim().isEmpty()){
+						tvError.setVisibility(View.VISIBLE);
+						tvError.setText(R.string.empty_area_min);
+						return;
+					} else if(!edAreaMin.getText().toString().trim().isEmpty() && edAreaMax.getText().toString().trim().isEmpty()){
+						// Add post with Area min
+						addPost(1);
+					} else {
+						// Enter full Area min & max
+						if(Integer.parseInt(edAreaMax.getText().toString()) >= Integer.parseInt(edAreaMin.getText().toString())){
+							// Add post with full Area (min & max)
+							addPost(2);
+						} else {
+							tvError.setVisibility(View.VISIBLE);
+							tvError.setText(R.string.incorrect_area);
+							return;
+						}
+					}
+				}				
 			}
 		});
+	}
+		
+	private void addPost(int iNumArea){
+		int i = spDistrictAddNew.getSelectedItemPosition();
+		ParseObject newPost = new ParseObject("Post");
+		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
+		newPost.put(MConstants.kPhoneNumber, edPhone.getText().toString().trim());
+		newPost.put(MConstants.kAddress, edAddress.getText().toString().trim());
+		newPost.put(MConstants.kCostMin, edCostMin.getText().toString().trim());
+		if(!edCostMax.getText().toString().trim().isEmpty()){
+			newPost.put(MConstants.kCostMax, edCostMax.getText().toString().trim());
+		}
+		if(!edNumRoom.getText().toString().trim().isEmpty()){
+			newPost.put(MConstants.kNumRoom, edNumRoom.getText().toString().trim());
+		}
+		newPost.put(MConstants.kDiscription, edDescription.getText().toString().trim());
+		
 	}
 }
