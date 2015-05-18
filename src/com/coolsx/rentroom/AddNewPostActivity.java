@@ -142,8 +142,9 @@ public class AddNewPostActivity extends Activity {
 	}
 		
 	private void addPost(int iNumArea){
-		int i = spDistrictAddNew.getSelectedItemPosition();
+		int iPos = spDistrictAddNew.getSelectedItemPosition();
 		ParseObject newPost = new ParseObject("Post");
+		
 		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
 		newPost.put(MConstants.kPhoneNumber, edPhone.getText().toString().trim());
 		newPost.put(MConstants.kAddress, edAddress.getText().toString().trim());
@@ -155,6 +156,16 @@ public class AddNewPostActivity extends Activity {
 			newPost.put(MConstants.kNumRoom, edNumRoom.getText().toString().trim());
 		}
 		newPost.put(MConstants.kDiscription, edDescription.getText().toString().trim());
+		switch(iNumArea){
+		case 1:
+			newPost.put(MConstants.kAreaMin, edAreaMin.getText().toString().trim());
+			break;
+		case 2:
+			newPost.put(MConstants.kAreaMin, edAreaMin.getText().toString().trim());
+			newPost.put(MConstants.kAreaMax, edAreaMax.getText().toString().trim());
+			break;
+		}
+		
 		
 	}
 }
