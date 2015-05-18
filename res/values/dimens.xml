@@ -12,13 +12,14 @@
     <dimen name="text_size">17dp</dimen>
     <dimen name="pad_left_right">5dp</dimen>
     <dimen name="pad_top">15dp</dimen>
+    <dimen name="pad_top_lv_result">15dp</dimen>
     <dimen name="pad_bottom">10dp</dimen>
-    <dimen name="min_height_button">50dp</dimen>
+    <dimen name="min_height_button">45dp</dimen>
     <dimen name="pad_top_sign_in">40dp</dimen>
     <dimen name="pad_top_btn_signin">20dp</dimen>
-    
+    <dimen name="pad_top_ed_add_new_post">5dp</dimen>
     <dimen name="pad_top_bottom_ed_sign_in">2dp</dimen>
     <dimen name="pad_right_ed_sign_in">6dp</dimen>
-    
+    <dimen name="height_ed_discription">100dp</dimen>
     <dimen name="pad_top_sign_up">40dp</dimen>
 </resources>

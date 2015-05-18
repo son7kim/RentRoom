@@ -4,8 +4,8 @@
     <string name="app_name">RentRoom</string>
     <string name="action_settings">Cài đặt</string>
     <string name="text_description_all">Rent room</string>
-    
-	<string name="sign_in">ĐĂNG KÝ</string>
+    <string name="error">Lỗi</string>
+	<string name="sign_in">ĐĂNG NHẬp</string>
 	<string name="username">Tên đăng nhập hoặc Email</string>
 	<string name="pass">Mật khẩu</string>
 	<string name="remember">Đăng nhập lần sau?</string>
@@ -31,4 +31,114 @@
 	<string name="invalid_username">Tên đăng nhập không hợp lệ</string>
 	<string name="invalid_lenght_username">Tên đăng nhập tối thiểu phải chứa 6 ký tự</string>
 	<string name="invalid_lenght_pass">Mật khẩu tối thiểu phải chứa 6 ký tự</string>
+	
+	<string name="sign_up_not_success">Đăng ký tài khoản không thành công. Vui lòng thử lại.</string>
+	
+	<string name="tip_search">Nhập từ khóa để tìm kiếm</string>
+	<string name="city_title">TP/Tỉnh:</string>
+	<string name="district_title">Quận/Huyện:</string>
+	<string-array name="city_arrays">
+        <item>TPHCM</item>
+        <item>Hà Nội</item>
+        <item>Đà Nẵng</item>
+        <item>Đồng Nai</item>
+        <item>Huế</item>
+        <item>Bình Dương</item>
+        <item>Vinh</item>
+        <item>Đà Lạt</item>
+    </string-array>
+    <string-array name="hcm_district_arrays">
+        <item>Quận 1</item>
+        <item>Quận 2</item>
+        <item>Quận 3</item>
+        <item>Quận 4</item>
+        <item>Quận 5</item>
+        <item>Quận 6</item>
+        <item>Quận 7</item>
+        <item>Quận 8</item>
+        <item>Quận 9</item>
+        <item>Quận 10</item>
+        <item>Quận 11</item>
+        <item>Quận 12</item>
+        <item>Thủ Đức</item>
+        <item>Bình Thạnh</item>
+        <item>Gò Vấp</item>
+        <item>Tân Bình</item>
+        <item>Hóc Môn</item>
+    </string-array>
+    <string-array name="equal_title">
+        <item>&gt;=</item>
+        <item>&lt;=</item>
+        <item>=</item>
+    </string-array>
+    
+    <string name="cost_title">Giá:</string>
+    <string name="cost_prompt">Chọn giá phòng</string>
+    <string-array name="cost_arrays">
+        <item>500k</item>
+        <item>1tr</item>
+        <item>1.5tr</item>
+        <item>2tr</item>
+        <item>2.5tr</item>
+        <item>3tr</item>
+        <item>3.5tr</item>
+        <item>4tr</item>
+        <item>4.5tr</item>
+        <item>5tr</item>
+        <item>5.5tr</item>
+        <item>6tr</item>
+        <item>6.5tr</item>
+        <item>7tr</item>
+        <item>7.5tr</item>
+        <item>8tr</item>
+        <item>8.5tr</item>
+        <item>9tr</item>
+        <item>9.5tr</item>
+        <item>10tr</item>
+    </string-array>
+    
+    <string name="area_title">DT:</string>
+    <string name="area_prompt">Chọn giá phòng</string>
+    <string-array name="area_arrays">
+        <item>10m2</item>
+        <item>15m2</item>
+        <item>20m2</item>
+        <item>25m2</item>
+        <item>30m2</item>
+        <item>35m2</item>
+        <item>40m2</item>
+        <item>45m2</item>
+        <item>50m2</item>
+        <item>55m2</item>
+        <item>60m2</item>
+        <item>65m2</item>
+        <item>70m2</item>
+        <item>75m2</item>
+        <item>80m2</item>
+        <item>85m2</item>
+        <item>9m2</item>
+        <item>95m2</item>
+        <item>100m2</item>
+    </string-array>
+    
+    <string name="search_title">Tìm ngay</string>
+    <string name="add_new_room_title">Thêm bài đăng</string>
+    <string name="name_title">Họ tên</string>
+    <string name="phone_title">Số điện thoại</string>
+    <string name="address_title">Địa chỉ</string>
+    <string name="area_title_add_new">Diện tích phòng (m2)</string>
+    <string name="cost_title_add_new">Giá phòng</string>
+    <string name="discription_title">Mô tả</string>
+    <string name="post_title">Đăng bài</string>
+    <string name="up_photo_title">Chọn ảnh upload</string>
+    <string name="from_to">đến</string>
+    <string name="num_room">Số lượng phòng trống</string>
+    
+    <string name="empty_full_name">Chưa nhập họ tên</string>
+    <string name="empty_phone_number">Chưa nhập Số điện thoại</string>
+    <string name="empty_address">Chưa nhập địa chỉ nhà</string>
+    <string name="empty_cost">Chưa nhập giá phòng</string>
+    <string name="empty_disctiption">Chưa nhập mô tả phòng</string>
+    <string name="incorrect_cost">Giá phòng không hợp lệ</string>
+    <string name="incorrect_area">Diện tích nhập vào không hợp lệ</string>
 </resources>

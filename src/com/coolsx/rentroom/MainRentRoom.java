@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainRentRoom extends Activity {
 
@@ -17,10 +18,10 @@ public class MainRentRoom extends Activity {
 		
 		setContentView(R.layout.rentroom_main);
 		
-		Button btnSignIn = (Button) findViewById(R.id.btnSignIn);
-		Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
+		TextView tvSignIn = (TextView) findViewById(R.id.tvSignInHome);
+		Button btnSignUp = (Button) findViewById(R.id.btnRegistryHome);
 
-		btnSignIn.setOnClickListener(new OnClickListener() {
+		tvSignIn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

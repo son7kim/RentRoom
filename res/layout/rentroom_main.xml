@@ -2,20 +2,196 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:orientation="vertical"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
     tools:context="com.coolsx.rentroom.MainRentRoom" >
 
-    <Button
-        android:id="@+id/btnSignIn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Sign In" />
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_marginRight="@dimen/pad_left_header"
+        android:layout_marginTop="@dimen/pad_top"
+        android:gravity="end" >
+
+        <TextView
+            android:id="@+id/tvSignInHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signin_title"
+            android:textColor="@color/custom_color_tv_forgot_pass"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/btnRegistryHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_left_header"
+            android:layout_marginStart="@dimen/pad_left_header"
+            android:background="@drawable/custom_border_select"
+            android:text="@string/sign_up_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_button_size" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_enter_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/min_height_button"
+        android:layout_marginEnd="@dimen/pad_right_ed_sign_in"
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_marginRight="@dimen/pad_left_header"
+        android:layout_marginTop="@dimen/pad_top"
+        android:background="@drawable/custom_border_normal"
+        android:hint="@string/tip_search"
+        android:singleLine="true"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pad_left_header"
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_marginRight="@dimen/pad_left_header"
+        android:layout_marginStart="@dimen/pad_left_header"
+        android:layout_marginTop="@dimen/pad_top"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pad_left_right"
+            android:layout_marginRight="@dimen/pad_left_right"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city_title"
+                android:textColor="@color/custom_color_tv_forgot_pass"
+                android:textSize="@dimen/text_size" />
+
+            <Spinner
+                android:id="@+id/spinCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/city_arrays" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pad_left_right"
+            android:layout_marginRight="@dimen/pad_left_right"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/district_title"
+                android:textColor="@color/custom_color_tv_forgot_pass"
+                android:textSize="@dimen/text_size" />
+
+            <Spinner
+                android:id="@+id/spinDistrict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/hcm_district_arrays" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pad_left_header"
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_marginRight="@dimen/pad_left_header"
+        android:layout_marginStart="@dimen/pad_left_header"
+        android:layout_marginTop="@dimen/pad_top"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pad_left_right"
+            android:layout_marginRight="@dimen/pad_left_right"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cost_title"
+                android:textColor="@color/custom_color_tv_forgot_pass"
+                android:textSize="@dimen/text_size" />
+
+            <Spinner
+                android:id="@+id/spinEqualCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/equal_title" />
+
+            <Spinner
+                android:id="@+id/spinCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/cost_arrays"
+                android:prompt="@string/cost_prompt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pad_left_right"
+            android:layout_marginRight="@dimen/pad_left_right"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/area_title"
+                android:textColor="@color/custom_color_tv_forgot_pass"
+                android:textSize="@dimen/text_size" />
+
+            <Spinner
+                android:id="@+id/spinEqualArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/equal_title" />
+
+            <Spinner
+                android:id="@+id/spinArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/area_arrays"
+                android:prompt="@string/area_prompt" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up" />
+        android:layout_gravity="end"
+        android:layout_marginLeft="@dimen/pad_left_header"
+        android:layout_marginRight="@dimen/pad_left_header"
+        android:layout_marginTop="@dimen/pad_top_btn_signin"
+        android:background="@drawable/custom_border_select"
+        android:minHeight="@dimen/min_height_button"
+        android:minWidth="@dimen/min_height_button"
+        android:text="@string/search_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_button_size"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lv_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" 
+        android:layout_marginTop="@dimen/pad_top_lv_result">
+
+    </ListView>
 
 </LinearLayout>

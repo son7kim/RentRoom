@@ -16,6 +16,13 @@ public final class R {
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
     }
+    public static final class array {
+        public static final int area_arrays=0x7f0c0004;
+        public static final int city_arrays=0x7f0c0000;
+        public static final int cost_arrays=0x7f0c0003;
+        public static final int equal_title=0x7f0c0002;
+        public static final int hcm_district_arrays=0x7f0c0001;
+    }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -913,17 +920,20 @@ containing a value of this type.
         public static final int activity_horizontal_margin=0x7f070011;
         public static final int activity_vertical_margin=0x7f070012;
         public static final int corner=0x7f070013;
+        public static final int height_ed_discription=0x7f070023;
         public static final int height_header=0x7f070014;
-        public static final int min_height_button=0x7f07001c;
-        public static final int pad_bottom=0x7f07001b;
+        public static final int min_height_button=0x7f07001d;
+        public static final int pad_bottom=0x7f07001c;
         public static final int pad_left_header=0x7f070015;
         public static final int pad_left_right=0x7f070019;
-        public static final int pad_right_ed_sign_in=0x7f070020;
+        public static final int pad_right_ed_sign_in=0x7f070022;
         public static final int pad_top=0x7f07001a;
-        public static final int pad_top_bottom_ed_sign_in=0x7f07001f;
-        public static final int pad_top_btn_signin=0x7f07001e;
-        public static final int pad_top_sign_in=0x7f07001d;
-        public static final int pad_top_sign_up=0x7f070021;
+        public static final int pad_top_bottom_ed_sign_in=0x7f070021;
+        public static final int pad_top_btn_signin=0x7f07001f;
+        public static final int pad_top_ed_add_new_post=0x7f070020;
+        public static final int pad_top_lv_result=0x7f07001b;
+        public static final int pad_top_sign_in=0x7f07001e;
+        public static final int pad_top_sign_up=0x7f070024;
         public static final int text_button_size=0x7f070017;
         public static final int text_size=0x7f070018;
         public static final int text_size_title_header=0x7f070016;
@@ -1021,10 +1031,16 @@ containing a value of this type.
         public static final int bg_gray_btn=0x7f020059;
         public static final int custom_border_normal=0x7f02005a;
         public static final int custom_border_select=0x7f02005b;
-        public static final int ic_launcher=0x7f02005c;
-        public static final int ic_password=0x7f02005d;
-        public static final int ic_user=0x7f02005e;
-        public static final int translucent_background=0x7f02005f;
+        public static final int custom_icon_left=0x7f02005c;
+        public static final int custom_padding_logo_actionbar=0x7f02005d;
+        public static final int ic_back=0x7f02005e;
+        public static final int ic_launcher=0x7f02005f;
+        public static final int ic_password=0x7f020060;
+        public static final int ic_selected_actionbar=0x7f020061;
+        public static final int ic_user=0x7f020062;
+        public static final int logo=0x7f020063;
+        public static final int selectable_background_actionbar=0x7f020064;
+        public static final int translucent_background=0x7f020065;
     }
     public static final class id {
         public static final int action_bar=0x7f09001c;
@@ -1038,29 +1054,41 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f090002;
         public static final int action_menu_presenter=0x7f090003;
         public static final int action_mode_close_button=0x7f090024;
-        public static final int action_settings=0x7f09004f;
+        public static final int action_settings=0x7f090069;
         public static final int activity_chooser_view_content=0x7f090025;
         public static final int always=0x7f09000f;
         public static final int beginning=0x7f090016;
-        public static final int btnSignIn=0x7f09003e;
-        public static final int btnSignUp=0x7f09003f;
-        public static final int btn_sign_in=0x7f090044;
-        public static final int btn_sign_up=0x7f09004e;
+        public static final int btnRegistryHome=0x7f090050;
+        public static final int btn_Add=0x7f09004d;
+        public static final int btn_post=0x7f09004a;
+        public static final int btn_search=0x7f090058;
+        public static final int btn_sign_in=0x7f09005e;
+        public static final int btn_sign_up=0x7f090068;
         public static final int checkbox=0x7f09002d;
-        public static final int checkbox_remember=0x7f090042;
+        public static final int checkbox_remember=0x7f09005c;
         public static final int collapseActionView=0x7f090010;
         public static final int default_activity_button=0x7f090028;
         public static final int dialog=0x7f090014;
         public static final int disableHome=0x7f090009;
         public static final int dropdown=0x7f090015;
-        public static final int edit_confirm_email_sign_up=0x7f09004c;
-        public static final int edit_email_sign_up=0x7f09004b;
-        public static final int edit_pass_confirm_sign_up=0x7f09004a;
-        public static final int edit_pass_sign_in=0x7f090041;
-        public static final int edit_pass_sign_up=0x7f090049;
+        public static final int edit_address=0x7f090040;
+        public static final int edit_area_max=0x7f090043;
+        public static final int edit_area_min=0x7f090042;
+        public static final int edit_confirm_email_sign_up=0x7f090066;
+        public static final int edit_cost_max=0x7f090045;
+        public static final int edit_cost_min=0x7f090044;
+        public static final int edit_discription=0x7f090046;
+        public static final int edit_email_sign_up=0x7f090065;
+        public static final int edit_enter_search=0x7f090051;
+        public static final int edit_fullname=0x7f09003c;
+        public static final int edit_num_room=0x7f090041;
+        public static final int edit_pass_confirm_sign_up=0x7f090064;
+        public static final int edit_pass_sign_in=0x7f09005b;
+        public static final int edit_pass_sign_up=0x7f090063;
+        public static final int edit_phone_number=0x7f09003d;
         public static final int edit_query=0x7f090030;
-        public static final int edit_username_sign_in=0x7f090040;
-        public static final int edit_username_sign_up=0x7f090048;
+        public static final int edit_username_sign_in=0x7f09005a;
+        public static final int edit_username_sign_up=0x7f090062;
         public static final int end=0x7f090017;
         public static final int expand_activities_button=0x7f090026;
         public static final int expanded_menu=0x7f09002c;
@@ -1071,7 +1099,10 @@ containing a value of this type.
         public static final int image=0x7f090027;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
-        public static final int llHeader=0x7f09003c;
+        public static final int llFileAttach=0x7f090048;
+        public static final int llHeader=0x7f09004b;
+        public static final int lv_my_result=0x7f09004e;
+        public static final int lv_search_result=0x7f090059;
         public static final int middle=0x7f090018;
         public static final int never=0x7f090012;
         public static final int none=0x7f090019;
@@ -1093,17 +1124,28 @@ containing a value of this type.
         public static final int showCustom=0x7f09000b;
         public static final int showHome=0x7f09000c;
         public static final int showTitle=0x7f09000d;
+        public static final int spinArea=0x7f090057;
+        public static final int spinCity=0x7f090052;
+        public static final int spinCityAddNew=0x7f09003e;
+        public static final int spinCost=0x7f090055;
+        public static final int spinDistrict=0x7f090053;
+        public static final int spinDistrictAddNew=0x7f09003f;
+        public static final int spinEqualArea=0x7f090056;
+        public static final int spinEqualCost=0x7f090054;
         public static final int split_action_bar=0x7f09001e;
         public static final int submit_area=0x7f090039;
         public static final int tabMode=0x7f090008;
-        public static final int textView1=0x7f090045;
+        public static final int textView1=0x7f09005f;
         public static final int title=0x7f09002b;
         public static final int top_action_bar=0x7f090020;
-        public static final int tvTitleHeader=0x7f09003d;
-        public static final int tv_error_login=0x7f090043;
-        public static final int tv_error_sign_up=0x7f09004d;
-        public static final int tv_forgotpass=0x7f090047;
-        public static final int tv_registry=0x7f090046;
+        public static final int tvSignInHome=0x7f09004f;
+        public static final int tvTitleHeader=0x7f09004c;
+        public static final int tv_error_add_new_post=0x7f090049;
+        public static final int tv_error_login=0x7f09005d;
+        public static final int tv_error_sign_up=0x7f090067;
+        public static final int tv_forgotpass=0x7f090061;
+        public static final int tv_registry=0x7f090060;
+        public static final int tv_upload_img=0x7f090047;
         public static final int up=0x7f090021;
         public static final int useLogo=0x7f09000e;
         public static final int withText=0x7f090013;
@@ -1157,14 +1199,16 @@ containing a value of this type.
         public static final int abc_popup_menu_item_layout=0x7f030014;
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
-        public static final int header_layout=0x7f030017;
-        public static final int rentroom_main=0x7f030018;
-        public static final int sign_in=0x7f030019;
-        public static final int sign_up=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int add_new_post_page=0x7f030017;
+        public static final int header_layout=0x7f030018;
+        public static final int my_page=0x7f030019;
+        public static final int rentroom_main=0x7f03001a;
+        public static final int sign_in=0x7f03001b;
+        public static final int sign_up=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
-        public static final int main_rent_room=0x7f0c0000;
+        public static final int main_rent_room=0x7f0d0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1208,33 +1252,61 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_settings=0x7f0a000e;
+        public static final int add_new_room_title=0x7f0a0033;
+        public static final int address_title=0x7f0a0036;
         public static final int app_name=0x7f0a000d;
-        public static final int confirm_email_sign_up=0x7f0a0020;
-        public static final int confirm_pass_sign_up=0x7f0a001e;
-        public static final int email_sign_up=0x7f0a001f;
-        public static final int error_login=0x7f0a0014;
-        public static final int forgot_pass=0x7f0a0016;
-        public static final int invalid_confirm_email=0x7f0a0023;
-        public static final int invalid_confirm_pass=0x7f0a0025;
-        public static final int invalid_email=0x7f0a0022;
-        public static final int invalid_lenght_pass=0x7f0a0028;
-        public static final int invalid_lenght_username=0x7f0a0027;
-        public static final int invalid_pass=0x7f0a0024;
-        public static final int invalid_username=0x7f0a0026;
-        public static final int or=0x7f0a0018;
-        public static final int pass=0x7f0a0012;
-        public static final int pass_required=0x7f0a001b;
-        public static final int pass_sign_up=0x7f0a001d;
-        public static final int register_yet=0x7f0a0017;
-        public static final int remember=0x7f0a0013;
-        public static final int sign_in=0x7f0a0010;
-        public static final int sign_up_title=0x7f0a0021;
-        public static final int signin_title=0x7f0a0015;
+        public static final int area_prompt=0x7f0a0031;
+        public static final int area_title=0x7f0a0030;
+        public static final int area_title_add_new=0x7f0a0037;
+        public static final int city_title=0x7f0a002c;
+        public static final int confirm_email_sign_up=0x7f0a0021;
+        public static final int confirm_pass_sign_up=0x7f0a001f;
+        public static final int cost_prompt=0x7f0a002f;
+        public static final int cost_title=0x7f0a002e;
+        public static final int cost_title_add_new=0x7f0a0038;
+        public static final int discription_title=0x7f0a0039;
+        public static final int district_title=0x7f0a002d;
+        public static final int email_sign_up=0x7f0a0020;
+        public static final int empty_address=0x7f0a0040;
+        public static final int empty_cost=0x7f0a0041;
+        public static final int empty_disctiption=0x7f0a0042;
+        public static final int empty_full_name=0x7f0a003e;
+        public static final int empty_phone_number=0x7f0a003f;
+        public static final int error=0x7f0a0010;
+        public static final int error_login=0x7f0a0015;
+        public static final int forgot_pass=0x7f0a0017;
+        public static final int from_to=0x7f0a003c;
+        public static final int incorrect_area=0x7f0a0044;
+        public static final int incorrect_cost=0x7f0a0043;
+        public static final int invalid_confirm_email=0x7f0a0024;
+        public static final int invalid_confirm_pass=0x7f0a0026;
+        public static final int invalid_email=0x7f0a0023;
+        public static final int invalid_lenght_pass=0x7f0a0029;
+        public static final int invalid_lenght_username=0x7f0a0028;
+        public static final int invalid_pass=0x7f0a0025;
+        public static final int invalid_username=0x7f0a0027;
+        public static final int name_title=0x7f0a0034;
+        public static final int num_room=0x7f0a003d;
+        public static final int or=0x7f0a0019;
+        public static final int pass=0x7f0a0013;
+        public static final int pass_required=0x7f0a001c;
+        public static final int pass_sign_up=0x7f0a001e;
+        public static final int phone_title=0x7f0a0035;
+        public static final int post_title=0x7f0a003a;
+        public static final int register_yet=0x7f0a0018;
+        public static final int remember=0x7f0a0014;
+        public static final int search_title=0x7f0a0032;
+        public static final int sign_in=0x7f0a0011;
+        public static final int sign_up_not_success=0x7f0a002a;
+        public static final int sign_up_title=0x7f0a0022;
+        public static final int signin_title=0x7f0a0016;
         public static final int text_description_all=0x7f0a000f;
-        public static final int username=0x7f0a0011;
-        public static final int username_pass_required=0x7f0a0019;
-        public static final int username_required=0x7f0a001a;
-        public static final int username_sign_up=0x7f0a001c;
+        public static final int tip_search=0x7f0a002b;
+        public static final int up_photo_title=0x7f0a003b;
+        public static final int username=0x7f0a0012;
+        public static final int username_pass_required=0x7f0a001a;
+        public static final int username_required=0x7f0a001b;
+        public static final int username_sign_up=0x7f0a001d;
     }
     public static final class style {
         /** 
@@ -1263,6 +1335,11 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
+        public static final int MyActionBar=0x7f0b0085;
+        /**  ActionBar tabs text styles 
+         */
+        public static final int MyActionBarTabText=0x7f0b0087;
+        public static final int MyActionBarTitleText=0x7f0b0086;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;
