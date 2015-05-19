@@ -18,30 +18,30 @@ import com.coolsx.rentroom.R;
 
 public class UtilDroid {
 
-	public static ArrayAdapter<String> getAdapterDistrict(Context context, int pos){
+	public static ArrayAdapter<String> getAdapterDistrict(Context context, int pos) {
 		ArrayAdapter<String> adapter = null;
-		String [] arrSpContent;
-		
-		switch(pos){
+		String[] arrSpContent;
+
+		switch (pos) {
 		case 0:
 			arrSpContent = context.getResources().getStringArray(R.array.hcm_district_arrays);
 			adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrSpContent);
-		    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);	        
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			break;
 		case 1:
 			arrSpContent = context.getResources().getStringArray(R.array.hn_district_arrays);
 			adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrSpContent);
-		    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			break;
 		case 2:
 			break;
 		case 3:
 			break;
 		}
-		
+
 		return adapter;
 	}
-	
+
 	public final static boolean isValidEmail(CharSequence target) {
 		if (TextUtils.isEmpty(target)) {
 			return false;

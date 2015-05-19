@@ -1,17 +1,30 @@
 package com.coolsx.rentroom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.coolsx.dto.CityDTO;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 public class MainRentRoom extends Activity {
 
+	Spinner spCity;
+	Spinner spDistrict;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,7 +33,9 @@ public class MainRentRoom extends Activity {
 		
 		TextView tvSignIn = (TextView) findViewById(R.id.tvSignInHome);
 		Button btnSignUp = (Button) findViewById(R.id.btnRegistryHome);
-
+		spCity = (Spinner)findViewById(R.id.spinCity);
+		spDistrict = (Spinner)findViewById(R.id.spinDistrict);
+		
 		tvSignIn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -39,8 +54,42 @@ public class MainRentRoom extends Activity {
 				startActivity(i);				
 			}
 		});
+		
+		getListCity();
 	}
 
+	List<CityDTO> cityDTOs= new ArrayList<CityDTO>();
+	
+	private void getListCity() {
+		 
+	    ParseQuery<CityDTO> query = CityDTO.getQuery();
+	 
+	    query.findInBackground(new FindCallback<CityDTO>() {	
+			@Override
+	        public void done(List<CityDTO> citys, ParseException e) {
+	            if (e == null) {	               
+	               cityDTOs.addAll(citys);
+	               setToSpinner();
+	            } else {
+	                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+	            }
+	        }
+	    });
+	}
+	
+	private void setToSpinner(){
+		try {
+			for(CityDTO cityDTO : cityDTOs){
+				String title = cityDTO.getCityName();
+				String sID = cityDTO.getCityID();
+				System.out.println(title);			
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

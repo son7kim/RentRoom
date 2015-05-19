@@ -98,7 +98,15 @@
                 android:hint="@string/address_title"
                 android:singleLine="true"
                 android:textColor="@color/black" />
-
+            <TextView
+                android:id="@+id/tv_address_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pad_top_ed_add_new_post"
+                android:gravity="center_horizontal"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size"/>
             <EditText
                 android:id="@+id/edit_num_room"
                 android:layout_width="match_parent"

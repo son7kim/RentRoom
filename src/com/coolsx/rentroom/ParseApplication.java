@@ -3,9 +3,12 @@ package com.coolsx.rentroom;
 import android.app.Application;
 
 import com.coolsx.constants.MConstants;
+import com.coolsx.dto.CityDTO;
+import com.coolsx.dto.DistrictDTO;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 public class ParseApplication extends Application {
@@ -13,6 +16,9 @@ public class ParseApplication extends Application {
 	@Override
 	public void onCreate() {		
 		super.onCreate();
+		
+		ParseObject.registerSubclass(CityDTO.class);
+		ParseObject.registerSubclass(DistrictDTO.class);
 		
 		// Initialize Crash Reporting.
 	    ParseCrashReporting.enable(this);
