@@ -1,11 +1,13 @@
 package com.coolsx.utils;
 
 import java.io.File;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentQueryMap;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,11 +15,56 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 
+import com.coolsx.constants.MConstants;
+import com.coolsx.constants.MData;
+import com.coolsx.dto.CityDTO;
+import com.coolsx.dto.DistrictDTO;
 import com.coolsx.rentroom.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 public class UtilDroid {
+	
+	public static ArrayAdapter<String> getAdapterCity(Context context){		
+		MData.sAdapterCity.clear();
+		for(CityDTO city : MData.cityDTOs){			
+			MData.sAdapterCity.add(city.getCityName());
+		}
+		
+		MData.adapterCity = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, MData.sAdapterCity);
+		MData.adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		return MData.adapterCity;
+	}
+	
+	public static ArrayAdapter<String> getAdapterDistrictFromKey(final Context context, CityDTO city){
+		ParseQuery<DistrictDTO> query = ParseQuery.getQuery(MConstants.kTableDistrict);
+		query.fromLocalDatastore();
+		
+		query.whereEqualTo(MConstants.kCityID, city.getCityID());
+		
+		
+		query.findInBackground(new FindCallback<DistrictDTO>() {
 
+			@Override
+			public void done(List<DistrictDTO> objects, ParseException e) {
+				if(e == null){
+					MData.sAdapterDistrict.clear();
+					for(DistrictDTO object:objects){
+						MData.sAdapterDistrict.add(object.getDistrictName());
+					}
+					
+					MData.adapterDistrict = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, MData.sAdapterDistrict);
+					MData.adapterDistrict.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				}
+			}
+		});
+		return MData.adapterDistrict;
+	}
+	
 	public static ArrayAdapter<String> getAdapterDistrict(Context context, int pos) {
 		ArrayAdapter<String> adapter = null;
 		String[] arrSpContent;

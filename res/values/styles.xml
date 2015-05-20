@@ -39,4 +39,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
     
+    <!-- Style Splash -->
+	<style name="SplashTheem" parent="android:Theme">
+	<item name="android:background">@drawable/custom_splash_center</item>
+	<item name="android:windowNoTitle">true</item>
+	</style>
 </resources>

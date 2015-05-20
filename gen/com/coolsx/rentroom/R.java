@@ -1030,18 +1030,20 @@ containing a value of this type.
         public static final int bg_blue_btn=0x7f020057;
         public static final int bg_dark_blue_btn=0x7f020058;
         public static final int bg_gray_btn=0x7f020059;
-        public static final int custom_border_normal=0x7f02005a;
-        public static final int custom_border_select=0x7f02005b;
-        public static final int custom_icon_left=0x7f02005c;
-        public static final int custom_padding_logo_actionbar=0x7f02005d;
-        public static final int ic_back=0x7f02005e;
-        public static final int ic_launcher=0x7f02005f;
-        public static final int ic_password=0x7f020060;
-        public static final int ic_selected_actionbar=0x7f020061;
-        public static final int ic_user=0x7f020062;
-        public static final int logo=0x7f020063;
-        public static final int selectable_background_actionbar=0x7f020064;
-        public static final int translucent_background=0x7f020065;
+        public static final int bg_page=0x7f02005a;
+        public static final int custom_border_normal=0x7f02005b;
+        public static final int custom_border_select=0x7f02005c;
+        public static final int custom_icon_left=0x7f02005d;
+        public static final int custom_padding_logo_actionbar=0x7f02005e;
+        public static final int custom_splash_center=0x7f02005f;
+        public static final int ic_back=0x7f020060;
+        public static final int ic_launcher=0x7f020061;
+        public static final int ic_password=0x7f020062;
+        public static final int ic_selected_actionbar=0x7f020063;
+        public static final int ic_user=0x7f020064;
+        public static final int logo=0x7f020065;
+        public static final int selectable_background_actionbar=0x7f020066;
+        public static final int translucent_background=0x7f020067;
     }
     public static final class id {
         public static final int action_bar=0x7f09001c;
@@ -1343,6 +1345,9 @@ containing a value of this type.
          */
         public static final int MyActionBarTabText=0x7f0b0087;
         public static final int MyActionBarTitleText=0x7f0b0086;
+        /**  Style Splash 
+         */
+        public static final int SplashTheem=0x7f0b0088;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;

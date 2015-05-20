@@ -1,24 +1,20 @@
 package com.coolsx.rentroom;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.coolsx.constants.MData;
+import com.coolsx.utils.UtilDroid;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.coolsx.dto.CityDTO;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class MainRentRoom extends Activity {
 
@@ -35,60 +31,39 @@ public class MainRentRoom extends Activity {
 		Button btnSignUp = (Button) findViewById(R.id.btnRegistryHome);
 		spCity = (Spinner)findViewById(R.id.spinCity);
 		spDistrict = (Spinner)findViewById(R.id.spinDistrict);
+				
+		spCity.setAdapter(UtilDroid.getAdapterCity(this));
+		spCity.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(position)));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {				
+			}
+		});
 		
 		tvSignIn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent i = new Intent(MainRentRoom.this, SignInActivity.class);
 				startActivity(i);
 			}
 		});
 		
-		btnSignUp.setOnClickListener(new OnClickListener() {
-			
+		btnSignUp.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainRentRoom.this, SignUpActivity.class);
 				startActivity(i);				
 			}
 		});
-		
-		getListCity();
-	}
-
-	List<CityDTO> cityDTOs= new ArrayList<CityDTO>();
-	
-	private void getListCity() {
-		 
-	    ParseQuery<CityDTO> query = CityDTO.getQuery();
-	 
-	    query.findInBackground(new FindCallback<CityDTO>() {	
-			@Override
-	        public void done(List<CityDTO> citys, ParseException e) {
-	            if (e == null) {	               
-	               cityDTOs.addAll(citys);
-	               setToSpinner();
-	            } else {
-	                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-	            }
-	        }
-	    });
 	}
 	
-	private void setToSpinner(){
-		try {
-			for(CityDTO cityDTO : cityDTOs){
-				String title = cityDTO.getCityName();
-				String sID = cityDTO.getCityID();
-				System.out.println(title);			
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

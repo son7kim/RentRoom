@@ -4,13 +4,25 @@ public class MConstants {
 	public static final String kApplicationKey = "VWQCpWYD8tKEq0gpiceGwJoyRzfAZycITiw6qzwz";
 	public static final String kClientKey = "DULbvhqeeF5ig0L5ut5OPmao8NVHkrwBU5uKJnA9";
 	public static final String PASSWORD_PATTERN = "^(?=.*?[A-Z])(?=.*?[0-9]).{7,30}$";
-	
+	public static final int iLimitSize = 1000;
 	// Table User
 	public static final String kUsername = "username";
 	public static final String kPassword = "password";
 	public static final String kEmail = "email";
 	
+	// Table City
+	public static final String kTableCity = "City";
+	public static final String kCityID = "cityID";
+	public static final String kCityName = "cityName";
+	public static final String kUpdatedAt = "updatedAt";
+	
+	// Table District
+	public static final String kTableDistrict = "District";
+	public static final String kDistrictID = "districtID";
+	public static final String kDistricName = "districtName";
+	
 	// Table Post
+	public static final String kTablePost = "Post";
 	public static final String kName = "name";
 	public static final String kPhoneNumber = "number";
 	public static final String kAddress = "address";
@@ -21,6 +33,4 @@ public class MConstants {
 	public static final String kUserIdPost = "userID";
 	public static final String kAreaMin = "areaMin";
 	public static final String kAreaMax = "areaMax";
-	public static final String kDistrictID = "disctrictID";
-
 }
