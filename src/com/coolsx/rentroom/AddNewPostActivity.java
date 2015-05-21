@@ -1,10 +1,10 @@
 package com.coolsx.rentroom;
 
-import com.coolsx.constants.MConstants;
-import com.coolsx.utils.UtilDroid;
-import com.parse.ParseObject;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +16,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.coolsx.constants.MConstants;
+import com.coolsx.constants.MData;
+import com.coolsx.dto.DistrictDTO;
+import com.coolsx.utils.UtilDroid;
+import com.parse.ParseObject;
 
 public class AddNewPostActivity extends Activity {
 
@@ -33,8 +39,11 @@ public class AddNewPostActivity extends Activity {
 	private TextView tvChooseImg;
 	private LinearLayout llFileAttach;
 	private TextView tvError;
+	private TextView tvAddress;
 	private Button btnPost;
-	
+	private ArrayAdapter<String> adapCity;
+	private ArrayAdapter<String> adapDistrict;
+	private List<DistrictDTO> districtAddNewDTOs = new ArrayList<DistrictDTO>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +55,7 @@ public class AddNewPostActivity extends Activity {
 		spCityAddNew = (Spinner)findViewById(R.id.spinCityAddNew);
 		spDistrictAddNew = (Spinner)findViewById(R.id.spinDistrictAddNew);
 		edAddress = (EditText)findViewById(R.id.edit_address);
+		tvAddress = (TextView) findViewById(R.id.tv_address_detail);
 		edNumRoom = (EditText)findViewById(R.id.edit_num_room);
 		edAreaMin = (EditText)findViewById(R.id.edit_area_min);	
 		edAreaMax = (EditText)findViewById(R.id.edit_area_max);
@@ -57,16 +67,45 @@ public class AddNewPostActivity extends Activity {
 		tvError = (TextView) findViewById(R.id.tv_error_add_new_post);
 		btnPost = (Button)findViewById(R.id.btn_post);
 		
+		adapCity = MData.adapterCity;
+		adapDistrict = UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(0), districtAddNewDTOs);
+
+		tvAddress.setText( "..., " + districtAddNewDTOs.get(0).getDistrictName() + ", " + MData.cityDTOs.get(0).getCityName());
+		
+		spCityAddNew.setAdapter(adapCity);
+		spDistrictAddNew.setAdapter(adapDistrict);
 		spCityAddNew.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				spDistrictAddNew.setAdapter(UtilDroid.getAdapterDistrict(AddNewPostActivity.this, position));
+				spDistrictAddNew.setAdapter(UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(position), districtAddNewDTOs));
+				tvAddress.setText( "..., " + districtAddNewDTOs.get(position).getDistrictName() + ", " + MData.cityDTOs.get(position).getCityName());
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {				
+			}
+		});
+		
+		spDistrictAddNew.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				tvAddress.setText( "..., " + districtAddNewDTOs.get(position).getDistrictName() + ", " + MData.cityDTOs.get(position).getCityName());
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {				
+			}
+		});
+		
+		tvChooseImg.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				UtilDroid.selectImage(AddNewPostActivity.this);				
 			}
 		});
 		
@@ -141,8 +180,14 @@ public class AddNewPostActivity extends Activity {
 		});
 	}
 		
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		UtilDroid.onSelectImageOk(AddNewPostActivity.this, data);
+		
+	}
+	
 	private void addPost(int iNumArea){
-		int iPos = spDistrictAddNew.getSelectedItemPosition();
 		ParseObject newPost = new ParseObject("Post");
 		
 		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
@@ -164,8 +209,6 @@ public class AddNewPostActivity extends Activity {
 			newPost.put(MConstants.kAreaMin, edAreaMin.getText().toString().trim());
 			newPost.put(MConstants.kAreaMax, edAreaMax.getText().toString().trim());
 			break;
-		}
-		
-		
+		}		
 	}
 }

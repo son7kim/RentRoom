@@ -1,99 +1,77 @@
 package com.coolsx.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentQueryMap;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 
-import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.CityDTO;
 import com.coolsx.dto.DistrictDTO;
-import com.coolsx.rentroom.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 
 public class UtilDroid {
-	
-	public static ArrayAdapter<String> getAdapterCity(Context context){		
+
+	public static ArrayAdapter<String> getAdapterCity(Context context) {
 		MData.sAdapterCity.clear();
-		for(CityDTO city : MData.cityDTOs){			
+		for (CityDTO city : MData.cityDTOs) {
 			MData.sAdapterCity.add(city.getCityName());
 		}
-		
-		MData.adapterCity = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, MData.sAdapterCity);
-		MData.adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		
+
+		MData.adapterCity = new ArrayAdapter<String>(context,
+				android.R.layout.simple_spinner_item, MData.sAdapterCity);
+		MData.adapterCity
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 		return MData.adapterCity;
 	}
-	
-	public static ArrayAdapter<String> getAdapterDistrictFromKey(final Context context, CityDTO city){
-		ParseQuery<DistrictDTO> query = ParseQuery.getQuery(MConstants.kTableDistrict);
-		query.fromLocalDatastore();
-		
-		query.whereEqualTo(MConstants.kCityID, city.getCityID());
-		
-		
-		query.findInBackground(new FindCallback<DistrictDTO>() {
 
-			@Override
-			public void done(List<DistrictDTO> objects, ParseException e) {
-				if(e == null){
-					MData.sAdapterDistrict.clear();
-					for(DistrictDTO object:objects){
-						MData.sAdapterDistrict.add(object.getDistrictName());
-					}
-					
-					MData.adapterDistrict = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, MData.sAdapterDistrict);
-					MData.adapterDistrict.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				}
+	public static ArrayAdapter<String> getAdapterDistrictFromKey(
+			final Context context, CityDTO city, List<DistrictDTO> districtDTOsTemp) {
+		List<String> sAdapterDistrict = new ArrayList<String>();
+		ArrayAdapter<String> adapterDistrict = null;
+		districtDTOsTemp.clear();
+		sAdapterDistrict.clear();
+		for (DistrictDTO districtObj : MData.districtDTOs) {
+			if (districtObj.getCityID().equals(city.getCityID())) {
+				sAdapterDistrict.add(districtObj.getDistrictName());
+				districtDTOsTemp.add(districtObj);
 			}
-		});
-		return MData.adapterDistrict;
-	}
-	
-	public static ArrayAdapter<String> getAdapterDistrict(Context context, int pos) {
-		ArrayAdapter<String> adapter = null;
-		String[] arrSpContent;
-
-		switch (pos) {
-		case 0:
-			arrSpContent = context.getResources().getStringArray(R.array.hcm_district_arrays);
-			adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrSpContent);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			break;
-		case 1:
-			arrSpContent = context.getResources().getStringArray(R.array.hn_district_arrays);
-			adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrSpContent);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
 		}
 
-		return adapter;
+		adapterDistrict = new ArrayAdapter<String>(context,
+				android.R.layout.simple_spinner_item, sAdapterDistrict);
+		adapterDistrict
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		return adapterDistrict;
 	}
 
 	public final static boolean isValidEmail(CharSequence target) {
 		if (TextUtils.isEmpty(target)) {
 			return false;
 		} else {
-			return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+			return android.util.Patterns.EMAIL_ADDRESS.matcher(target)
+					.matches();
 		}
 	}
 
@@ -110,7 +88,8 @@ public class UtilDroid {
 
 	public static void selectImage(final Activity activity) {
 
-		final CharSequence[] options = { "Take Photo", "Choose from Gallery", "Cancel" };
+		final CharSequence[] options = { "Take Photo", "Choose from Gallery",
+				"Cancel" };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -127,7 +106,8 @@ public class UtilDroid {
 
 					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-					File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+					File f = new File(android.os.Environment
+							.getExternalStorageDirectory(), "temp.jpg");
 
 					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 
@@ -139,7 +119,9 @@ public class UtilDroid {
 
 				{
 
-					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					Intent intent = new Intent(
+							Intent.ACTION_PICK,
+							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
 					activity.startActivityForResult(intent, 2);
 
@@ -159,4 +141,81 @@ public class UtilDroid {
 
 	}
 
+	public static void onSelectImageOk(Context context, Intent data){				
+		if (data == null) {
+			try{
+				Uri takenPhotoUri = getPhotoFileUri("temp.jpg");
+		         // by this point we have the camera photo on disk
+		         Bitmap bitmap = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+		         // Load the taken image into a preview
+		         GetByteArrayFromFile(takenPhotoUri.getPath());
+		        
+				onResultChoosed (bitmap);
+				
+			} catch(Exception e){				
+			}
+		} else {
+			Uri uri = Uri.parse(data.getDataString());
+			Bitmap bitmap = null;
+			try {
+				bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace ();
+			} catch (IOException e) {
+				e.printStackTrace ();
+			}
+			
+			onResultChoosed (bitmap);
+		}
+	}
+	
+	public static Uri getPhotoFileUri(String fileName) {
+	    // Get safe storage directory for photos
+	    File mediaStorageDir = new File(
+	        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "");
+
+	    // Create the storage directory if it does not exist
+	    if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+	        Log.d("", "failed to create directory");
+	    }
+
+	    // Return the file target for the photo based on filename
+	    return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+	}
+	
+	public static byte[] GetByteArrayFromFile (String filename)
+	{
+			File fInfo = new File(filename);			
+
+			 try {
+				InputStream is = new FileInputStream(fInfo);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		        long length = fInfo.length();
+			return null;
+//			int size = (int) fInfo.length();
+//			byte[] bytes = new byte[size];
+//			try {				
+//			    BufferedInputStream buf = new BufferedInputStream(new FileInputStream(fInfo));
+//			    buf.read(bytes, 0, bytes.length);
+//			    buf.close();
+//			} catch (FileNotFoundException e) {
+//			    e.printStackTrace();
+//			} catch (IOException e) {
+//			    e.printStackTrace();
+//			}
+//			
+//		return bytes;
+	}
+	
+	static void onResultChoosed(Bitmap bitmap){
+		// Convert it to byte
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		// Compress image to lower quality scale 1 - 100
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		byte[] image = stream.toByteArray();	
+
+	}
 }

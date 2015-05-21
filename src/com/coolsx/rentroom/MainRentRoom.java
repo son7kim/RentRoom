@@ -1,6 +1,10 @@
 package com.coolsx.rentroom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.coolsx.constants.MData;
+import com.coolsx.dto.DistrictDTO;
 import com.coolsx.utils.UtilDroid;
 
 import android.app.Activity;
@@ -20,6 +24,7 @@ public class MainRentRoom extends Activity {
 
 	Spinner spCity;
 	Spinner spDistrict;
+	private List<DistrictDTO> districtDTOsHome = new ArrayList<DistrictDTO>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,7 @@ public class MainRentRoom extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(position)));
+				spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(position), districtDTOsHome));
 			}
 
 			@Override

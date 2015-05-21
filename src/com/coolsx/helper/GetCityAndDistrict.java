@@ -56,7 +56,7 @@ public class GetCityAndDistrict {
 									getListCity(true);
 								}
 							} else {
-								getListCity(false);
+								getListCity(true);
 							}
 						}
 					});
