@@ -80,7 +80,7 @@ public class AddNewPostActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				spDistrictAddNew.setAdapter(UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(position), districtAddNewDTOs));
-				tvAddress.setText( "..., " + districtAddNewDTOs.get(position).getDistrictName() + ", " + MData.cityDTOs.get(position).getCityName());
+				tvAddress.setText( "..., " + districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", " + MData.cityDTOs.get(position).getCityName());
 			}
 
 			@Override
@@ -93,7 +93,7 @@ public class AddNewPostActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				tvAddress.setText( "..., " + districtAddNewDTOs.get(position).getDistrictName() + ", " + MData.cityDTOs.get(position).getCityName());
+				tvAddress.setText( "..., " + districtAddNewDTOs.get(position).getDistrictName() + ", " + MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName());
 			}
 
 			@Override
@@ -132,6 +132,12 @@ public class AddNewPostActivity extends Activity {
 				if(edAddress.getText().toString().trim().isEmpty()){
 					tvError.setVisibility(View.VISIBLE);
 					tvError.setText(R.string.empty_address);
+					return;
+				}
+				
+				if(edNumRoom.getText().toString().trim().isEmpty()){
+					tvError.setVisibility(View.VISIBLE);
+					tvError.setText(R.string.empty_num_room);
 					return;
 				}
 				
@@ -183,8 +189,9 @@ public class AddNewPostActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		UtilDroid.onSelectImageOk(AddNewPostActivity.this, data);
-		
+		if(requestCode == MConstants.CHOOSE_IMG && resultCode == RESULT_OK){
+			UtilDroid.onSelectImageOk(AddNewPostActivity.this, data);
+		}
 	}
 	
 	private void addPost(int iNumArea){

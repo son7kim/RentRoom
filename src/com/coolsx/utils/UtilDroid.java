@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.CityDTO;
 import com.coolsx.dto.DistrictDTO;
@@ -104,14 +105,18 @@ public class UtilDroid {
 
 				{
 
-					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-					File f = new File(android.os.Environment
-							.getExternalStorageDirectory(), "temp.jpg");
-
-					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-
-					activity.startActivityForResult(intent, 1);
+//					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//					File f = new File(android.os.Environment
+//							.getExternalStorageDirectory(), "temp.jpg");
+//
+//					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//
+//					activity.startActivityForResult(intent, MConstants.CHOOSE_IMG);
+					
+					Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+					activity.startActivityForResult(intent, MConstants.CHOOSE_IMG);
+				      
 
 				}
 
@@ -123,7 +128,7 @@ public class UtilDroid {
 							Intent.ACTION_PICK,
 							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-					activity.startActivityForResult(intent, 2);
+					activity.startActivityForResult(intent, MConstants.CHOOSE_IMG);
 
 				}
 
@@ -141,32 +146,31 @@ public class UtilDroid {
 
 	}
 
-	public static void onSelectImageOk(Context context, Intent data){				
-		if (data == null) {
-			try{
-				Uri takenPhotoUri = getPhotoFileUri("temp.jpg");
-		         // by this point we have the camera photo on disk
-		         Bitmap bitmap = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-		         // Load the taken image into a preview
-		         GetByteArrayFromFile(takenPhotoUri.getPath());
-		        
-				onResultChoosed (bitmap);
-				
-			} catch(Exception e){				
-			}
-		} else {
-			Uri uri = Uri.parse(data.getDataString());
-			Bitmap bitmap = null;
-			try {
-				bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace ();
-			} catch (IOException e) {
-				e.printStackTrace ();
-			}
-			
-			onResultChoosed (bitmap);
-		}
+	public static void onSelectImageOk(Context context, Intent data){
+		Bitmap bitmap1 = (Bitmap) data.getExtras().get("data");
+		onResultChoosed (bitmap1);
+		
+//		if (data == null) {
+//			try{		        
+//				Bitmap bitmap = (Bitmap) data.getExtras().get("data");     
+//						
+//				onResultChoosed (bitmap);
+//				
+//			} catch(Exception e){				
+//			}
+//		} else {
+//			Uri uri = Uri.parse(data.getDataString());
+//			Bitmap bitmap = null;
+//			try {
+//				bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace ();
+//			} catch (IOException e) {
+//				e.printStackTrace ();
+//			}
+//			
+//			onResultChoosed (bitmap);
+//		}
 	}
 	
 	public static Uri getPhotoFileUri(String fileName) {

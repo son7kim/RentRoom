@@ -5,6 +5,7 @@ public class MConstants {
 	public static final String kClientKey = "DULbvhqeeF5ig0L5ut5OPmao8NVHkrwBU5uKJnA9";
 	public static final String PASSWORD_PATTERN = "^(?=.*?[A-Z])(?=.*?[0-9]).{7,30}$";
 	public static final int iLimitSize = 1000;
+	public static final int CHOOSE_IMG = 10;
 	// Table User
 	public static final String kUsername = "username";
 	public static final String kPassword = "password";

@@ -75,8 +75,7 @@
             <Spinner
                 android:id="@+id/spinCity"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/city_arrays" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -96,8 +95,7 @@
             <Spinner
                 android:id="@+id/spinDistrict"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/hcm_district_arrays" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 

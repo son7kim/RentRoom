@@ -37,54 +37,7 @@
 	<string name="tip_search">Nhập từ khóa để tìm kiếm</string>
 	<string name="city_title">TP/Tỉnh:</string>
 	<string name="district_title">Quận/Huyện:</string>
-	<string-array name="city_arrays">
-        <item>TPHCM</item>
-        <item>Hà Nội</item>
-        <item>Đà Nẵng</item>
-        <item>Đồng Nai</item>
-        <item>Huế</item>
-        <item>Bình Dương</item>
-        <item>Vinh</item>
-        <item>Đà Lạt</item>
-    </string-array>
-    <string-array name="hcm_district_arrays">
-        <item>Quận 1</item>
-        <item>Quận 2</item>
-        <item>Quận 3</item>
-        <item>Quận 4</item>
-        <item>Quận 5</item>
-        <item>Quận 6</item>
-        <item>Quận 7</item>
-        <item>Quận 8</item>
-        <item>Quận 9</item>
-        <item>Quận 10</item>
-        <item>Quận 11</item>
-        <item>Quận 12</item>
-        <item>Thủ Đức</item>
-        <item>Bình Thạnh</item>
-        <item>Gò Vấp</item>
-        <item>Tân Bình</item>
-        <item>Hóc Môn</item>
-    </string-array>
-        <string-array name="hn_district_arrays">
-        <item>Quận Hoang Kiem</item>
-        <item>Quận Dong Da</item>
-        <item>Quận Ba Binh</item>
-        <item>Quận Bon Dinh</item>
-        <item>Quận 5</item>
-        <item>Quận 6</item>
-        <item>Quận 7</item>
-        <item>Quận 8</item>
-        <item>Quận 9</item>
-        <item>Quận 10</item>
-        <item>Quận 11</item>
-        <item>Quận 12</item>
-        <item>Thủ Đức</item>
-        <item>Bình Thạnh</item>
-        <item>Gò Vấp</item>
-        <item>Tân Bình</item>
-        <item>Hóc Môn</item>
-    </string-array>
+	
     <string-array name="equal_title">
         <item>&gt;=</item>
         <item>&lt;=</item>
@@ -160,5 +113,6 @@
     <string name="empty_disctiption">Chưa nhập mô tả phòng</string>
     <string name="incorrect_cost">Giá phòng không hợp lệ</string>
     <string name="incorrect_area">Diện tích nhập vào không hợp lệ</string>
-    <string name="empty_area_min">Chua nhap dien tich phong min</string>
+    <string name="empty_area_min">Diện tích nhập vào chưa đầy đủ</string>
+    <string name="empty_num_room">Chưa nhập số lượng phòng trống</string>
 </resources>

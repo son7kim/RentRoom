@@ -63,8 +63,7 @@
                     <Spinner
                         android:id="@+id/spinCityAddNew"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/city_arrays" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -84,8 +83,7 @@
                     <Spinner
                         android:id="@+id/spinDistrictAddNew"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/hcm_district_arrays" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -103,8 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pad_top_ed_add_new_post"
-                android:gravity="center_horizontal"
-                android:text=""
+                android:gravity="end"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"/>
             <EditText

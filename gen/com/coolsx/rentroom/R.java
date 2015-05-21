@@ -17,12 +17,9 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        public static final int area_arrays=0x7f0c0005;
-        public static final int city_arrays=0x7f0c0000;
-        public static final int cost_arrays=0x7f0c0004;
-        public static final int equal_title=0x7f0c0003;
-        public static final int hcm_district_arrays=0x7f0c0001;
-        public static final int hn_district_arrays=0x7f0c0002;
+        public static final int area_arrays=0x7f0c0002;
+        public static final int cost_arrays=0x7f0c0001;
+        public static final int equal_title=0x7f0c0000;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1276,6 +1273,7 @@ containing a value of this type.
         public static final int empty_cost=0x7f0a0041;
         public static final int empty_disctiption=0x7f0a0042;
         public static final int empty_full_name=0x7f0a003e;
+        public static final int empty_num_room=0x7f0a0046;
         public static final int empty_phone_number=0x7f0a003f;
         public static final int error=0x7f0a0010;
         public static final int error_login=0x7f0a0015;
