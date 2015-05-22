@@ -6,6 +6,7 @@ public class MConstants {
 	public static final String PASSWORD_PATTERN = "^(?=.*?[A-Z])(?=.*?[0-9]).{7,30}$";
 	public static final int iLimitSize = 1000;
 	public static final int CHOOSE_IMG = 10;
+	public static final int TAKE_PHOTO = 20;
 	// Table User
 	public static final String kUsername = "username";
 	public static final String kPassword = "password";
@@ -16,6 +17,7 @@ public class MConstants {
 	public static final String kCityID = "cityID";
 	public static final String kCityName = "cityName";
 	public static final String kUpdatedAt = "updatedAt";
+
 	
 	// Table District
 	public static final String kTableDistrict = "District";
@@ -34,4 +36,10 @@ public class MConstants {
 	public static final String kUserIdPost = "userID";
 	public static final String kAreaMin = "areaMin";
 	public static final String kAreaMax = "areaMax";
+	
+	// Table Image
+	public static final String kTableImage = "Image";
+	public static final String kImgFile = "imgFile";
+	public static final String kImgName = "imgName";
+	public static final String kPostID = "postID";
 }
