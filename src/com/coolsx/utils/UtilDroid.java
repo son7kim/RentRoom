@@ -24,6 +24,7 @@ import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.CityDTO;
 import com.coolsx.dto.DistrictDTO;
+import java.util.UUID;
 
 public class UtilDroid {
 
@@ -158,9 +159,13 @@ public class UtilDroid {
 		return bIimages;
 	}
 	
-	public static String getRandomString() {
+	public static String getRandomStringNumber() {
 	    Random generator = new Random();
 	    String x = "phong_"+(generator.nextInt(96) + 32);
 	    return x;
+	}
+	
+	public static String getRandomStringUUID(){		
+		return UUID.randomUUID().toString();
 	}
 }

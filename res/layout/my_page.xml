@@ -23,6 +23,12 @@
         android:textSize="@dimen/text_button_size"
         android:textStyle="bold" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/pad_top_bottom"
+        android:background="@color/grey_app" />
+
     <ListView
         android:id="@+id/lv_my_result"
         android:layout_width="match_parent"

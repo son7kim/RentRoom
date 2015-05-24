@@ -115,4 +115,10 @@
     <string name="incorrect_area">Diện tích nhập vào không hợp lệ</string>
     <string name="empty_area_min">Diện tích nhập vào chưa đầy đủ</string>
     <string name="empty_num_room">Chưa nhập số lượng phòng trống</string>
+    
+    <string name="post_error">Bạn không thể đăng bài ngay lúc này. Vui lòng thử lại sau!</string>
+
+    <string name="room_description_adapter">Mô tả phòng</string>
+    <string name="cost_adapter">Giá</string>
+     <string name="address_adapter">Địa chỉ</string>
 </resources>

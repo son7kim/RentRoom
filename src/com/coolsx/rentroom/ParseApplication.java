@@ -5,6 +5,7 @@ import android.app.Application;
 import com.coolsx.constants.MConstants;
 import com.coolsx.dto.CityDTO;
 import com.coolsx.dto.DistrictDTO;
+import com.coolsx.dto.PostArticleDTO;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
@@ -16,7 +17,7 @@ public class ParseApplication extends Application {
 	@Override
 	public void onCreate() {		
 		super.onCreate();
-		
+		ParseObject.registerSubclass(PostArticleDTO.class);
 		ParseObject.registerSubclass(CityDTO.class);
 		ParseObject.registerSubclass(DistrictDTO.class);
 		

@@ -7,7 +7,9 @@ public class MConstants {
 	public static final int iLimitSize = 1000;
 	public static final int CHOOSE_IMG = 10;
 	public static final int TAKE_PHOTO = 20;
+	public static final String kPostExtraKey = "ActiclePosted";
 	// Table User
+	public static final String kTableUser = "User";
 	public static final String kUsername = "username";
 	public static final String kPassword = "password";
 	public static final String kEmail = "email";

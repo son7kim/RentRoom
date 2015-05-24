@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,9 @@ import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.ImageDTO;
+import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.DialogNotice;
+import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.coolsx.utils.UtilDroid;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.parse.ParseException;
@@ -54,13 +57,16 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 	OnAddFileImage onAddFile;
 	int iNumFile = 0;
 	DialogNotice dialog;
+	String sRandomUUID;
+	static onPostActicle postActicleDelegate;
+	Context _context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.add_new_post_page);
-
+		
 		edFullName = (EditText) findViewById(R.id.edit_fullname);
 		edPhone = (EditText) findViewById(R.id.edit_phone_number);
 		spCityAddNew = (Spinner) findViewById(R.id.spinCityAddNew);
@@ -79,7 +85,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		btnPost = (Button) findViewById(R.id.btn_post);
 
 		onAddFile = new OnAddFileImage(this, this);
-		dialog = new DialogNotice(this);
+		dialog = new DialogNotice(this);		
 
 		adapCity = MData.adapterCity;
 		adapDistrict = UtilDroid.getAdapterDistrictFromKey(
@@ -147,8 +153,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		btnPost.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				addPost(0);
+			public void onClick(View v) {				
 				tvError.setVisibility(View.GONE);
 
 				// Check validate
@@ -227,6 +232,10 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		});
 	}
 
+	public static void initDelegate(onPostActicle delegate){
+		postActicleDelegate = delegate;
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -236,7 +245,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 			if (bArrImages.length > 0) {
 				iNumFile++;
 
-				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomString(),
+				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomStringNumber(),
 						bArrImages);
 				listImgDTO.add(imgDTO);
 
@@ -250,12 +259,16 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 	}
 
 	private void addPost(int iNumArea) {
-		ParseObject newPost = new ParseObject("Post");
-
+		//ParseObject newPost = new ParseObject(MConstants.kTablePost);
+		final PostArticleDTO newPost = new PostArticleDTO();
+		
 		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
 		newPost.put(MConstants.kPhoneNumber, edPhone.getText().toString()
 				.trim());
-		newPost.put(MConstants.kAddress, edAddress.getText().toString().trim());
+		String address = edAddress.getText().toString().trim() + ", " + 
+				districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", " +
+				MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName();
+		newPost.put(MConstants.kAddress, address);
 		newPost.put(MConstants.kCostMin, edCostMin.getText().toString().trim());
 		if (!edCostMax.getText().toString().trim().isEmpty()) {
 			newPost.put(MConstants.kCostMax, edCostMax.getText().toString()
@@ -278,16 +291,26 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 			break;
 		}
 		
+		newPost.put(MConstants.kUserIdPost, MData.userInfo.getObjID());
+		
+		newPost.put(MConstants.kDistrictID, districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictID());
+		
+		sRandomUUID = UtilDroid.getRandomStringUUID();
+		newPost.put(MConstants.kPostID, sRandomUUID);
 		newPost.saveInBackground(new SaveCallback() {
 			
 			@Override
-			public void done(ParseException arg0) {
-				// TODO Auto-generated method stub
-				
+			public void done(ParseException e) {
+				if(e == null) {
+					postActicleDelegate.onSuccess(newPost);
+					finish();
+				} else {
+					dialog.ShowDialog(getResources().getString(R.string.post_title), getResources().getString(R.string.post_error));
+				}
 			}
 		});
 		
-		for(ImageDTO imgDTO : listImgDTO){
+		for(ImageDTO imgDTO : listImgDTO) {
 			ParseFile file = new ParseFile(imgDTO.getFileName() + ".png", imgDTO.getByteArrData());
 			// Upload the image into Parse Cloud
 			file.saveInBackground();
@@ -297,9 +320,11 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 
 			// Create a column named "ImageName" and set the string
 			imgupload.put(MConstants.kImgName, imgDTO.getFileName() + ".png");
-			imgupload.put(MConstants.kPostID, "ID Bai Post");
+			imgupload.put(MConstants.kPostID, sRandomUUID);
 			// Create a column named "ImageFile" and insert the image
-			imgupload.put(MConstants.kImgFile, file);			
+			imgupload.put(MConstants.kImgFile, file);	
+			
+			imgupload.saveInBackground();
 		}
 	}
 

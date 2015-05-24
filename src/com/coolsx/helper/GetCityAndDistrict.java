@@ -93,7 +93,7 @@ public class GetCityAndDistrict {
 	public void getListDistrict(final boolean isLocal) {
 
 		ParseQuery<DistrictDTO> query = DistrictDTO.getQuery();
-		if (isLocal) {			
+		if (isLocal) {
 			query.fromLocalDatastore();
 		}
 

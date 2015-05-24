@@ -22,4 +22,5 @@
     <dimen name="pad_right_ed_sign_in">6dp</dimen>
     <dimen name="height_ed_discription">100dp</dimen>
     <dimen name="pad_top_sign_up">40dp</dimen>
+    <dimen name="pad_top_bottom">5dp</dimen>
 </resources>

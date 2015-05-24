@@ -11,7 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.coolsx.utils.DialogNotice;
+import com.coolsx.constants.MData;
+import com.coolsx.dto.UserDTO;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -63,13 +64,12 @@ public class SignInActivity extends Activity {
 						public void done(ParseUser user, ParseException e) {
 							setProgressBarIndeterminateVisibility(false);
 							if (e == null) {
+								MData.userInfo = new UserDTO(user.getObjectId(),user.getUsername(),user.getEmail());
 								Intent i = new Intent(SignInActivity.this, MyPageActivity.class);
 								startActivity(i);
 								finish();
 							} else {
 								// Fail
-								DialogNotice dialog = new DialogNotice(SignInActivity.this);
-								dialog.ShowDialog("Title", "Content");
 								tvError.setText(e.getMessage());
 								tvError.setVisibility(View.VISIBLE);
 							}

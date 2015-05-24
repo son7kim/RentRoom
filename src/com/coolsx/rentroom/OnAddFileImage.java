@@ -44,7 +44,7 @@ public class OnAddFileImage extends LinearLayout {
 			ll.setVerticalGravity(Gravity.CENTER_VERTICAL);
 			
 			ImageView imgFile = new ImageView(_context);
-			imgFile.setImageResource(R.drawable.ic_back);
+			imgFile.setImageResource(R.drawable.ic_attach);
 			
 			TextView tvFile = new TextView(_context);
 			tvFile.setTextColor(Color.BLUE);
@@ -57,7 +57,7 @@ public class OnAddFileImage extends LinearLayout {
 			
 			final ImageButton imgDelete = new ImageButton(_context);
 			imgDelete.setId(i);
-			imgDelete.setImageResource(R.drawable.abc_ab_share_pack_mtrl_alpha);
+			imgDelete.setImageResource(R.drawable.ic_delete);
 			imgDelete.setMinimumWidth(60);
 			imgDelete.setBackgroundColor(Color.TRANSPARENT);
 			imgDelete.setOnClickListener(new OnClickListener() {
