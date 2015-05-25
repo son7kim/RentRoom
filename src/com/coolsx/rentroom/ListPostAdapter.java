@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.coolsx.constants.MConstants;
 import com.coolsx.dto.PostArticleDTO;
 
 public class ListPostAdapter extends ArrayAdapter<PostArticleDTO> {
@@ -35,7 +36,7 @@ public class ListPostAdapter extends ArrayAdapter<PostArticleDTO> {
 		TextView tvAddress = (TextView)view.findViewById(R.id.tv_address_adapter);
 		
 		tvDescription.setText(_listPostArticle.get(position).getDescription());
-		tvCost.setText("Giá: " + _listPostArticle.get(position).getCostMin());
+		tvCost.setText("Gia: " + _listPostArticle.get(position).getLong(MConstants.kCostMin));
 		tvAddress.setText(_listPostArticle.get(position).getAddress());
 		
 		return view;

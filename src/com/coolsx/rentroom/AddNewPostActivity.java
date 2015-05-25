@@ -269,31 +269,32 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 				districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", " +
 				MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName();
 		newPost.put(MConstants.kAddress, address);
-		newPost.put(MConstants.kCostMin, edCostMin.getText().toString().trim());
+		newPost.put(MConstants.kCostMin, Long.valueOf(edCostMin.getText().toString().trim()));
 		if (!edCostMax.getText().toString().trim().isEmpty()) {
-			newPost.put(MConstants.kCostMax, edCostMax.getText().toString()
-					.trim());
+			newPost.put(MConstants.kCostMax, Long.valueOf(edCostMax.getText().toString()
+					.trim()));
 		}
-		newPost.put(MConstants.kNumRoom, edNumRoom.getText().toString().trim());
+		newPost.put(MConstants.kNumRoom, Long.valueOf(edNumRoom.getText().toString().trim()));
 		
 		newPost.put(MConstants.kDiscription, edDescription.getText().toString()
 				.trim());
 		switch (iNumArea) {
 		case 1:
-			newPost.put(MConstants.kAreaMin, edAreaMin.getText().toString()
-					.trim());
+			newPost.put(MConstants.kAreaMin, Long.valueOf(edAreaMin.getText().toString()
+					.trim()));
 			break;
 		case 2:
-			newPost.put(MConstants.kAreaMin, edAreaMin.getText().toString()
-					.trim());
-			newPost.put(MConstants.kAreaMax, edAreaMax.getText().toString()
-					.trim());
+			newPost.put(MConstants.kAreaMin, Long.valueOf(edAreaMin.getText().toString()
+					.trim()));
+			newPost.put(MConstants.kAreaMax, Long.valueOf(edAreaMax.getText().toString()
+					.trim()));
 			break;
 		}
 		
 		newPost.put(MConstants.kUserIdPost, MData.userInfo.getObjID());
 		
 		newPost.put(MConstants.kDistrictID, districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictID());
+		newPost.put(MConstants.kCityID, MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityID());
 		
 		sRandomUUID = UtilDroid.getRandomStringUUID();
 		newPost.put(MConstants.kPostID, sRandomUUID);

@@ -129,13 +129,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/equal_title" />
-
-            <Spinner
+            <EditText
+                android:id="@+id/edit_cost_search"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/min_height_button"
+                android:background="@drawable/custom_border_normal"
+                android:layout_marginTop="@dimen/pad_top_ed_add_new_post"
+                android:hint="@string/hint_cost"
+                android:inputType="number"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:textColor="@color/black" />
+<!--             <Spinner
                 android:id="@+id/spinCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/cost_arrays"
-                android:prompt="@string/cost_prompt" />
+                android:prompt="@string/cost_prompt" /> -->
         </LinearLayout>
 
         <LinearLayout
@@ -157,13 +167,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/equal_title" />
-
-            <Spinner
+            <EditText
+                android:id="@+id/edit_area_search"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/min_height_button"
+                android:background="@drawable/custom_border_normal"
+                android:layout_marginTop="@dimen/pad_top_ed_add_new_post"
+                android:hint="@string/hint_area"
+                android:inputType="number"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:textColor="@color/black" />
+            <!-- <Spinner
                 android:id="@+id/spinArea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/area_arrays"
-                android:prompt="@string/area_prompt" />
+                android:prompt="@string/area_prompt" /> -->
         </LinearLayout>
     </LinearLayout>
 

@@ -27,7 +27,7 @@ import com.coolsx.dto.DistrictDTO;
 import java.util.UUID;
 
 public class UtilDroid {
-
+	
 	public static ArrayAdapter<String> getAdapterCity(Context context) {
 		MData.sAdapterCity.clear();
 		for (CityDTO city : MData.cityDTOs) {

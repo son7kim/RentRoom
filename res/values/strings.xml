@@ -47,6 +47,7 @@
     <string name="cost_title">Giá:</string>
     <string name="cost_prompt">Chọn giá phòng</string>
     <string-array name="cost_arrays">
+        <item>Chon gia</item>
         <item>500k</item>
         <item>1tr</item>
         <item>1.5tr</item>
@@ -72,6 +73,7 @@
     <string name="area_title">DT:</string>
     <string name="area_prompt">Chọn giá phòng</string>
     <string-array name="area_arrays">
+        <item>Chon dien tich</item>
         <item>10m2</item>
         <item>15m2</item>
         <item>20m2</item>
@@ -121,4 +123,6 @@
     <string name="room_description_adapter">Mô tả phòng</string>
     <string name="cost_adapter">Giá</string>
      <string name="address_adapter">Địa chỉ</string>
+     <string name="hint_cost">2500000(VND)</string>
+     <string name="hint_area">20(m2)</string>
 </resources>

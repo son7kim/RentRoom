@@ -3,10 +3,6 @@ package com.coolsx.rentroom;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.coolsx.constants.MData;
-import com.coolsx.dto.DistrictDTO;
-import com.coolsx.utils.UtilDroid;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,61 +11,168 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.coolsx.constants.MConstants;
+import com.coolsx.constants.MData;
+import com.coolsx.dto.DistrictDTO;
+import com.coolsx.dto.PostArticleDTO;
+import com.coolsx.utils.UtilDroid;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 public class MainRentRoom extends Activity {
 
 	Spinner spCity;
 	Spinner spDistrict;
+	Spinner spCostCompair;
+	//Spinner spCost;
+	Spinner spAraeCompair;
+	//Spinner spArea;
+	EditText edKeyContent;
+	EditText edCost;
+	EditText edArea;
 	private List<DistrictDTO> districtDTOsHome = new ArrayList<DistrictDTO>();
-	
+	private List<PostArticleDTO> listPost = new ArrayList<PostArticleDTO>();
+	private ListPostAdapter listPostadapters;
+	private ListView lvPost;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.rentroom_main);
-		
+
 		TextView tvSignIn = (TextView) findViewById(R.id.tvSignInHome);
 		Button btnSignUp = (Button) findViewById(R.id.btnRegistryHome);
-		spCity = (Spinner)findViewById(R.id.spinCity);
-		spDistrict = (Spinner)findViewById(R.id.spinDistrict);
-				
+		Button btnSearch = (Button) findViewById(R.id.btn_search);
+		spCity = (Spinner) findViewById(R.id.spinCity);
+		spDistrict = (Spinner) findViewById(R.id.spinDistrict);
+		spCostCompair = (Spinner) findViewById(R.id.spinEqualCost);
+		//spCost = (Spinner) findViewById(R.id.spinCost);
+		spAraeCompair = (Spinner) findViewById(R.id.spinEqualArea);
+		//spArea = (Spinner) findViewById(R.id.spinArea);
+		lvPost = (ListView) findViewById(R.id.lv_search_result);
+		edKeyContent = (EditText) findViewById(R.id.edit_enter_search);
+		edCost = (EditText) findViewById(R.id.edit_cost_search);
+		edArea = (EditText) findViewById(R.id.edit_area_search);
+
 		spCity.setAdapter(UtilDroid.getAdapterCity(this));
 		spCity.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(position), districtDTOsHome));
+				spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(
+						MainRentRoom.this, MData.cityDTOs.get(position),
+						districtDTOsHome));
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView<?> parent) {				
+			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		});
-		
+
 		tvSignIn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainRentRoom.this, SignInActivity.class);
 				startActivity(i);
 			}
 		});
-		
-		btnSignUp.setOnClickListener(new OnClickListener() {			
+
+		btnSignUp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainRentRoom.this, SignUpActivity.class);
-				startActivity(i);				
+				startActivity(i);
+			}
+		});
+
+		btnSearch.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getListPost(true, -1);
+			}
+		});
+
+		getListPost(false, 15);
+	}
+
+	private void getListPost(boolean isSearch, int iLimit) {
+		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
+		if (isSearch) {
+			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
+			String keyContent = edKeyContent.getText().toString().trim();
+			if (!keyContent.isEmpty()) {				
+				String[] sContents = keyContent.split("\\s+");
+				if(sContents.length > 1){
+					for(int i = 0; i < sContents.length; i ++){
+						String content = sContents[i];
+						query.whereContains(MConstants.kDiscription, content.trim());
+					}
+				}
+				query.whereContains(MConstants.kDiscription, keyContent);
+			}
+			
+			if(!edCost.getText().toString().isEmpty()){
+				switch (spCostCompair.getSelectedItemPosition()) {
+				case 0:
+					 query.whereGreaterThanOrEqualTo(MConstants.kCostMax,Long.valueOf(edCost.getText().toString()));
+					break;
+				case 1:
+					query.whereLessThanOrEqualTo(MConstants.kCostMin,Long.valueOf(edCost.getText().toString()));
+					break;
+				case 2:
+					query.whereEqualTo(MConstants.kCostMin,Long.valueOf(edCost.getText().toString()));
+					query.whereEqualTo(MConstants.kCostMax,Long.valueOf(edCost.getText().toString()));
+					break;
+				}
+			}
+			
+			if(!edArea.getText().toString().isEmpty()){
+				switch (spAraeCompair.getSelectedItemPosition()) {
+				case 0:
+					 query.whereGreaterThanOrEqualTo(MConstants.kAreaMax,Long.valueOf(edArea.getText().toString()));
+					break;
+				case 1:
+					query.whereLessThanOrEqualTo(MConstants.kAreaMin,Long.valueOf(edArea.getText().toString()));
+					break;
+				case 2:
+					query.whereEqualTo(MConstants.kAreaMin,Long.valueOf(edArea.getText().toString()));
+					query.whereEqualTo(MConstants.kAreaMax,Long.valueOf(edArea.getText().toString()));
+					break;
+				}
+			}
+		} else {
+			query.whereEqualTo(MConstants.kCityID, "hcm");
+			query.setLimit(iLimit);
+		}
+
+		query.findInBackground(new FindCallback<PostArticleDTO>() {
+
+			@Override
+			public void done(List<PostArticleDTO> listPostQuery,
+					ParseException e) {
+				if (e == null) {
+					listPost.clear();
+					listPost.addAll(listPostQuery);
+					listPostadapters = new ListPostAdapter(MainRentRoom.this,
+							listPost);
+					lvPost.setAdapter(listPostadapters);
+				}
 			}
 		});
 	}
-	
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
