@@ -22,6 +22,7 @@ import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.PostArticleDTO;
+import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.UtilDroid;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -106,22 +107,31 @@ public class MainRentRoom extends Activity {
 
 		getListPost(false, 15);
 	}
-
+	DialogNotice notice = new DialogNotice(MainRentRoom.this);
+	@SuppressWarnings("static-access")
 	private void getListPost(boolean isSearch, int iLimit) {
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		if (isSearch) {
 			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
 			String keyContent = edKeyContent.getText().toString().trim();
-			if (!keyContent.isEmpty()) {				
-				String[] sContents = keyContent.split("\\s+");
-				if(sContents.length > 1){
-					for(int i = 0; i < sContents.length; i ++){
-						String content = sContents[i];
-						query.whereContains(MConstants.kDiscription, content.trim());
-					}
-				}
+			if (!keyContent.isEmpty()) {
+				//String[] sContents = keyContent.split("\\s+");
 				query.whereContains(MConstants.kDiscription, keyContent);
 			}
+			
+			List<ParseQuery<PostArticleDTO>> listQuery = new ArrayList<ParseQuery<PostArticleDTO>>();
+			ParseQuery<PostArticleDTO> orQuery = PostArticleDTO.getQuery();
+			orQuery.whereContains(MConstants.kDiscription, "dkdy");
+			ParseQuery<PostArticleDTO> orQuery1 = PostArticleDTO.getQuery();
+			orQuery1.whereContains(MConstants.kDiscription, "gsrhra");
+			ParseQuery<PostArticleDTO> orQuery2 = PostArticleDTO.getQuery();
+			orQuery2.whereContains(MConstants.kDiscription, "jsfhetut");
+			
+			listQuery.add(orQuery);
+			listQuery.add(orQuery1);
+			listQuery.add(orQuery2);
+			query.or(listQuery);
+			
 			
 			if(!edCost.getText().toString().isEmpty()){
 				switch (spCostCompair.getSelectedItemPosition()) {
@@ -132,8 +142,7 @@ public class MainRentRoom extends Activity {
 					query.whereLessThanOrEqualTo(MConstants.kCostMin,Long.valueOf(edCost.getText().toString()));
 					break;
 				case 2:
-					query.whereEqualTo(MConstants.kCostMin,Long.valueOf(edCost.getText().toString()));
-					query.whereEqualTo(MConstants.kCostMax,Long.valueOf(edCost.getText().toString()));
+					query.whereEqualTo(MConstants.kCostMin,Long.valueOf(edCost.getText().toString()));					
 					break;
 				}
 			}
@@ -148,7 +157,6 @@ public class MainRentRoom extends Activity {
 					break;
 				case 2:
 					query.whereEqualTo(MConstants.kAreaMin,Long.valueOf(edArea.getText().toString()));
-					query.whereEqualTo(MConstants.kAreaMax,Long.valueOf(edArea.getText().toString()));
 					break;
 				}
 			}
@@ -168,6 +176,9 @@ public class MainRentRoom extends Activity {
 					listPostadapters = new ListPostAdapter(MainRentRoom.this,
 							listPost);
 					lvPost.setAdapter(listPostadapters);
+				} else {
+					
+					notice.ShowDialog("Error", e.getMessage());
 				}
 			}
 		});
