@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,6 +107,20 @@ public class MainRentRoom extends Activity {
 		});
 
 		getListPost(false, 15);
+		
+		lvPost.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				MData.postInfo = listPost.get(position);
+				Intent i = new Intent(MainRentRoom.this, PostDetail.class);
+				i.putExtra(MConstants.kPostExtraKey, listPost.get(position));
+				startActivity(i);
+				
+				// To get extra
+				//PostArticleDTO post = (PostArticleDTO)getIntent().getSerializableExtra(MConstants.kPostExtraKey);
+			}
+		});
+		
 	}
 	DialogNotice notice = new DialogNotice(MainRentRoom.this);
 	@SuppressWarnings("static-access")
@@ -132,6 +147,7 @@ public class MainRentRoom extends Activity {
 			listQuery.add(orQuery2);
 			query.or(listQuery);
 			
+			query.orderByDescending(MConstants.kUpdatedAt);
 			
 			if(!edCost.getText().toString().isEmpty()){
 				switch (spCostCompair.getSelectedItemPosition()) {

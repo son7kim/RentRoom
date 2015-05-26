@@ -125,4 +125,14 @@
      <string name="address_adapter">Địa chỉ</string>
      <string name="hint_cost">2500000(VND)</string>
      <string name="hint_area">20(m2)</string>
+     
+     <string name="description_title_detail">MÔ TẢ</string>
+     <string name="cost_title_detail">GIÁ:</string>
+     <string name="area_title_detail">DIỆN TÍCH:</string>
+     <string name="num_room_title_detail">SỐ LƯỢNG PHÒNG TRỐNG:</string>
+     <string name="image_title_detail">HÌNH ẢNH:</string>
+     <string name="contact_title_detail">LIÊN HỆ:</string>
+     <string name="phone_title_detail">Số điện thoại:</string>
+     <string name="address_title_detail">Đ/c:</string>
+     <string name="name_title_detail">Tên liên hệ:</string>
 </resources>

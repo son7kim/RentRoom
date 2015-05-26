@@ -43,23 +43,23 @@ public class PostArticleDTO extends ParseObject implements Serializable {
 		return getString(MConstants.kDistrictID);
 	}
 
-	public String getNumRoom() {
-		return getString(MConstants.kNumRoom);
+	public int getNumRoom() {
+		return getInt(MConstants.kNumRoom);
 	}
 
-	public String getCostMin() {
-		return getString(MConstants.kCostMin);
+	public long getCostMin() {
+		return getLong(MConstants.kCostMin);
 	}
 
-	public String getCostMax() {
-		return getString(MConstants.kCostMax);
+	public long getCostMax() {
+		return getLong(MConstants.kCostMax);
 	}
 
-	public String getAreaMin() {
-		return getString(MConstants.kAreaMin);
+	public int getAreaMin() {
+		return getInt(MConstants.kAreaMin);
 	}
 
-	public String getAreaMax() {
-		return getString(MConstants.kAreaMax);
+	public int getAreaMax() {
+		return getInt(MConstants.kAreaMax);
 	}
 }
