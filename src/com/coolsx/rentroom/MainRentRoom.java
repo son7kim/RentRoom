@@ -37,7 +37,7 @@ public class MainRentRoom extends Activity {
 	//Spinner spCost;
 	Spinner spAraeCompair;
 	//Spinner spArea;
-	EditText edKeyContent;
+	//EditText edKeyContent;
 	EditText edCost;
 	EditText edArea;
 	private List<DistrictDTO> districtDTOsHome = new ArrayList<DistrictDTO>();
@@ -61,7 +61,7 @@ public class MainRentRoom extends Activity {
 		spAraeCompair = (Spinner) findViewById(R.id.spinEqualArea);
 		//spArea = (Spinner) findViewById(R.id.spinArea);
 		lvPost = (ListView) findViewById(R.id.lv_search_result);
-		edKeyContent = (EditText) findViewById(R.id.edit_enter_search);
+		//edKeyContent = (EditText) findViewById(R.id.edit_enter_search);
 		edCost = (EditText) findViewById(R.id.edit_cost_search);
 		edArea = (EditText) findViewById(R.id.edit_area_search);
 
@@ -123,29 +123,30 @@ public class MainRentRoom extends Activity {
 		
 	}
 	DialogNotice notice = new DialogNotice(MainRentRoom.this);
-	@SuppressWarnings("static-access")
 	private void getListPost(boolean isSearch, int iLimit) {
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		if (isSearch) {
 			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
-			String keyContent = edKeyContent.getText().toString().trim();
-			if (!keyContent.isEmpty()) {
-				//String[] sContents = keyContent.split("\\s+");
-				query.whereContains(MConstants.kDiscription, keyContent);
-			}
+			//String keyContent = edKeyContent.getText().toString().trim();
+//			if (!keyContent.isEmpty()) {
+//				//String[] sContents = keyContent.split("\\s+");
+//				query.whereContains(MConstants.kDiscription, keyContent);
+//			}
 			
-			List<ParseQuery<PostArticleDTO>> listQuery = new ArrayList<ParseQuery<PostArticleDTO>>();
-			ParseQuery<PostArticleDTO> orQuery = PostArticleDTO.getQuery();
-			orQuery.whereContains(MConstants.kDiscription, "dkdy");
-			ParseQuery<PostArticleDTO> orQuery1 = PostArticleDTO.getQuery();
-			orQuery1.whereContains(MConstants.kDiscription, "gsrhra");
-			ParseQuery<PostArticleDTO> orQuery2 = PostArticleDTO.getQuery();
-			orQuery2.whereContains(MConstants.kDiscription, "jsfhetut");
+//			List<ParseQuery<PostArticleDTO>> listQuery = new ArrayList<ParseQuery<PostArticleDTO>>();
+//			ParseQuery<PostArticleDTO> orQuery = PostArticleDTO.getQuery();
+//			orQuery.whereContains(MConstants.kDiscription, "nvmbmj");
+//			ParseQuery<PostArticleDTO> orQuery1 = PostArticleDTO.getQuery();
+//			orQuery1.whereContains(MConstants.kDiscription, "jsfhetut ku yu");
+//			ParseQuery<PostArticleDTO> orQuery2 = PostArticleDTO.getQuery();
+//			orQuery2.whereContains(MConstants.kDiscription, "fhgjyjrs shtjtj");
+//			
+//			listQuery.add(orQuery);
+//			listQuery.add(orQuery1);
+//			listQuery.add(orQuery2);
+//			query.or(listQuery);
 			
-			listQuery.add(orQuery);
-			listQuery.add(orQuery1);
-			listQuery.add(orQuery2);
-			query.or(listQuery);
+			
 			
 			query.orderByDescending(MConstants.kUpdatedAt);
 			

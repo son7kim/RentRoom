@@ -135,4 +135,6 @@
      <string name="phone_title_detail">Số điện thoại:</string>
      <string name="address_title_detail">Đ/c:</string>
      <string name="name_title_detail">Tên liên hệ:</string>
+     <string name="option_search_title">TUY CHON TIM KIEM</string>
+     <string name="address_search"><u>D/c: </u> {0}</string>
 </resources>

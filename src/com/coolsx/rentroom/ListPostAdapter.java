@@ -1,5 +1,6 @@
 package com.coolsx.rentroom;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -16,6 +17,7 @@ import com.coolsx.dto.PostArticleDTO;
 public class ListPostAdapter extends ArrayAdapter<PostArticleDTO> {
 	Context _context;
 	List<PostArticleDTO> _listPostArticle;
+	DecimalFormat dFormat = new DecimalFormat();
 	
 	public ListPostAdapter(Context context, List<PostArticleDTO> listPost){
 		super(context, 0, listPost);
@@ -35,8 +37,15 @@ public class ListPostAdapter extends ArrayAdapter<PostArticleDTO> {
 		TextView tvAddress = (TextView)view.findViewById(R.id.tv_address_adapter);
 		
 		tvDescription.setText(_listPostArticle.get(position).getDescription());
-		tvCost.setText("Gia: " + _listPostArticle.get(position).getCostMin());
-		tvAddress.setText(_listPostArticle.get(position).getAddress());
+		
+		String sCost = "Gia: " + dFormat.format(_listPostArticle.get(position).getCostMin()) + " VND";
+		if (_listPostArticle.get(position).getCostMax() > 0) {
+			sCost = sCost + " - " + dFormat.format(_listPostArticle.get(position).getCostMax()) + " VND";
+		}
+		tvCost.setText(sCost);		
+	
+		tvAddress.setText("D/c: " + _listPostArticle.get(position).getAddress());
+		//tvAddress.setText(String.format(_context.getResources().getString(R.string.address_search), _listPostArticle.get(position).getAddress()));
 		
 		return view;
 	}
