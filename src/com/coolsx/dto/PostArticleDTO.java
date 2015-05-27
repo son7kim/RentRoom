@@ -1,6 +1,7 @@
 package com.coolsx.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.coolsx.constants.MConstants;
 import com.parse.ParseClassName;
@@ -11,6 +12,12 @@ import com.parse.ParseQuery;
 @ParseClassName(MConstants.kTablePost)
 public class PostArticleDTO extends ParseObject implements Serializable {
 
+	private List<ImageDTO> imgDTOs;
+	private boolean isFileLoaded;
+	
+	public PostArticleDTO(){
+	}
+	
 	public static ParseQuery<PostArticleDTO> getQuery() {
 		return ParseQuery.getQuery(PostArticleDTO.class);
 	}
@@ -61,5 +68,21 @@ public class PostArticleDTO extends ParseObject implements Serializable {
 
 	public int getAreaMax() {
 		return getInt(MConstants.kAreaMax);
+	}
+	
+	public void setIsFileLoaded(boolean isLoaded){
+		this.isFileLoaded = isLoaded;
+	}
+	
+	public boolean getIsFileLoaded(){
+		return this.isFileLoaded;
+	}
+	
+	public void setListImageDTO(List<ImageDTO> listImgDTOs){
+		this.imgDTOs = listImgDTOs;
+	}
+	
+	public List<ImageDTO> getListImageDTO(){
+		return this.imgDTOs;
 	}
 }

@@ -250,7 +250,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 				listImgDTO.add(imgDTO);
 
 				llFileAttach.removeAllViews();
-				onAddFile.InitView(listImgDTO);
+				onAddFile.InitView(listImgDTO, true);
 				llFileAttach.addView(onAddFile);
 			} else {
 				dialog.ShowDialog("Thong bao", "Khong the chon hinh nay");
@@ -312,7 +312,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		});
 		
 		for(ImageDTO imgDTO : listImgDTO) {
-			ParseFile file = new ParseFile(imgDTO.getFileName() + ".png", imgDTO.getByteArrData());
+			ParseFile file = new ParseFile(imgDTO.getFileNameLocal() + ".png", imgDTO.getByteArrDataLocal());
 			// Upload the image into Parse Cloud
 			file.saveInBackground();
 
@@ -320,7 +320,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 			ParseObject imgupload = new ParseObject(MConstants.kTableImage);
 
 			// Create a column named "ImageName" and set the string
-			imgupload.put(MConstants.kImgName, imgDTO.getFileName() + ".png");
+			imgupload.put(MConstants.kImgName, imgDTO.getFileNameLocal() + ".png");
 			imgupload.put(MConstants.kPostID, sRandomUUID);
 			// Create a column named "ImageFile" and insert the image
 			imgupload.put(MConstants.kImgFile, file);	
@@ -335,7 +335,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		llFileAttach.removeAllViews();
 		listImgDTO.clear();
 		listImgDTO = listImgAfterDelete;
-		onAddFile.InitView(listImgDTO);
+		onAddFile.InitView(listImgDTO, true);
 		llFileAttach.addView(onAddFile);
 	}
 }

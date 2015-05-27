@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter;
 
 import com.coolsx.dto.CityDTO;
 import com.coolsx.dto.DistrictDTO;
-import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.dto.UserDTO;
 
 public class MData {
@@ -16,5 +15,5 @@ public class MData {
 	public static List<String> sAdapterCity = new ArrayList<String>();
 	public static ArrayAdapter<String> adapterCity = null;
 	public static UserDTO userInfo = null;
-	public static PostArticleDTO postInfo = null;
+	//public static PostArticleDTO postInfo = null;
 }

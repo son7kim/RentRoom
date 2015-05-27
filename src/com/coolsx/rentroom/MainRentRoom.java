@@ -111,9 +111,14 @@ public class MainRentRoom extends Activity {
 		lvPost.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				MData.postInfo = listPost.get(position);
+				//MData.postInfo = listPost.get(position);
 				Intent i = new Intent(MainRentRoom.this, PostDetail.class);
-				i.putExtra(MConstants.kPostExtraKey, listPost.get(position));
+				//i.putExtra(MConstants.kPostExtraKey, listPost.get(position));
+				
+				Bundle bd = new Bundle();
+				bd.putSerializable(MConstants.kPostExtraKey, listPost.get(position));
+				i.putExtras(bd);
+				
 				startActivity(i);
 				
 				// To get extra
