@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -14,13 +15,14 @@ import android.widget.TextView;
 
 import com.coolsx.constants.MConstants;
 import com.coolsx.dto.ImageDTO;
+import com.coolsx.dto.ParseProxyObject;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-public class PostDetail extends Activity implements onDeleteFileNotify{
+public class PostDetail extends Activity implements onDeleteFileNotify {
 
 	TextView tvDescription;
 	TextView tvCost;
@@ -31,19 +33,21 @@ public class PostDetail extends Activity implements onDeleteFileNotify{
 	TextView tvName;
 	LinearLayout llFileAttach;
 	OnAddFileImage onAddFile;
-	PostArticleDTO postInfo;
-	
+	//PostArticleDTO postInfo;
+	ParseProxyObject postInfo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_post);
+
+//		postInfo = (PostArticleDTO) getIntent().getSerializableExtra(
+//				MConstants.kPostExtraKey);
 		
-		//postInfo = (PostArticleDTO)getIntent().getSerializableExtra(MConstants.kPostExtraKey);
+		Intent intent = getIntent();
+		postInfo = (ParseProxyObject) intent.getSerializableExtra(MConstants.kPostExtraKey);
+
 		
-		 Bundle bd = new Bundle();
-        bd = getIntent().getExtras();
-        postInfo = (PostArticleDTO) bd.getSerializable(MConstants.kPostExtraKey);
-         
 		tvDescription = (TextView) findViewById(R.id.tvDescriptionDetail);
 		tvCost = (TextView) findViewById(R.id.tvCostDetail);
 		tvArea = (TextView) findViewById(R.id.tvAreaDetail);
@@ -51,16 +55,16 @@ public class PostDetail extends Activity implements onDeleteFileNotify{
 		tvAddress = (TextView) findViewById(R.id.tvAddressDetail);
 		tvPhone = (TextView) findViewById(R.id.tvPhoneDetail);
 		tvName = (TextView) findViewById(R.id.tvNameDetail);
-		llFileAttach = (LinearLayout)findViewById(R.id.llFileAttachDetail);
-		
+		llFileAttach = (LinearLayout) findViewById(R.id.llFileAttachDetail);
+
 		onAddFile = new OnAddFileImage(this, this);
-		
+
 		setDataToView();
 		setActionToView();
-		if(postInfo.getIsFileLoaded()){
-			onAddFile.InitView(postInfo.getListImageDTO(), false);
-			llFileAttach.addView(onAddFile);
-		}else {
+		if (intent.getBooleanExtra("isLoaded", false)) {
+			//onAddFile.InitView(postInfo.getListImageDTO(), false);
+			//llFileAttach.addView(onAddFile);
+		} else {
 			getFileAttach();
 		}
 	}
@@ -68,9 +72,10 @@ public class PostDetail extends Activity implements onDeleteFileNotify{
 	private void setDataToView() {
 		DecimalFormat dFormat = new DecimalFormat();
 		tvDescription.setText(postInfo.getDescription());
-		String sCost = dFormat.format(postInfo.getCostMin()) + " VND";
+		String sCost = dFormat.format((long)postInfo.getCostMin()) + " VND";
 		if (postInfo.getCostMax() > 0) {
-			sCost = sCost + " - " + dFormat.format(postInfo.getCostMax()) + " VND";
+			sCost = sCost + " - " + dFormat.format((long)postInfo.getCostMax())
+					+ " VND";
 		}
 		tvCost.setText(sCost);
 		String sArea = "";
@@ -101,26 +106,26 @@ public class PostDetail extends Activity implements onDeleteFileNotify{
 			}
 		});
 	}
-	
-	private void getFileAttach(){
+
+	private void getFileAttach() {
 		ParseQuery<ImageDTO> query = ImageDTO.getQuery();
 		query.whereEqualTo(MConstants.kPostID, postInfo.getPostID());
 		query.findInBackground(new FindCallback<ImageDTO>() {
-			
+
 			@Override
 			public void done(List<ImageDTO> imgDTOs, ParseException e) {
-				if(e == null){
+				if (e == null) {
 					onAddFile.InitView(imgDTOs, false);
 					llFileAttach.addView(onAddFile);
-					postInfo.setIsFileLoaded(true);
-					postInfo.setListImageDTO(imgDTOs);
-				}				
+					//postInfo.setIsFileLoaded(true);
+					//postInfo.setListImageDTO(imgDTOs);
+				}
 			}
 		});
 	}
 
 	@Override
 	public void onDeleteNotify(List<ImageDTO> listImgAfterDelete) {
-		
+
 	}
 }

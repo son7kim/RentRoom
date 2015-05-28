@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
+import com.coolsx.dto.ParseProxyObject;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.UtilDroid;
@@ -34,10 +35,7 @@ public class MainRentRoom extends Activity {
 	Spinner spCity;
 	Spinner spDistrict;
 	Spinner spCostCompair;
-	//Spinner spCost;
 	Spinner spAraeCompair;
-	//Spinner spArea;
-	//EditText edKeyContent;
 	EditText edCost;
 	EditText edArea;
 	private List<DistrictDTO> districtDTOsHome = new ArrayList<DistrictDTO>();
@@ -57,11 +55,8 @@ public class MainRentRoom extends Activity {
 		spCity = (Spinner) findViewById(R.id.spinCity);
 		spDistrict = (Spinner) findViewById(R.id.spinDistrict);
 		spCostCompair = (Spinner) findViewById(R.id.spinEqualCost);
-		//spCost = (Spinner) findViewById(R.id.spinCost);
 		spAraeCompair = (Spinner) findViewById(R.id.spinEqualArea);
-		//spArea = (Spinner) findViewById(R.id.spinArea);
 		lvPost = (ListView) findViewById(R.id.lv_search_result);
-		//edKeyContent = (EditText) findViewById(R.id.edit_enter_search);
 		edCost = (EditText) findViewById(R.id.edit_cost_search);
 		edArea = (EditText) findViewById(R.id.edit_area_search);
 
@@ -111,18 +106,13 @@ public class MainRentRoom extends Activity {
 		lvPost.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//MData.postInfo = listPost.get(position);
 				Intent i = new Intent(MainRentRoom.this, PostDetail.class);
-				//i.putExtra(MConstants.kPostExtraKey, listPost.get(position));
-				
-				Bundle bd = new Bundle();
-				bd.putSerializable(MConstants.kPostExtraKey, listPost.get(position));
-				i.putExtras(bd);
-				
+				PostArticleDTO postInfo = listPost.get(position);
+				//listPost.get(position).setIsFileLoaded(true);
+				ParseProxyObject proxyProject = new ParseProxyObject(postInfo);
+				i.putExtra(MConstants.kPostExtraKey, proxyProject);
+				i.putExtra("isLoaded", postInfo.getIsFileLoaded());
 				startActivity(i);
-				
-				// To get extra
-				//PostArticleDTO post = (PostArticleDTO)getIntent().getSerializableExtra(MConstants.kPostExtraKey);
 			}
 		});
 		
@@ -132,27 +122,6 @@ public class MainRentRoom extends Activity {
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		if (isSearch) {
 			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
-			//String keyContent = edKeyContent.getText().toString().trim();
-//			if (!keyContent.isEmpty()) {
-//				//String[] sContents = keyContent.split("\\s+");
-//				query.whereContains(MConstants.kDiscription, keyContent);
-//			}
-			
-//			List<ParseQuery<PostArticleDTO>> listQuery = new ArrayList<ParseQuery<PostArticleDTO>>();
-//			ParseQuery<PostArticleDTO> orQuery = PostArticleDTO.getQuery();
-//			orQuery.whereContains(MConstants.kDiscription, "nvmbmj");
-//			ParseQuery<PostArticleDTO> orQuery1 = PostArticleDTO.getQuery();
-//			orQuery1.whereContains(MConstants.kDiscription, "jsfhetut ku yu");
-//			ParseQuery<PostArticleDTO> orQuery2 = PostArticleDTO.getQuery();
-//			orQuery2.whereContains(MConstants.kDiscription, "fhgjyjrs shtjtj");
-//			
-//			listQuery.add(orQuery);
-//			listQuery.add(orQuery1);
-//			listQuery.add(orQuery2);
-//			query.or(listQuery);
-			
-			
-			
 			query.orderByDescending(MConstants.kUpdatedAt);
 			
 			if(!edCost.getText().toString().isEmpty()){
@@ -208,16 +177,12 @@ public class MainRentRoom extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main_rent_room, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

@@ -39,11 +39,7 @@ public class MyPageActivity extends Activity implements onPostActicle {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent i = new Intent(MyPageActivity.this, AddNewPostActivity.class);
-				i.putExtra(MConstants.kPostExtraKey, listPost.get(position));
-				startActivity(i);
-				
-				// To get extra
-				//PostArticleDTO post = (PostArticleDTO)getIntent().getSerializableExtra(MConstants.kPostExtraKey);
+				startActivity(i);				
 			}
 		});
 
