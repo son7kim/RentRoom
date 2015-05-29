@@ -52,6 +52,7 @@ public class OnAddFileImage extends LinearLayout {
 				tvFile.setText(listImgs.get(i).getFileNameLocal());
 			} else {
 				tvFile.setText(listImgs.get(i).getFileNameServer());
+				//tvFile.setText(listImgs.get(i).getFile().getUrl());
 			}
 			tvFile.setId(i);
 			tvFile.setTypeface(null, Typeface.BOLD);

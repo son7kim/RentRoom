@@ -7,16 +7,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coolsx.constants.MConstants;
+import com.coolsx.constants.MData;
 import com.coolsx.dto.ImageDTO;
-import com.coolsx.dto.ParseProxyObject;
-import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -33,21 +31,12 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 	TextView tvName;
 	LinearLayout llFileAttach;
 	OnAddFileImage onAddFile;
-	//PostArticleDTO postInfo;
-	ParseProxyObject postInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_post);
 
-//		postInfo = (PostArticleDTO) getIntent().getSerializableExtra(
-//				MConstants.kPostExtraKey);
-		
-		Intent intent = getIntent();
-		postInfo = (ParseProxyObject) intent.getSerializableExtra(MConstants.kPostExtraKey);
-
-		
 		tvDescription = (TextView) findViewById(R.id.tvDescriptionDetail);
 		tvCost = (TextView) findViewById(R.id.tvCostDetail);
 		tvArea = (TextView) findViewById(R.id.tvAreaDetail);
@@ -61,9 +50,11 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 
 		setDataToView();
 		setActionToView();
-		if (intent.getBooleanExtra("isLoaded", false)) {
-			//onAddFile.InitView(postInfo.getListImageDTO(), false);
-			//llFileAttach.addView(onAddFile);
+		if (MData.postInfo.getIsFileLoaded()) {
+			if (MData.postInfo.getListImageDTO() != null) {
+				onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
+				llFileAttach.addView(onAddFile);
+			}
 		} else {
 			getFileAttach();
 		}
@@ -71,25 +62,27 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 
 	private void setDataToView() {
 		DecimalFormat dFormat = new DecimalFormat();
-		tvDescription.setText(postInfo.getDescription());
-		String sCost = dFormat.format((long)postInfo.getCostMin()) + " VND";
-		if (postInfo.getCostMax() > 0) {
-			sCost = sCost + " - " + dFormat.format((long)postInfo.getCostMax())
+		tvDescription.setText(MData.postInfo.getDescription());
+		String sCost = dFormat.format((long) MData.postInfo.getCostMin())
+				+ " VND";
+		if (MData.postInfo.getCostMax() > 0) {
+			sCost = sCost + " - "
+					+ dFormat.format((long) MData.postInfo.getCostMax())
 					+ " VND";
 		}
 		tvCost.setText(sCost);
 		String sArea = "";
-		if (postInfo.getAreaMin() > 0) {
-			sArea = sArea + postInfo.getAreaMin() + " m2";
+		if (MData.postInfo.getAreaMin() > 0) {
+			sArea = sArea + MData.postInfo.getAreaMin() + " m2";
 		}
-		if (postInfo.getAreaMax() > 0) {
-			sArea = sArea + " - " + postInfo.getAreaMax() + " m2";
+		if (MData.postInfo.getAreaMax() > 0) {
+			sArea = sArea + " - " + MData.postInfo.getAreaMax() + " m2";
 		}
 		tvArea.setText(sArea);
-		tvNumRoom.setText("" + postInfo.getNumRoom());
-		tvAddress.setText("Dia chi: " + postInfo.getAddress());
-		tvPhone.setText("" + postInfo.getPhoneNumber());
-		tvName.setText("Ten lien he: " + postInfo.getFullName());
+		tvNumRoom.setText("" + MData.postInfo.getNumRoom());
+		tvAddress.setText("Dia chi: " + MData.postInfo.getAddress());
+		tvPhone.setText("" + MData.postInfo.getPhoneNumber());
+		tvName.setText("Ten lien he: " + MData.postInfo.getFullName());
 	}
 
 	private void setActionToView() {
@@ -109,7 +102,7 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 
 	private void getFileAttach() {
 		ParseQuery<ImageDTO> query = ImageDTO.getQuery();
-		query.whereEqualTo(MConstants.kPostID, postInfo.getPostID());
+		query.whereEqualTo(MConstants.kPostID, MData.postInfo.getPostID());
 		query.findInBackground(new FindCallback<ImageDTO>() {
 
 			@Override
@@ -117,8 +110,8 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 				if (e == null) {
 					onAddFile.InitView(imgDTOs, false);
 					llFileAttach.addView(onAddFile);
-					//postInfo.setIsFileLoaded(true);
-					//postInfo.setListImageDTO(imgDTOs);
+					MData.postInfo.setIsFileLoaded(true);
+					MData.postInfo.setListImageDTO(imgDTOs);
 				}
 			}
 		});
@@ -126,6 +119,9 @@ public class PostDetail extends Activity implements onDeleteFileNotify {
 
 	@Override
 	public void onDeleteNotify(List<ImageDTO> listImgAfterDelete) {
-
+		MData.postInfo.setListImageDTO(listImgAfterDelete);
+		onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
+		llFileAttach.removeAllViews();
+		llFileAttach.addView(onAddFile);
 	}
 }

@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
-import com.coolsx.dto.ParseProxyObject;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.UtilDroid;
@@ -106,12 +105,8 @@ public class MainRentRoom extends Activity {
 		lvPost.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent i = new Intent(MainRentRoom.this, PostDetail.class);
-				PostArticleDTO postInfo = listPost.get(position);
-				//listPost.get(position).setIsFileLoaded(true);
-				ParseProxyObject proxyProject = new ParseProxyObject(postInfo);
-				i.putExtra(MConstants.kPostExtraKey, proxyProject);
-				i.putExtra("isLoaded", postInfo.getIsFileLoaded());
+				MData.postInfo = listPost.get(position);
+				Intent i = new Intent(MainRentRoom.this, PostDetail.class);				
 				startActivity(i);
 			}
 		});

@@ -8,14 +8,15 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-@SuppressWarnings("serial")
 @ParseClassName(MConstants.kTablePost)
 public class PostArticleDTO extends ParseObject implements Serializable {
-
+	private static final long serialVersionUID = 1L;
 	private List<ImageDTO> imgDTOs;
 	private boolean isFileLoaded;
 	
 	public PostArticleDTO(){
+		setListImageDTO(null);
+		setIsFileLoaded(false);
 	}
 	
 	public static ParseQuery<PostArticleDTO> getQuery() {
