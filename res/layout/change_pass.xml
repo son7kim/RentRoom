@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_color" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pad_bottom"
+            android:layout_marginLeft="@dimen/pad_left_header"
+            android:layout_marginRight="@dimen/pad_left_header"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edit_old_pass"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/min_height_button"
+                android:layout_marginTop="@dimen/pad_top"
+                android:background="@drawable/custom_border_normal"
+                android:hint="@string/old_pass_hint"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edit_new_pass"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/min_height_button"
+                android:layout_marginTop="@dimen/pad_top"
+                android:background="@drawable/custom_border_normal"
+                android:hint="@string/new_pass_hint"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edit_new_pass_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/min_height_button"
+                android:layout_marginTop="@dimen/pad_top"
+                android:background="@drawable/custom_border_normal"
+                android:hint="@string/new_pass_confirm_hint"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_error_change_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pad_left_right"
+                android:gravity="center"
+                android:text="@string/error_login"
+                android:textColor="@color/red"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_change_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pad_top_btn_signin"
+                android:background="@drawable/custom_border_select"
+                android:minHeight="@dimen/min_height_button"
+                android:minWidth="@dimen/min_height_button"
+                android:text="@string/btn_change_pass_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_button_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/indicator_progresbar_layout" />
+
+</FrameLayout>

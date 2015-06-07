@@ -51,6 +51,9 @@
         <activity
             android:name=".PostDetail"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ChangePassword"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

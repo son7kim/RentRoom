@@ -29,7 +29,9 @@
     <string name="invalid_email">Email không hợp lệ</string>
     <string name="invalid_confirm_email">Email xác thực không đúng</string>
     <string name="invalid_pass">Mật khẩu không hợp lệ</string>
+    <string name="invalid_new_pass">Mật khẩu mới không hợp lệ</string>
     <string name="invalid_confirm_pass">Mật khẩu xác nhận không đúng</string>
+    <string name="invalid_old_pass">Mật khẩu cũ không đúng</string>
     <string name="invalid_username">Tên đăng nhập không hợp lệ</string>
     <string name="invalid_lenght_username">Tên đăng nhập tối thiểu phải chứa 6 ký tự</string>
     <string name="invalid_lenght_pass">Mật khẩu tối thiểu phải chứa 6 ký tự</string>
@@ -112,10 +114,11 @@
     <string name="empty_full_name">Chưa nhập họ tên</string>
     <string name="empty_phone_number">Chưa nhập Số điện thoại</string>
     <string name="empty_address">Chưa nhập địa chỉ nhà</string>
+    <string name="empty_area">Chưa nhập diện tích phòng</string>
     <string name="empty_cost">Chưa nhập giá phòng</string>
     <string name="empty_disctiption">Chưa nhập mô tả phòng</string>
     <string name="incorrect_cost">Giá phòng không hợp lệ</string>
-    <string name="incorrect_area">Diện tích nhập vào không hợp lệ</string>
+    <string name="incorrect_area">Diện tích không hợp lệ</string>
     <string name="empty_area_min">Diện tích nhập vào chưa đầy đủ</string>
     <string name="empty_num_room">Chưa nhập số lượng phòng trống</string>
     <string name="post_error">Bạn không thể đăng bài ngay lúc này. Vui lòng thử lại sau!</string>
@@ -147,5 +150,18 @@
     <string name="detail_header_title">Chi tiết</string>
     <string name="my_page_header_title">Quản lý trang</string>
     <string name="add_new_header_title">Thêm bài viết</string>
+    
+    <string name="option_title">Tùy chọn</string>
+    <string name="delete_option">Xóa bài viết</string>
+    <string name="edit_option">Sửa bài viết</string>
+    <string name="delete_fail_notice">Không thể xóa bài viết ngay lúc này. Vui lòng thử lại sau</string>
+    
+    <string name="old_pass_hint">Mật khẩu cũ</string>
+    <string name="new_pass_hint">Mật khẩu mới</string>
+    <string name="new_pass_confirm_hint">Xác nhận mật khẩu mới</string>
+    <string name="change_pass_title">Đổi mật khẩu</string>
+    <string name="btn_change_pass_title">Xác nhận</string>
+    <string name="request_success">Yêu cầu của bạn đã thành công</string>
+    <string name="request_fail">Yêu cầu của bạn không thành công. Vui lòng thử lại sau</string>
 
 </resources>

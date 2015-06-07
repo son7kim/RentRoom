@@ -86,7 +86,7 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 		DecimalFormat dFormat = new DecimalFormat();
 		tvDescription.setText(MData.postInfo.getDescription());
 		String sCost = dFormat.format((long) MData.postInfo.getCostMin()) + " VND";
-		if (MData.postInfo.getCostMax() > 0) {
+		if (MData.postInfo.getCostMax() > 0 && MData.postInfo.getCostMax() > MData.postInfo.getCostMin()) {
 			sCost = sCost + " - " + dFormat.format((long) MData.postInfo.getCostMax()) + " VND";
 		}
 		tvCost.setText(sCost);
@@ -94,7 +94,7 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 		if (MData.postInfo.getAreaMin() > 0) {
 			sArea = sArea + MData.postInfo.getAreaMin() + " m2";
 		}
-		if (MData.postInfo.getAreaMax() > 0) {
+		if (MData.postInfo.getAreaMax() > 0 && MData.postInfo.getAreaMax() > MData.postInfo.getAreaMin()) {
 			sArea = sArea + " - " + MData.postInfo.getAreaMax() + " m2";
 		}
 		tvArea.setText(sArea);

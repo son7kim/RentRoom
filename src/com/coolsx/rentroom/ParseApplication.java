@@ -9,7 +9,6 @@ import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.dto.PostArticleDTO;
 import com.parse.Parse;
-import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -34,13 +33,7 @@ public class ParseApplication extends Application {
 
 	    // Add your initialization code here
 	    Parse.initialize(this, MConstants.kApplicationKey, MConstants.kClientKey);
-
-
 	    ParseUser.enableAutomaticUser();
-	    ParseACL defaultACL = new ParseACL();
-	    // Optionally enable public read access.
-	     defaultACL.setPublicReadAccess(true);
-	    ParseACL.setDefaultACL(defaultACL, true);
 	}
 
 }

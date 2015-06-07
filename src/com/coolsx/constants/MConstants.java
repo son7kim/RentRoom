@@ -48,4 +48,6 @@ public class MConstants {
 	// Table Comment
 	public static final String kTableComment = "Comment";
 	public static final String kContentComment = "content";
+	
+	public static final String kIsEdit = "EditPost";
 }

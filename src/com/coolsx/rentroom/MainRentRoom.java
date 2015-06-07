@@ -134,15 +134,41 @@ public class MainRentRoom extends BaseActivity {
 		llProgress.setVisibility(View.VISIBLE);
 		
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
-//		query.orderByDescending(MConstants.kUpdatedAt);
-//		if (isSearch) {
-//			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
-//			
-//
-//		} else {
-//			query.whereEqualTo(MConstants.kCityID, "hcm");
-//			query.setLimit(iLimit);
-//		}
+		query.orderByDescending(MConstants.kUpdatedAt);
+		if (isSearch) {
+			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
+			
+			if (!edCost.getText().toString().isEmpty()) {
+				switch (spCostCompair.getSelectedItemPosition()) {
+				case 0:
+					query.whereGreaterThanOrEqualTo(MConstants.kCostMin, Long.valueOf(edCost.getText().toString()));
+					break;
+				case 1:
+					query.whereLessThanOrEqualTo(MConstants.kCostMin, Long.valueOf(edCost.getText().toString()));
+					break;
+				case 2:
+					query.whereEqualTo(MConstants.kCostMin, Long.valueOf(edCost.getText().toString()));
+					break;
+				}
+			}
+
+			if (!edArea.getText().toString().isEmpty()) {
+				switch (spAraeCompair.getSelectedItemPosition()) {
+				case 0:
+					query.whereGreaterThanOrEqualTo(MConstants.kAreaMin, Long.valueOf(edArea.getText().toString()));
+					break;
+				case 1:
+					query.whereLessThanOrEqualTo(MConstants.kAreaMin, Long.valueOf(edArea.getText().toString()));
+					break;
+				case 2:
+					query.whereEqualTo(MConstants.kAreaMin, Long.valueOf(edArea.getText().toString()));
+					break;
+				}
+			}
+		} else {
+			query.whereEqualTo(MConstants.kCityID, "hcm");
+			query.setLimit(iLimit);
+		}
 
 		query.findInBackground(new FindCallback<PostArticleDTO>() {
 
@@ -181,6 +207,10 @@ public class MainRentRoom extends BaseActivity {
 			startActivity(i);
 			break;
 		case R.id.action_favorite:
+			break;
+		case R.id.action_change_pass:
+			Intent intent = new Intent(MainRentRoom.this, ChangePassword.class);
+			startActivity(intent);
 			break;
 		case R.id.action_sign_out:
 			ParseUser.logOutInBackground();

@@ -17,4 +17,5 @@ public class MData {
 	public static ArrayAdapter<String> adapterCity = null;
 	public static UserDTO userInfo = null;
 	public static PostArticleDTO postInfo = null;
+	public static String strPass;
 }

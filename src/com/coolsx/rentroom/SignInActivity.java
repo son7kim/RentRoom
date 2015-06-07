@@ -51,7 +51,7 @@ public class SignInActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				String username = edUserName.getText().toString().trim();
-				String password = edPass.getText().toString().trim();
+				final String password = edPass.getText().toString().trim();
 
 				if (username.isEmpty() && password.isEmpty()) {
 					tvError.setText(R.string.username_pass_required);
@@ -69,6 +69,7 @@ public class SignInActivity extends BaseActivity {
 						public void done(ParseUser user, ParseException e) {
 							llProgress.setVisibility(View.GONE);
 							if (e == null) {
+								MData.strPass = password;
 								MData.userInfo = new UserDTO(user.getObjectId(), user.getUsername(), user.getEmail());
 								finish();
 							} else {
