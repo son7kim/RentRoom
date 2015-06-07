@@ -38,13 +38,13 @@ public class ListPostAdapter extends ArrayAdapter<PostArticleDTO> {
 		
 		tvDescription.setText(_listPostArticle.get(position).getDescription());
 		
-		String sCost = "Gia: " + dFormat.format(_listPostArticle.get(position).getCostMin()) + " VND";
+		String sCost = "Giá: " + dFormat.format(_listPostArticle.get(position).getCostMin()) + " VND";
 		if (_listPostArticle.get(position).getCostMax() > 0) {
 			sCost = sCost + " - " + dFormat.format(_listPostArticle.get(position).getCostMax()) + " VND";
 		}
 		tvCost.setText(sCost);		
 	
-		tvAddress.setText("D/c: " + _listPostArticle.get(position).getAddress());
+		tvAddress.setText("Đ/c: " + _listPostArticle.get(position).getAddress());
 		//tvAddress.setText(String.format(_context.getResources().getString(R.string.address_search), _listPostArticle.get(position).getAddress()));
 		
 		return view;

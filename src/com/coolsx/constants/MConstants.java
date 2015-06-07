@@ -44,4 +44,8 @@ public class MConstants {
 	public static final String kImgFile = "imgFile";
 	public static final String kImgName = "imgName";
 	public static final String kPostID = "postID";
+	
+	// Table Comment
+	public static final String kTableComment = "Comment";
+	public static final String kContentComment = "content";
 }

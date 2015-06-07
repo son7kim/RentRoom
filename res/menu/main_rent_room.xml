@@ -4,9 +4,24 @@
     tools:context="com.coolsx.rentroom.MainRentRoom" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_my_page"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_my_page"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:orderInCategory="100"
+        android:title="@string/action_favorite"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_change_pass"
+        android:orderInCategory="100"
+        android:title="@string/action_change_pass"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_sign_out"
+        android:orderInCategory="100"
+        android:title="@string/action_sign_out"
         app:showAsAction="never"/>
 
 </menu>

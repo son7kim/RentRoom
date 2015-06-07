@@ -1,14 +1,14 @@
 package com.coolsx.rentroom;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coolsx.constants.MData;
@@ -17,7 +17,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class SignInActivity extends Activity {
+public class SignInActivity extends BaseActivity {
 
 	protected EditText edUserName;
 	protected EditText edPass;
@@ -26,12 +26,16 @@ public class SignInActivity extends Activity {
 	protected Button btnLogIn;
 	protected TextView tvSignUp;
 	protected TextView tvError;
+	LinearLayout llProgress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.sign_in);
+
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle(R.string.signin_title);
 
 		tvSignUp = (TextView) findViewById(R.id.tv_registry);
 		edUserName = (EditText) findViewById(R.id.edit_username_sign_in);
@@ -39,8 +43,9 @@ public class SignInActivity extends Activity {
 		btnLogIn = (Button) findViewById(R.id.btn_sign_in);
 		tvError = (TextView) findViewById(R.id.tv_error_login);
 
-		// btnLogIn.setEnabled(false);
-
+		llProgress = (LinearLayout)findViewById(R.id.llProgressBar);
+		llProgress.setVisibility(View.GONE);
+		
 		btnLogIn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -58,15 +63,13 @@ public class SignInActivity extends Activity {
 					tvError.setText(R.string.pass_required);
 					tvError.setVisibility(View.VISIBLE);
 				} else {
-					setProgressBarIndeterminateVisibility(true);
+					llProgress.setVisibility(View.VISIBLE);
 					ParseUser.logInInBackground(username, password, new LogInCallback() {
 						@Override
 						public void done(ParseUser user, ParseException e) {
-							setProgressBarIndeterminateVisibility(false);
+							llProgress.setVisibility(View.GONE);
 							if (e == null) {
-								MData.userInfo = new UserDTO(user.getObjectId(),user.getUsername(),user.getEmail());
-								Intent i = new Intent(SignInActivity.this, MyPageActivity.class);
-								startActivity(i);
+								MData.userInfo = new UserDTO(user.getObjectId(), user.getUsername(), user.getEmail());
 								finish();
 							} else {
 								// Fail
@@ -87,5 +90,11 @@ public class SignInActivity extends Activity {
 				startActivity(i);
 			}
 		});
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		finish();
+		return true;
 	}
 }

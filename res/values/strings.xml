@@ -2,50 +2,51 @@
 <resources>
 
     <string name="app_name">RentRoom</string>
-    <string name="action_settings">Cài đặt</string>
+    <string name="action_my_page">Quản lý trang</string>
+    <string name="action_favorite">Bài lưu trữ</string>
+    <string name="action_sign_out">Thoát</string>
+    <string name="action_change_pass">Đổi mật khẩu</string>
     <string name="text_description_all">Rent room</string>
     <string name="error">Lỗi</string>
-	<string name="sign_in">ĐĂNG NHẬp</string>
-	<string name="username">Tên đăng nhập hoặc Email</string>
-	<string name="pass">Mật khẩu</string>
-	<string name="remember">Đăng nhập lần sau?</string>
-	<string name="error_login">Tên đăng nhập hoặc mật khẩu không đúng</string>
-	<string name="signin_title">Đăng nhập</string>
-	<string name="forgot_pass"><u>Forgotten your password?</u></string>
-	<string name="register_yet">Chưa đăng ký,</string>
-	<string name="or">Hoặc</string>
-	<string name="username_pass_required">Tên đăng nhập và mật khẩu không được trống</string>
-	<string name="username_required">Tên đăng nhập không được trống</string>
-	<string name="pass_required">Mật khẩu không được trống</string>
-	
-	<string name="username_sign_up">Tên đăng nhập</string>
-	<string name="pass_sign_up">Mật khẩu</string>
-	<string name="confirm_pass_sign_up">Xác nhận mật khẩu</string>
-	<string name="email_sign_up">Email</string>
-	<string name="confirm_email_sign_up">Xác nhận Email</string>
-	<string name="sign_up_title">Đăng ký</string>	
-	<string name="invalid_email">Email không hợp lệ</string>
-	<string name="invalid_confirm_email">Email xác thực không đúng</string>
-	<string name="invalid_pass">Mật khẩu không hợp lệ</string>
-	<string name="invalid_confirm_pass">Mật khẩu xác nhận không đúng</string>
-	<string name="invalid_username">Tên đăng nhập không hợp lệ</string>
-	<string name="invalid_lenght_username">Tên đăng nhập tối thiểu phải chứa 6 ký tự</string>
-	<string name="invalid_lenght_pass">Mật khẩu tối thiểu phải chứa 6 ký tự</string>
-	
-	<string name="sign_up_not_success">Đăng ký tài khoản không thành công. Vui lòng thử lại.</string>
-	
-	<string name="tip_search">Nhập từ khóa để tìm kiếm</string>
-	<string name="city_title">TP/Tỉnh:</string>
-	<string name="district_title">Quận/Huyện:</string>
-	
+    <string name="sign_in">ĐĂNG NHẬp</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="pass">Mật khẩu</string>
+    <string name="remember">Đăng nhập lần sau?</string>
+    <string name="error_login">Tên đăng nhập hoặc mật khẩu không đúng</string>
+    <string name="signin_title">Đăng nhập</string>
+    <string name="forgot_pass"><u>Forgotten your password?</u></string>
+    <string name="register_yet">Chưa đăng ký,</string>
+    <string name="or">Hoặc</string>
+    <string name="username_pass_required">Tên đăng nhập và mật khẩu không được trống</string>
+    <string name="username_required">Tên đăng nhập không được trống</string>
+    <string name="pass_required">Mật khẩu không được trống</string>
+    <string name="username_sign_up">Tên đăng nhập</string>
+    <string name="pass_sign_up">Mật khẩu</string>
+    <string name="confirm_pass_sign_up">Xác nhận mật khẩu</string>
+    <string name="email_sign_up">Email</string>
+    <string name="confirm_email_sign_up">Xác nhận Email</string>
+    <string name="sign_up_title">Đăng ký</string>
+    <string name="invalid_email">Email không hợp lệ</string>
+    <string name="invalid_confirm_email">Email xác thực không đúng</string>
+    <string name="invalid_pass">Mật khẩu không hợp lệ</string>
+    <string name="invalid_confirm_pass">Mật khẩu xác nhận không đúng</string>
+    <string name="invalid_username">Tên đăng nhập không hợp lệ</string>
+    <string name="invalid_lenght_username">Tên đăng nhập tối thiểu phải chứa 6 ký tự</string>
+    <string name="invalid_lenght_pass">Mật khẩu tối thiểu phải chứa 6 ký tự</string>
+    <string name="sign_up_not_success">Đăng ký tài khoản không thành công. Vui lòng thử lại.</string>
+    <string name="tip_search">Nhập từ khóa để tìm kiếm</string>
+    <string name="city_title">TP/Tỉnh:</string>
+    <string name="district_title">Quận/Huyện:</string>
+
     <string-array name="equal_title">
         <item>&gt;=</item>
         <item>&lt;=</item>
         <item>=</item>
     </string-array>
-    
+
     <string name="cost_title">Giá:</string>
     <string name="cost_prompt">Chọn giá phòng</string>
+
     <string-array name="cost_arrays">
         <item>Chon gia</item>
         <item>500k</item>
@@ -69,9 +70,10 @@
         <item>9.5tr</item>
         <item>10tr</item>
     </string-array>
-    
+
     <string name="area_title">DT:</string>
     <string name="area_prompt">Chọn giá phòng</string>
+
     <string-array name="area_arrays">
         <item>Chon dien tich</item>
         <item>10m2</item>
@@ -94,20 +96,19 @@
         <item>95m2</item>
         <item>100m2</item>
     </string-array>
-    
+
     <string name="search_title">Tìm ngay</string>
     <string name="add_new_room_title">Thêm bài đăng</string>
     <string name="name_title">Họ tên</string>
     <string name="phone_title">Số điện thoại</string>
     <string name="address_title">Địa chỉ</string>
-    <string name="area_title_add_new">Diện tích phòng (m2)</string>
+    <string name="area_title_add_new">Diện tích (m2)</string>
     <string name="cost_title_add_new">Giá phòng</string>
     <string name="discription_title">Mô tả</string>
     <string name="post_title">Đăng bài</string>
     <string name="up_photo_title">Chọn ảnh upload</string>
     <string name="from_to">đến</string>
     <string name="num_room">Số lượng phòng trống</string>
-    
     <string name="empty_full_name">Chưa nhập họ tên</string>
     <string name="empty_phone_number">Chưa nhập Số điện thoại</string>
     <string name="empty_address">Chưa nhập địa chỉ nhà</string>
@@ -117,24 +118,34 @@
     <string name="incorrect_area">Diện tích nhập vào không hợp lệ</string>
     <string name="empty_area_min">Diện tích nhập vào chưa đầy đủ</string>
     <string name="empty_num_room">Chưa nhập số lượng phòng trống</string>
-    
     <string name="post_error">Bạn không thể đăng bài ngay lúc này. Vui lòng thử lại sau!</string>
-
     <string name="room_description_adapter">Mô tả phòng</string>
     <string name="cost_adapter">Giá</string>
-     <string name="address_adapter">Địa chỉ</string>
-     <string name="hint_cost">2500000(VND)</string>
-     <string name="hint_area">20(m2)</string>
-     
-     <string name="description_title_detail">MÔ TẢ</string>
-     <string name="cost_title_detail">GIÁ:</string>
-     <string name="area_title_detail">DIỆN TÍCH:</string>
-     <string name="num_room_title_detail">SỐ LƯỢNG PHÒNG TRỐNG:</string>
-     <string name="image_title_detail">HÌNH ẢNH:</string>
-     <string name="contact_title_detail">LIÊN HỆ:</string>
-     <string name="phone_title_detail">Số điện thoại:</string>
-     <string name="address_title_detail">Địa chỉ:</string>
-     <string name="name_title_detail">Tên liên hệ:</string>
-     <string name="option_search_title">TÙY CHỌN TÌM KIẾM</string>
-     <string name="address_search"><u>D/c: </u> {0}</string>
+    <string name="address_adapter">Địa chỉ</string>
+    <string name="hint_cost">2,500,000</string>
+    <string name="hint_area">20(m2)</string>
+    <string name="description_title_detail">MÔ TẢ</string>
+    <string name="cost_title_detail">GIÁ:</string>
+    <string name="area_title_detail">DIỆN TÍCH:</string>
+    <string name="num_room_title_detail">SỐ LƯỢNG PHÒNG TRỐNG:</string>
+    <string name="image_title_detail">HÌNH ẢNH:</string>
+    <string name="contact_title_detail">LIÊN HỆ:</string>
+    <string name="phone_title_detail">Số điện thoại:</string>
+    <string name="address_title_detail">Địa chỉ:</string>
+    <string name="name_title_detail">Tên liên hệ:</string>
+    <string name="option_search_title">TÙY CHỌN TÌM KIẾM</string>
+    <string name="comment_title">NHẬN XÉT:</string>
+    <string name="address_search"><u>D/c: </u> {0}</string>
+    
+    <string name="post_comment_title">Gởi</string>
+    <string name="post_comment_hind">Nhập lời bình</string>
+    <string name="notice_title">Thông báo</string>
+    <string name="sign_in_notice">Vui lòng đăng nhập để thực hiện tính năng này</string>
+    <string name="comment_content_notice">Vui lòng nhập nội dung</string>
+    
+    <string name="temp_text">N/A</string>
+    <string name="detail_header_title">Chi tiết</string>
+    <string name="my_page_header_title">Quản lý trang</string>
+    <string name="add_new_header_title">Thêm bài viết</string>
+
 </resources>

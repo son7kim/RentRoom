@@ -9,7 +9,8 @@
     <dimen name="pad_left_header">20dp</dimen>
     <dimen name="text_size_title_header">20dp</dimen>
     <dimen name="text_button_size">17dp</dimen>
-    <dimen name="text_size">17dp</dimen>
+    <dimen name="text_size">13dp</dimen>
+    <dimen name="text_comment_size">11dp</dimen>
     <dimen name="pad_left_right">5dp</dimen>
     <dimen name="pad_top">15dp</dimen>
     <dimen name="pad_top_lv_result">15dp</dimen>

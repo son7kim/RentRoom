@@ -3,10 +3,10 @@ package com.coolsx.rentroom;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,15 +24,15 @@ import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.utils.DialogNotice;
+import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.coolsx.utils.UtilDroid;
-import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
-public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
+public class AddNewPostActivity extends BaseActivity implements onDeleteFileNotify{
 
 	private EditText edFullName;
 	private EditText edPhone;
@@ -60,12 +60,20 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 	String sRandomUUID;
 	static onPostActicle postActicleDelegate;
 	Context _context;
+	LinearLayout llProgress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.add_new_post_page);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle(R.string.add_new_header_title);
+		
+		llProgress = (LinearLayout)findViewById(R.id.llProgressBar);
+		llProgress.setVisibility(View.GONE);
 		
 		edFullName = (EditText) findViewById(R.id.edit_fullname);
 		edPhone = (EditText) findViewById(R.id.edit_phone_number);
@@ -259,7 +267,8 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 	}
 
 	private void addPost(int iNumArea) {
-		//ParseObject newPost = new ParseObject(MConstants.kTablePost);
+		llProgress.setVisibility(View.VISIBLE);
+		
 		final PostArticleDTO newPost = new PostArticleDTO();
 		
 		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
@@ -302,6 +311,7 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 			
 			@Override
 			public void done(ParseException e) {
+				llProgress.setVisibility(View.GONE);
 				if(e == null) {
 					postActicleDelegate.onSuccess(newPost);
 					finish();
@@ -337,5 +347,11 @@ public class AddNewPostActivity extends Activity implements onDeleteFileNotify{
 		listImgDTO = listImgAfterDelete;
 		onAddFile.InitView(listImgDTO, true);
 		llFileAttach.addView(onAddFile);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		finish();
+		return true;
 	}
 }

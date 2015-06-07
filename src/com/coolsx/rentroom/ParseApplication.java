@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.coolsx.constants.MConstants;
 import com.coolsx.dto.CityDTO;
+import com.coolsx.dto.CommentDTO;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.dto.PostArticleDTO;
@@ -19,6 +20,7 @@ public class ParseApplication extends Application {
 	public void onCreate() {		
 		super.onCreate();
 		
+		ParseObject.registerSubclass(CommentDTO.class);
 		ParseObject.registerSubclass(ImageDTO.class);
 		ParseObject.registerSubclass(PostArticleDTO.class);
 		ParseObject.registerSubclass(CityDTO.class);
@@ -28,7 +30,7 @@ public class ParseApplication extends Application {
 	    ParseCrashReporting.enable(this);
 
 	    // Enable Local Datastore.
-	    Parse.enableLocalDatastore(this);
+	    //Parse.enableLocalDatastore(this);
 
 	    // Add your initialization code here
 	    Parse.initialize(this, MConstants.kApplicationKey, MConstants.kClientKey);
@@ -37,7 +39,7 @@ public class ParseApplication extends Application {
 	    ParseUser.enableAutomaticUser();
 	    ParseACL defaultACL = new ParseACL();
 	    // Optionally enable public read access.
-	    // defaultACL.setPublicReadAccess(true);
+	     defaultACL.setPublicReadAccess(true);
 	    ParseACL.setDefaultACL(defaultACL, true);
 	}
 

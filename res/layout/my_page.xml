@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    android:orientation="vertical" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_color" >
 
-    <include layout="@layout/header_layout" />
-
-    <Button
-        android:id="@+id/btn_Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginLeft="@dimen/pad_left_header"
-        android:layout_marginRight="@dimen/pad_left_header"
-        android:layout_marginTop="@dimen/pad_top_btn_signin"
-        android:background="@drawable/custom_border_select"
-        android:minHeight="@dimen/min_height_button"
-        android:minWidth="@dimen/min_height_button"
-        android:text="@string/add_new_room_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_button_size"
-        android:textStyle="bold" />
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/pad_top_bottom"
-        android:background="@color/grey_app" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/lv_my_result"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/pad_top_lv_result"
-        android:layout_weight="1" />
+        <Button
+            android:id="@+id/btn_Add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="@dimen/pad_left_header"
+            android:layout_marginRight="@dimen/pad_left_header"
+            android:layout_marginTop="@dimen/pad_top_btn_signin"
+            android:background="@drawable/custom_border_select"
+            android:minHeight="@dimen/min_height_button"
+            android:minWidth="@dimen/min_height_button"
+            android:text="@string/add_new_room_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_button_size"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/pad_top_bottom"
+            android:background="@color/grey_app" />
+
+        <ListView
+            android:id="@+id/lv_my_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/pad_top_lv_result"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <include layout="@layout/indicator_progresbar_layout" />
+
+</FrameLayout>
