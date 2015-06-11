@@ -61,6 +61,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 	static onPostActicle postActicleDelegate;
 	Context _context;
 	LinearLayout llProgress;
+	boolean isEditPost;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle(R.string.add_new_header_title);
 
+		isEditPost = getIntent().getBooleanExtra(MConstants.kIsEdit, false);
+		
 		llProgress = (LinearLayout) findViewById(R.id.llProgressBar);
 		llProgress.setVisibility(View.GONE);
 
@@ -100,8 +103,31 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 
 		tvAddress.setText("..., " + districtAddNewDTOs.get(0).getDistrictName() + ", " + MData.cityDTOs.get(0).getCityName());
 
-		spCityAddNew.setAdapter(adapCity);
+		spCityAddNew.setAdapter(adapCity);				
 		spDistrictAddNew.setAdapter(adapDistrict);
+		
+		if(isEditPost){
+			getActionBar().setTitle(R.string.edit_option);
+			btnPost.setText(R.string.edit_button_text);
+			int i = 0;
+			for(i = 0; i < MData.cityDTOs.size(); i ++){
+				if(MData.cityDTOs.get(i).getCityID().equals(MData.postInfo.getCityID())){
+					spCityAddNew.setSelection(i);
+					break;
+				}
+			}	
+			adapDistrict = UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(i), districtAddNewDTOs);
+			spDistrictAddNew.setAdapter(adapDistrict);
+			for(int k = 0; k < districtAddNewDTOs.size(); k ++){
+				if(districtAddNewDTOs.get(k).getDistrictID().equals(MData.postInfo.getDistricID())){
+					spDistrictAddNew.setSelection(k);
+					break;
+				}
+			}
+			
+			setDataEdit();
+		}		
+
 		spCityAddNew.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -230,6 +256,19 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		}
 	}
 
+	private void setDataEdit(){
+		edFullName.setText(MData.postInfo.getFullName());
+		edPhone.setText(MData.postInfo.getPhoneNumber());
+		edAddress.setText(MData.postInfo.getAddress());
+		edNumRoom.setText("" +MData.postInfo.getNumRoom());
+		edAreaMin.setText("" + MData.postInfo.getAreaMin());		
+		edAreaMax.setText("" + MData.postInfo.getAreaMax());
+		edCostMin.setText(""+ MData.postInfo.getCostMin());
+		edCostMax.setText("" + MData.postInfo.getCostMax());
+		edDescription.setText(MData.postInfo.getDescription());		
+		tvAddress.setText("..., " + districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", " + MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName());
+	}
+	
 	private void addPost() {
 		llProgress.setVisibility(View.VISIBLE);
 

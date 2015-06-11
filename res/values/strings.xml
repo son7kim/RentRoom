@@ -154,6 +154,7 @@
     <string name="option_title">Tùy chọn</string>
     <string name="delete_option">Xóa bài viết</string>
     <string name="edit_option">Sửa bài viết</string>
+    <string name="edit_button_text">Cập nhật</string>
     <string name="delete_fail_notice">Không thể xóa bài viết ngay lúc này. Vui lòng thử lại sau</string>
     
     <string name="old_pass_hint">Mật khẩu cũ</string>

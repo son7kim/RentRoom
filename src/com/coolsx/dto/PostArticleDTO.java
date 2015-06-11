@@ -50,6 +50,10 @@ public class PostArticleDTO extends ParseObject implements Serializable {
 	public String getDistricID() {
 		return getString(MConstants.kDistrictID);
 	}
+	
+	public String getCityID() {
+		return getString(MConstants.kCityID);
+	}
 
 	public int getNumRoom() {
 		return getInt(MConstants.kNumRoom);
