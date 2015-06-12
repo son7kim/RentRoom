@@ -1300,6 +1300,7 @@ containing a value of this type.
         public static final int area_title_detail=0x7f0a0055;
         public static final int btn_change_pass_title=0x7f0a0071;
         public static final int change_pass_title=0x7f0a0070;
+        public static final int choose_img_err=0x7f0a0075;
         public static final int city_title=0x7f0a0031;
         public static final int comment_content_notice=0x7f0a0063;
         public static final int comment_title=0x7f0a005d;
@@ -1346,6 +1347,7 @@ containing a value of this type.
         public static final int invalid_old_pass=0x7f0a002b;
         public static final int invalid_pass=0x7f0a0028;
         public static final int invalid_username=0x7f0a002c;
+        public static final int max_file_upload_notice=0x7f0a0074;
         public static final int my_page_header_title=0x7f0a0066;
         public static final int name_title=0x7f0a0039;
         public static final int name_title_detail=0x7f0a005b;

@@ -11,11 +11,18 @@ public class MInterfaceNotice {
 	}
 
 	public interface onDeleteFileNotify {
-		void onDeleteNotify(List<ImageDTO> listImgAfterDelete);
+		void onSendingDeleteFile();
+		void onDeleteFileSuccess(List<ImageDTO> listImgAfterDelete);
 	}
-	
-	public interface onPostActicle{
+
+	public interface onPostActicle {
 		void onSuccess(PostArticleDTO postActicle);
 	}
-	
+
+	public interface onGetAttachFile {
+		void onSendingGetFile();
+
+		void onSuccessGetFile(List<ImageDTO> imgDTOs);
+	}
+
 }

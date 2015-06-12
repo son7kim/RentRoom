@@ -164,5 +164,8 @@
     <string name="btn_change_pass_title">Xác nhận</string>
     <string name="request_success">Yêu cầu của bạn đã thành công</string>
     <string name="request_fail">Yêu cầu của bạn không thành công. Vui lòng thử lại sau</string>
+    
+    <string name="max_file_upload_notice">Bạn chỉ được đăng tối đa 3 hình</string>
+    <string name="choose_img_err">Đã có lỗi xảy ra. Vui lòng thử lại hoặc chọn hình khác</string>
 
 </resources>

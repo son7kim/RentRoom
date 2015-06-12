@@ -11,6 +11,8 @@ public class ImageDTO extends ParseObject{
 
 	private String _fileName;
 	private byte[] _bArrData;
+	private boolean _isDeleteAccepted;
+	private boolean _isFileLocal;
 	
 	public ImageDTO(){}
 	
@@ -18,9 +20,10 @@ public class ImageDTO extends ParseObject{
 		return ParseQuery.getQuery(ImageDTO.class);
 	}
 	
-	public ImageDTO (String fileName, byte[] bArrData){
+	public ImageDTO (String fileName, byte[] bArrData, boolean isLocal){
 		this._fileName = fileName;
 		this._bArrData = bArrData;
+		this._isFileLocal = isLocal;
 	}
 	
 	public String getFileNameLocal(){
@@ -37,5 +40,25 @@ public class ImageDTO extends ParseObject{
 	
 	public ParseFile getFile(){
 		return (ParseFile)getParseFile(MConstants.kImgFile);
+	}
+	
+	public String getImageId(){
+		return getString(MConstants.kImageId);
+	}
+	
+	public void setIsDeleteAccepted(boolean isDeleteAccepted){
+		this._isDeleteAccepted = isDeleteAccepted;
+	}
+	
+	public boolean getIsDeleteAccepted(){
+		return _isDeleteAccepted;
+	}
+	
+	public void setIsFileLocal(boolean isFileLocal){
+		this._isFileLocal = isFileLocal;
+	}
+	
+	public boolean getIsFileLocal(){
+		return _isFileLocal;
 	}
 }

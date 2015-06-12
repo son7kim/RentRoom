@@ -14,20 +14,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.coolsx.constants.MConstants;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
+import com.parse.DeleteCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 public class OnAddFileImage extends LinearLayout {
 
 	Context _context;
 	List<ImageDTO> _listImgs;
+	boolean _isEdit;
 
 	public onDeleteFileNotify deleteFileNotify;
 
-	public OnAddFileImage(Context context, onDeleteFileNotify event) {
+	public OnAddFileImage(Context context, onDeleteFileNotify event, boolean isEdit) {
 		super(context);
 		this._context = context;
 		this.deleteFileNotify = event;
+		this._isEdit = isEdit;
 
 		this.setOrientation(VERTICAL);
 		this.setVerticalGravity(Gravity.CENTER_VERTICAL);
@@ -48,7 +55,8 @@ public class OnAddFileImage extends LinearLayout {
 
 			TextView tvFile = new TextView(_context);
 			tvFile.setTextColor(Color.BLUE);
-			if (isLocal) {
+			if(listImgs.get(i).getIsFileLocal())
+			{
 				tvFile.setText(listImgs.get(i).getFileNameLocal());
 			} else {
 				tvFile.setText(listImgs.get(i).getFileNameServer());
@@ -69,8 +77,38 @@ public class OnAddFileImage extends LinearLayout {
 
 				@Override
 				public void onClick(View v) {
-					_listImgs.remove(imgDelete.getId());
-					deleteFileNotify.onDeleteNotify(_listImgs);
+					if(_isEdit){
+						if(_listImgs.get(imgDelete.getId()).getIsDeleteAccepted()){
+						deleteFileNotify.onSendingDeleteFile();
+						ParseQuery<ImageDTO> query = ImageDTO.getQuery();
+						query.whereEqualTo(MConstants.kImageId, _listImgs.get(imgDelete.getId()).getImageId());
+						query.getFirstInBackground(new GetCallback<ImageDTO>() {
+							
+							@Override
+							public void done(ImageDTO img, ParseException e) {
+								if(e == null){
+									img.deleteInBackground(new DeleteCallback() {
+										
+										@Override
+										public void done(ParseException ex) {
+											if(ex == null){
+												_listImgs.remove(imgDelete.getId());
+												deleteFileNotify.onDeleteFileSuccess(_listImgs);
+											}
+										}
+									});
+								}
+							}
+						});
+						} else{
+							_listImgs.remove(imgDelete.getId());
+							deleteFileNotify.onDeleteFileSuccess(_listImgs);
+						}
+						
+					} else {
+						_listImgs.remove(imgDelete.getId());
+						deleteFileNotify.onDeleteFileSuccess(_listImgs);
+					}
 				}
 			});
 

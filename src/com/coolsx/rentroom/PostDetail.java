@@ -64,7 +64,7 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 		edComment = (EditText) findViewById(R.id.edit_comment);
 		btnComment = (Button) findViewById(R.id.btn_comment);
 
-		onAddFile = new OnAddFileImage(this, this);
+		onAddFile = new OnAddFileImage(this, this, false);
 		dialog = new DialogNotice(this);
 		_comments = new ArrayList<CommentDTO>();
 
@@ -180,7 +180,10 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 	}
 	
 	@Override
-	public void onDeleteNotify(List<ImageDTO> listImgAfterDelete) {
+	public void onSendingDeleteFile(){}
+	
+	@Override
+	public void onDeleteFileSuccess(List<ImageDTO> listImgAfterDelete) {
 		MData.postInfo.setListImageDTO(listImgAfterDelete);
 		onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
 		llFileAttach.removeAllViews();

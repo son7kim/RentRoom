@@ -23,8 +23,10 @@ import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.dto.PostArticleDTO;
+import com.coolsx.helper.GetAttachFiles;
 import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
+import com.coolsx.utils.MInterfaceNotice.onGetAttachFile;
 import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.coolsx.utils.UtilDroid;
 import com.parse.ParseException;
@@ -32,7 +34,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
-public class AddNewPostActivity extends BaseActivity implements onDeleteFileNotify {
+public class AddNewPostActivity extends BaseActivity implements onDeleteFileNotify, onGetAttachFile {
 
 	private EditText edFullName;
 	private EditText edPhone;
@@ -74,7 +76,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		getActionBar().setTitle(R.string.add_new_header_title);
 
 		isEditPost = getIntent().getBooleanExtra(MConstants.kIsEdit, false);
-		
+
 		llProgress = (LinearLayout) findViewById(R.id.llProgressBar);
 		llProgress.setVisibility(View.GONE);
 
@@ -95,7 +97,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		tvError = (TextView) findViewById(R.id.tv_error_add_new_post);
 		btnPost = (Button) findViewById(R.id.btn_post);
 
-		onAddFile = new OnAddFileImage(this, this);
+		onAddFile = new OnAddFileImage(this, this, isEditPost);
 		dialog = new DialogNotice(this);
 
 		adapCity = MData.adapterCity;
@@ -103,30 +105,8 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 
 		tvAddress.setText("..., " + districtAddNewDTOs.get(0).getDistrictName() + ", " + MData.cityDTOs.get(0).getCityName());
 
-		spCityAddNew.setAdapter(adapCity);				
+		spCityAddNew.setAdapter(adapCity);
 		spDistrictAddNew.setAdapter(adapDistrict);
-		
-		if(isEditPost){
-			getActionBar().setTitle(R.string.edit_option);
-			btnPost.setText(R.string.edit_button_text);
-			int i = 0;
-			for(i = 0; i < MData.cityDTOs.size(); i ++){
-				if(MData.cityDTOs.get(i).getCityID().equals(MData.postInfo.getCityID())){
-					spCityAddNew.setSelection(i);
-					break;
-				}
-			}	
-			adapDistrict = UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(i), districtAddNewDTOs);
-			spDistrictAddNew.setAdapter(adapDistrict);
-			for(int k = 0; k < districtAddNewDTOs.size(); k ++){
-				if(districtAddNewDTOs.get(k).getDistrictID().equals(MData.postInfo.getDistricID())){
-					spDistrictAddNew.setSelection(k);
-					break;
-				}
-			}
-			
-			setDataEdit();
-		}		
 
 		spCityAddNew.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -161,7 +141,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 				if (iNumFile < 3) {
 					UtilDroid.selectImage(AddNewPostActivity.this);
 				} else {
-					dialog.ShowDialog("Thong bao", "Upload toi da 3 file");
+					dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.max_file_upload_notice));
 				}
 			}
 		});
@@ -230,6 +210,28 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 				addPost();
 			}
 		});
+
+		if (isEditPost) {
+			getActionBar().setTitle(R.string.edit_option);
+			btnPost.setText(R.string.edit_button_text);
+			int i = 0;
+			for (i = 0; i < MData.cityDTOs.size(); i++) {
+				if (MData.cityDTOs.get(i).getCityID().equals(MData.postInfo.getCityID())) {
+					spCityAddNew.setSelection(i);
+					break;
+				}
+			}
+			adapDistrict = UtilDroid.getAdapterDistrictFromKey(AddNewPostActivity.this, MData.cityDTOs.get(i), districtAddNewDTOs);
+			spDistrictAddNew.setAdapter(adapDistrict);
+			for (int k = 0; k < districtAddNewDTOs.size(); k++) {
+				if (districtAddNewDTOs.get(k).getDistrictID().equals(MData.postInfo.getDistricID())) {
+					spDistrictAddNew.setSelection(k);
+					break;
+				}
+			}
+
+			setDataEdit();
+		}
 	}
 
 	public static void initDelegate(onPostActicle delegate) {
@@ -244,31 +246,38 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 			if (bArrImages.length > 0) {
 				iNumFile++;
 
-				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomStringNumber(), bArrImages);
+				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomStringNumber(), bArrImages, true);				
 				listImgDTO.add(imgDTO);
 
 				llFileAttach.removeAllViews();
 				onAddFile.InitView(listImgDTO, true);
 				llFileAttach.addView(onAddFile);
 			} else {
-				dialog.ShowDialog("Thong bao", "Khong the chon hinh nay");
+				dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.choose_img_err));
 			}
 		}
 	}
 
-	private void setDataEdit(){
+	private void setDataEdit() {
 		edFullName.setText(MData.postInfo.getFullName());
 		edPhone.setText(MData.postInfo.getPhoneNumber());
 		edAddress.setText(MData.postInfo.getAddress());
-		edNumRoom.setText("" +MData.postInfo.getNumRoom());
-		edAreaMin.setText("" + MData.postInfo.getAreaMin());		
+		edNumRoom.setText("" + MData.postInfo.getNumRoom());
+		edAreaMin.setText("" + MData.postInfo.getAreaMin());
 		edAreaMax.setText("" + MData.postInfo.getAreaMax());
-		edCostMin.setText(""+ MData.postInfo.getCostMin());
+		edCostMin.setText("" + MData.postInfo.getCostMin());
 		edCostMax.setText("" + MData.postInfo.getCostMax());
-		edDescription.setText(MData.postInfo.getDescription());		
-		tvAddress.setText("..., " + districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", " + MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName());
+		edDescription.setText(MData.postInfo.getDescription());
+		tvAddress.setText("..., " + districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictName() + ", "
+				+ MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityName());
+		getFileAttach();
 	}
-	
+
+	private void getFileAttach() {
+		GetAttachFiles getFiles = new GetAttachFiles(this);
+		getFiles.getFileAttach(MData.postInfo.getPostID());
+	}
+
 	private void addPost() {
 		llProgress.setVisibility(View.VISIBLE);
 
@@ -336,18 +345,52 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 	}
 
 	@Override
-	public void onDeleteNotify(List<ImageDTO> listImgAfterDelete) {
+	public void onSendingDeleteFile() {
+		llProgress.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public void onDeleteFileSuccess(List<ImageDTO> listImgAfterDelete) {
+		llProgress.setVisibility(View.GONE);
 		iNumFile--;
 		llFileAttach.removeAllViews();
-		listImgDTO.clear();
-		listImgDTO = listImgAfterDelete;
-		onAddFile.InitView(listImgDTO, true);
-		llFileAttach.addView(onAddFile);
+		if (isEditPost) {
+			MData.postInfo.setListImageDTO(listImgAfterDelete);
+			onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
+			llFileAttach.addView(onAddFile);
+		} else {
+			listImgDTO.clear();
+			listImgDTO = listImgAfterDelete;
+			onAddFile.InitView(listImgDTO, true);
+			llFileAttach.addView(onAddFile);
+		}
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
 		return true;
+	}
+
+	@Override
+	public void onSendingGetFile() {
+		llProgress.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public void onSuccessGetFile(List<ImageDTO> imgDTOs) {
+		llProgress.setVisibility(View.GONE);
+		if (imgDTOs != null) {
+			iNumFile = imgDTOs.size();
+			listImgDTO.clear();
+			for (ImageDTO imgDto : imgDTOs) {
+				imgDto.setIsDeleteAccepted(true);				
+				listImgDTO.add(imgDto);
+			}
+			onAddFile.InitView(listImgDTO, false);
+			llFileAttach.addView(onAddFile);
+			MData.postInfo.setIsFileLoaded(true);
+			MData.postInfo.setListImageDTO(imgDTOs);
+		}
 	}
 }
