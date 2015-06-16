@@ -193,8 +193,7 @@
                 android:layout_marginLeft="@dimen/pad_left_right"
                 android:layout_marginStart="@dimen/pad_left_right"
                 android:layout_marginTop="@dimen/pad_top_bottom"
-                android:text="@string/temp_text"
-                android:textColor="@color/black"
+                android:textColor="@color/green_sky_landing"
                 android:textSize="@dimen/text_comment_size"
                 android:textStyle="italic" />
         </LinearLayout>

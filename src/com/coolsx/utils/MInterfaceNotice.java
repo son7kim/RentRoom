@@ -7,11 +7,14 @@ import com.coolsx.dto.PostArticleDTO;
 
 public class MInterfaceNotice {
 	public interface onGetDistrictNotify {
-		void onFinish();
+		void onFinishLoadDataFromSplash();
+
+		void onFinishLoadDataFromMain();
 	}
 
 	public interface onDeleteFileNotify {
 		void onSendingDeleteFile();
+
 		void onDeleteFileSuccess(List<ImageDTO> listImgAfterDelete);
 	}
 
@@ -25,4 +28,7 @@ public class MInterfaceNotice {
 		void onSuccessGetFile(List<ImageDTO> imgDTOs);
 	}
 
+	public interface onOkLoadData {
+		void onOkClick();
+	}
 }

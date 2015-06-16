@@ -21,6 +21,8 @@ import android.widget.ListView;
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.PostArticleDTO;
+import com.coolsx.helper.DeleteCommentsPost;
+import com.coolsx.helper.DeleteImagesPost;
 import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.parse.DeleteCallback;
@@ -36,6 +38,7 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 	List<PostArticleDTO> listPost = new ArrayList<PostArticleDTO>();
 	LinearLayout llProgress;
 	DialogNotice dialog;
+	boolean isEdit;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +117,15 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 						@Override
 						public void done(ParseException e) {
 							llProgress.setVisibility(View.GONE);
-							if (e == null) {								
+							if (e == null) {
+								/* Delete all images and comments relative*/
+								DeleteImagesPost deleteImg = new DeleteImagesPost();
+								deleteImg.deleteImages(listPost.get(pos).getPostID());
+
+								DeleteCommentsPost deleteCmd = new DeleteCommentsPost();
+								deleteCmd.deleteComments(listPost.get(pos).getPostID());
+								
+								/*Update lisview*/
 								listPost.remove(pos);
 								myPostadapters = new ListPostAdapter(MyPageActivity.this, listPost);
 								lvMyPost.setAdapter(myPostadapters);
@@ -132,7 +143,9 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 	}
 
 	private void onEditPost(int pos) {
+		isEdit = true;
 		MData.postInfo = listPost.get(pos);
+		AddNewPostActivity.initDelegate(MyPageActivity.this);
 		Intent i = new Intent(MyPageActivity.this, AddNewPostActivity.class);
 		i.putExtra(MConstants.kIsEdit, true);
 		startActivity(i);
@@ -158,9 +171,14 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 
 	@Override
 	public void onSuccess(PostArticleDTO postActicle) {
-		listPost.add(postActicle);
-		myPostadapters = new ListPostAdapter(MyPageActivity.this, listPost);
-		lvMyPost.setAdapter(myPostadapters);
+		if (!isEdit) {
+			// listPost.add(postActicle);
+			getMyPosts();
+		} else {
+			myPostadapters = new ListPostAdapter(MyPageActivity.this, listPost);
+			lvMyPost.setAdapter(myPostadapters);
+			isEdit = false;
+		}
 	}
 
 	@Override

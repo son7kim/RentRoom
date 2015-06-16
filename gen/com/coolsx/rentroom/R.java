@@ -1312,6 +1312,7 @@ containing a value of this type.
         public static final int cost_title=0x7f0a0033;
         public static final int cost_title_add_new=0x7f0a003d;
         public static final int cost_title_detail=0x7f0a0054;
+        public static final int data_error=0x7f0a0076;
         public static final int delete_fail_notice=0x7f0a006c;
         public static final int delete_option=0x7f0a0069;
         public static final int description_title_detail=0x7f0a0053;

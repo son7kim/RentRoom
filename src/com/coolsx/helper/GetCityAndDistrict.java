@@ -3,7 +3,6 @@ package com.coolsx.helper;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.coolsx.constants.MData;
 import com.coolsx.dto.CityDTO;
@@ -17,97 +16,48 @@ public class GetCityAndDistrict {
 
 	public onGetDistrictNotify actionGetDistrict;
 	Context _context;
+	boolean _isSplashScreen;
 
-	public GetCityAndDistrict(Context context, onGetDistrictNotify event) {
+	public GetCityAndDistrict(Context context, onGetDistrictNotify event, boolean isSplashScreen) {
 		this._context = context;
 		actionGetDistrict = event;
+		this._isSplashScreen = isSplashScreen;
 	}
 
-	public void checkUpdateCity_District() {
-		getListCity(false);
-//		final ParseQuery<CityDTO> queryCityLocal = ParseQuery.getQuery(MConstants.kTableCity);
-//		queryCityLocal.fromLocalDatastore();
-//		queryCityLocal.orderByDescending(MConstants.kUpdatedAt);
-//		queryCityLocal.getFirstInBackground(new GetCallback<CityDTO>() {
-//
-//			@Override
-//			public void done(CityDTO cityOld, ParseException e) {
-//
-//				if (e == null) {
-//					final java.util.Date dOld = cityOld.getUpdatedAt();
-//
-//					ParseQuery<ParseObject> queryCityNew = ParseQuery.getQuery(MConstants.kTableCity);
-//					queryCityNew.orderByDescending(MConstants.kUpdatedAt);
-//
-//					queryCityNew.getFirstInBackground(new GetCallback<ParseObject>() {
-//
-//						@Override
-//						public void done(ParseObject object, ParseException e) {
-//							if (e == null) {
-//								final java.util.Date dNew = object.getUpdatedAt();
-//								long lMiliSecondOld = dOld.getTime();
-//								long lMiliSecondNew = dNew.getTime();
-//								if (lMiliSecondNew > lMiliSecondOld) {
-//									// Update
-//									getListCity(false);
-//								} else {
-//									getListCity(true);
-//								}
-//							} else {
-//								getListCity(true);
-//							}
-//						}
-//					});
-//				} else {
-//					getListCity(false);
-//				}
-//			}
-//		});
-	}
-
-	private void getListCity(final boolean isLocal) {
+	public void getListCity() {
 		ParseQuery<CityDTO> query = CityDTO.getQuery();
-		if(isLocal){
-			query.fromLocalDatastore();
-		}	
-
 		query.findInBackground(new FindCallback<CityDTO>() {
 			@Override
 			public void done(List<CityDTO> citys, ParseException e) {
 				if (e == null) {
-					getListDistrict(isLocal);
-					// Save to Local
-//					if(!isLocal)
-//						ParseObject.pinAllInBackground(citys);
+					getListDistrict();
 					MData.cityDTOs.clear();
 					MData.cityDTOs.addAll(citys);
 				} else {
-					Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+					if(_isSplashScreen){
+						actionGetDistrict.onFinishLoadDataFromSplash();
+					} else {
+						actionGetDistrict.onFinishLoadDataFromMain();
+					}
 				}
 			}
 		});
 	}
 
-	public void getListDistrict(final boolean isLocal) {
+	public void getListDistrict() {
 
 		ParseQuery<DistrictDTO> query = DistrictDTO.getQuery();
-		if (isLocal) {
-			query.fromLocalDatastore();
-		}
-
 		query.findInBackground(new FindCallback<DistrictDTO>() {
 			@Override
 			public void done(List<DistrictDTO> districts, ParseException e) {
 				if (e == null) {
-//					if (!isLocal)
-//						ParseObject.pinAllInBackground(districts);
 					MData.districtDTOs.clear();
-					MData.districtDTOs.addAll(districts);					
-					
-					actionGetDistrict.onFinish();
-					
+					MData.districtDTOs.addAll(districts);
+				}
+				if(_isSplashScreen){
+					actionGetDistrict.onFinishLoadDataFromSplash();
 				} else {
-					Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+					actionGetDistrict.onFinishLoadDataFromMain();
 				}
 			}
 		});

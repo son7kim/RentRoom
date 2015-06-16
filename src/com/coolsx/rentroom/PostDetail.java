@@ -19,13 +19,15 @@ import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.CommentDTO;
 import com.coolsx.dto.ImageDTO;
+import com.coolsx.helper.GetAttachFiles;
 import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
+import com.coolsx.utils.MInterfaceNotice.onGetAttachFile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-public class PostDetail extends BaseActivity implements onDeleteFileNotify {
+public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGetAttachFile {
 
 	TextView tvDescription;
 	TextView tvCost;
@@ -76,7 +78,8 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 				llFileAttach.addView(onAddFile);
 			}
 		} else {
-			getFileAttach();
+			GetAttachFiles getAttach = new GetAttachFiles(this);
+			getAttach.getFileAttach(MData.postInfo.getPostID());
 		}
 		
 		getComment();
@@ -142,23 +145,6 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 		});
 	}
 
-	private void getFileAttach() {
-		ParseQuery<ImageDTO> query = ImageDTO.getQuery();
-		query.whereEqualTo(MConstants.kPostID, MData.postInfo.getPostID());
-		query.findInBackground(new FindCallback<ImageDTO>() {
-
-			@Override
-			public void done(List<ImageDTO> imgDTOs, ParseException e) {
-				if (e == null) {
-					onAddFile.InitView(imgDTOs, false);
-					llFileAttach.addView(onAddFile);
-					MData.postInfo.setIsFileLoaded(true);
-					MData.postInfo.setListImageDTO(imgDTOs);
-				}
-			}
-		});
-	}
-
 	private void getComment(){
 		ParseQuery<CommentDTO> query = CommentDTO.getQuery();
 		query.whereEqualTo(MConstants.kPostID, MData.postInfo.getPostID());
@@ -194,5 +180,21 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
 		return true;
+	}
+
+	@Override
+	public void onSendingGetFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSuccessGetFile(List<ImageDTO> imgDTOs) {
+		if(imgDTOs != null){
+			onAddFile.InitView(imgDTOs, false);
+			llFileAttach.addView(onAddFile);
+			MData.postInfo.setIsFileLoaded(true);
+			MData.postInfo.setListImageDTO(imgDTOs);
+		}
 	}
 }

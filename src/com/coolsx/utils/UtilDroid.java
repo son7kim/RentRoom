@@ -27,6 +27,24 @@ import com.coolsx.dto.DistrictDTO;
 import java.util.UUID;
 
 public class UtilDroid {
+
+	public static boolean checkInternet() {
+		Runtime runtime = Runtime.getRuntime();
+		try {
+			Process mIpAddrProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+			int mExitValue = mIpAddrProcess.waitFor();
+			if (mExitValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (InterruptedException ignore) {
+			ignore.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 	public static ArrayAdapter<String> getAdapterCity(Context context) {
 		MData.sAdapterCity.clear();
@@ -34,16 +52,13 @@ public class UtilDroid {
 			MData.sAdapterCity.add(city.getCityName());
 		}
 
-		MData.adapterCity = new ArrayAdapter<String>(context,
-				android.R.layout.simple_spinner_item, MData.sAdapterCity);
-		MData.adapterCity
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		MData.adapterCity = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, MData.sAdapterCity);
+		MData.adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		return MData.adapterCity;
 	}
 
-	public static ArrayAdapter<String> getAdapterDistrictFromKey(
-			final Context context, CityDTO city, List<DistrictDTO> districtDTOsTemp) {
+	public static ArrayAdapter<String> getAdapterDistrictFromKey(final Context context, CityDTO city, List<DistrictDTO> districtDTOsTemp) {
 		List<String> sAdapterDistrict = new ArrayList<String>();
 		ArrayAdapter<String> adapterDistrict = null;
 		districtDTOsTemp.clear();
@@ -55,10 +70,8 @@ public class UtilDroid {
 			}
 		}
 
-		adapterDistrict = new ArrayAdapter<String>(context,
-				android.R.layout.simple_spinner_item, sAdapterDistrict);
-		adapterDistrict
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapterDistrict = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, sAdapterDistrict);
+		adapterDistrict.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		return adapterDistrict;
 	}
@@ -67,8 +80,7 @@ public class UtilDroid {
 		if (TextUtils.isEmpty(target)) {
 			return false;
 		} else {
-			return android.util.Patterns.EMAIL_ADDRESS.matcher(target)
-					.matches();
+			return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
 		}
 	}
 
@@ -85,44 +97,29 @@ public class UtilDroid {
 
 	public static void selectImage(final Activity activity) {
 
-		final CharSequence[] options = { "Take Photo", "Choose from Gallery",
-				"Cancel" };
+		final CharSequence[] options = { "Dùng Camera", "Thư viện ảnh", "Hủy" };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-		builder.setTitle("Add Photo");
+		builder.setTitle("Đăng hình");
 
 		builder.setItems(options, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int item) {
 
-				if (options[item].equals("Take Photo"))
-				{
-//					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//					File f = new File(android.os.Environment
-//							.getExternalStorageDirectory(), "temp.jpg");
-//
-//					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//
-//					activity.startActivityForResult(intent, MConstants.CHOOSE_IMG);
-					
+				if (options[item].equals("Dùng Camera")) {
 					Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 					activity.startActivityForResult(intent, MConstants.TAKE_PHOTO);
 				}
 
-				else if (options[item].equals("Choose from Gallery"))
-				{
+				else if (options[item].equals("Thư viện ảnh")) {
 
-					Intent intent = new Intent(
-							Intent.ACTION_PICK,
-							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
 					activity.startActivityForResult(intent, MConstants.CHOOSE_IMG);
 
-				}
-				else if (options[item].equals("Cancel")) {
+				} else if (options[item].equals("Hủy")) {
 
 					dialog.dismiss();
 				}
@@ -133,39 +130,44 @@ public class UtilDroid {
 
 	}
 
-	public static byte[] getByteArrFromDataIntent(Context context, Intent data, int requestCode){	
+	public static byte[] getByteArrFromDataIntent(Context context, Intent data, int requestCode) {
 		Bitmap bitmap = null;
-		if(requestCode == MConstants.TAKE_PHOTO){
-			try{		        
-				bitmap = (Bitmap) data.getExtras().get("data");    
-			} catch(Exception e){				
+		byte[] bIimages = null;
+		if (requestCode == MConstants.TAKE_PHOTO) {
+			try {
+				bitmap = (Bitmap) data.getExtras().get("data");
+			} catch (Exception e) {
 			}
 		} else {
 			Uri uri = Uri.parse(data.getDataString());
 			try {
 				bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace ();
+				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace ();
+				e.printStackTrace();
 			}
-		}		
-		
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		// Compress image to lower quality scale 1 - 100
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-		byte[] bIimages = stream.toByteArray();	
-		
+		}
+
+		try {
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			// Compress image to lower quality scale 1 - 100
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			bIimages = stream.toByteArray();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return bIimages;
+		}
 		return bIimages;
 	}
-	
+
 	public static String getRandomStringNumber() {
-	    Random generator = new Random();
-	    String x = "phong_"+(generator.nextInt(96) + 32);
-	    return x;
+		Random generator = new Random();
+		String x = "phong_" + (generator.nextInt(96) + 32);
+		return x;
 	}
-	
-	public static String getRandomStringUUID(){		
+
+	public static String getRandomStringUUID() {
 		return UUID.randomUUID().toString();
 	}
 }

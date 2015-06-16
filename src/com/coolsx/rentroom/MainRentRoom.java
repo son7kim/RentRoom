@@ -24,14 +24,17 @@ import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.dto.PostArticleDTO;
+import com.coolsx.helper.GetCityAndDistrict;
 import com.coolsx.utils.DialogNotice;
+import com.coolsx.utils.MInterfaceNotice.onGetDistrictNotify;
+import com.coolsx.utils.MInterfaceNotice.onOkLoadData;
 import com.coolsx.utils.UtilDroid;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class MainRentRoom extends BaseActivity {
+public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDistrictNotify {
 
 	Spinner spCity;
 	Spinner spDistrict;
@@ -49,6 +52,8 @@ public class MainRentRoom extends BaseActivity {
 	private ListView lvPost;
 	Menu _menu;
 	DialogNotice notice;
+	GetCityAndDistrict getCityDistrict;
+	DialogNotice noticeLoadData;
 	LinearLayout llProgress;
 
 	@Override
@@ -57,8 +62,10 @@ public class MainRentRoom extends BaseActivity {
 		setContentView(R.layout.rentroom_main);
 
 		getActionBar().setDisplayShowHomeEnabled(false);
-		
+
 		notice = new DialogNotice(MainRentRoom.this);
+		noticeLoadData = new DialogNotice(MainRentRoom.this, MainRentRoom.this);
+		getCityDistrict = new GetCityAndDistrict(this, this, false);
 
 		tvSignIn = (TextView) findViewById(R.id.tvSignInHome);
 		btnSignUp = (Button) findViewById(R.id.btnRegistryHome);
@@ -70,19 +77,27 @@ public class MainRentRoom extends BaseActivity {
 		lvPost = (ListView) findViewById(R.id.lv_search_result);
 		edCost = (EditText) findViewById(R.id.edit_cost_search);
 		edArea = (EditText) findViewById(R.id.edit_area_search);
-		llSignInUp = (LinearLayout)findViewById(R.id.llSignIn_SignUp);
-		
-		llProgress = (LinearLayout)findViewById(R.id.llProgressBar);
+		llSignInUp = (LinearLayout) findViewById(R.id.llSignIn_SignUp);
 
-		spCity.setAdapter(UtilDroid.getAdapterCity(this));		
-		spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(0), districtDTOsHome));
+		llProgress = (LinearLayout) findViewById(R.id.llProgressBar);
+		llProgress.setVisibility(View.GONE);
 
-		getListPost(false, 15);
-		
+		setDataToSpinner();
+
 		setActionToView();
-	}	
+	}
 
-	private void setActionToView(){
+	private void setDataToSpinner() {
+		if (MData.districtDTOs.size() > 0 && MData.cityDTOs.size() > 0) {
+			spCity.setAdapter(UtilDroid.getAdapterCity(this));
+			spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(0), districtDTOsHome));
+			getListPost(false, 150);
+		} else {
+			noticeLoadData.ShowDialogRequestData(getResources().getString(R.string.notice_title), getResources().getString(R.string.data_error));
+		}
+	}
+
+	private void setActionToView() {
 		spCity.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -119,7 +134,7 @@ public class MainRentRoom extends BaseActivity {
 				getListPost(true, 100);
 			}
 		});
-		
+
 		lvPost.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,15 +144,15 @@ public class MainRentRoom extends BaseActivity {
 			}
 		});
 	}
-	
+
 	private void getListPost(boolean isSearch, int iLimit) {
 		llProgress.setVisibility(View.VISIBLE);
-		
+
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		query.orderByDescending(MConstants.kUpdatedAt);
 		if (isSearch) {
 			query.whereContains(MConstants.kDistrictID, districtDTOsHome.get(spDistrict.getSelectedItemPosition()).getDistrictID());
-			
+
 			if (!edCost.getText().toString().isEmpty()) {
 				switch (spCostCompair.getSelectedItemPosition()) {
 				case 0:
@@ -242,5 +257,26 @@ public class MainRentRoom extends BaseActivity {
 			startActivity(i);
 		}
 		return true;
+	}
+
+	@Override
+	public void onOkClick() {
+		if (UtilDroid.checkInternet()) {
+			llProgress.setVisibility(View.VISIBLE);
+			getCityDistrict.getListCity();
+		} else {
+			noticeLoadData.ShowDialogRequestData(getResources().getString(R.string.notice_title), getResources().getString(R.string.data_error));
+		}
+
+	}
+
+	@Override
+	public void onFinishLoadDataFromSplash() {
+	}
+
+	@Override
+	public void onFinishLoadDataFromMain() {
+		llProgress.setVisibility(View.GONE);
+		setDataToSpinner();
 	}
 }

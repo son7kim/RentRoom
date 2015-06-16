@@ -108,7 +108,7 @@
     <string name="cost_title_add_new">Giá phòng</string>
     <string name="discription_title">Mô tả</string>
     <string name="post_title">Đăng bài</string>
-    <string name="up_photo_title">Chọn ảnh upload</string>
+    <string name="up_photo_title">Chọn ảnh upload (&lt;2MB)</string>
     <string name="from_to">đến</string>
     <string name="num_room">Số lượng phòng trống</string>
     <string name="empty_full_name">Chưa nhập họ tên</string>
@@ -163,9 +163,10 @@
     <string name="change_pass_title">Đổi mật khẩu</string>
     <string name="btn_change_pass_title">Xác nhận</string>
     <string name="request_success">Yêu cầu của bạn đã thành công</string>
-    <string name="request_fail">Yêu cầu của bạn không thành công. Vui lòng thử lại sau</string>
+    <string name="request_fail">Đã có lỗi xảy ra trong quá trình thực hiện. Vui lòng thử lại sau</string>
     
     <string name="max_file_upload_notice">Bạn chỉ được đăng tối đa 3 hình</string>
     <string name="choose_img_err">Đã có lỗi xảy ra. Vui lòng thử lại hoặc chọn hình khác</string>
 
+    <string name="data_error">Không thể lấy dữ liệu từ sever. Vui lòng kiểm tra kết nối mạng và thử lại.</string>
 </resources>

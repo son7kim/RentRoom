@@ -31,7 +31,6 @@ import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.coolsx.utils.UtilDroid;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 public class AddNewPostActivity extends BaseActivity implements onDeleteFileNotify, onGetAttachFile {
@@ -207,7 +206,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 					return;
 				}
 
-				addPost();
+				addEditPost();
 			}
 		});
 
@@ -243,10 +242,10 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			byte[] bArrImages = UtilDroid.getByteArrFromDataIntent(AddNewPostActivity.this, data, requestCode);
-			if (bArrImages.length > 0) {
+			if (bArrImages != null && bArrImages.length > 0) {
 				iNumFile++;
 
-				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomStringNumber(), bArrImages, true);				
+				ImageDTO imgDTO = new ImageDTO(UtilDroid.getRandomStringNumber(), bArrImages, true);
 				listImgDTO.add(imgDTO);
 
 				llFileAttach.removeAllViews();
@@ -261,7 +260,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 	private void setDataEdit() {
 		edFullName.setText(MData.postInfo.getFullName());
 		edPhone.setText(MData.postInfo.getPhoneNumber());
-		edAddress.setText(MData.postInfo.getAddress());
+		// edAddress.setText(MData.postInfo.getAddress());
 		edNumRoom.setText("" + MData.postInfo.getNumRoom());
 		edAreaMin.setText("" + MData.postInfo.getAreaMin());
 		edAreaMax.setText("" + MData.postInfo.getAreaMax());
@@ -278,10 +277,13 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 		getFiles.getFileAttach(MData.postInfo.getPostID());
 	}
 
-	private void addPost() {
-		llProgress.setVisibility(View.VISIBLE);
+	PostArticleDTO newPost = new PostArticleDTO();
 
-		final PostArticleDTO newPost = new PostArticleDTO();
+	private void addEditPost() {
+		llProgress.setVisibility(View.VISIBLE);
+		if (isEditPost) {
+			newPost = MData.postInfo;
+		}
 
 		newPost.put(MConstants.kName, edFullName.getText().toString().trim());
 		newPost.put(MConstants.kPhoneNumber, edPhone.getText().toString().trim());
@@ -305,13 +307,14 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 			newPost.put(MConstants.kAreaMax, Long.valueOf(edAreaMin.getText().toString().trim()));
 		}
 
-		newPost.put(MConstants.kUserIdPost, MData.userInfo.getObjID());
-
 		newPost.put(MConstants.kDistrictID, districtAddNewDTOs.get(spDistrictAddNew.getSelectedItemPosition()).getDistrictID());
 		newPost.put(MConstants.kCityID, MData.cityDTOs.get(spCityAddNew.getSelectedItemPosition()).getCityID());
 
-		sRandomUUID = UtilDroid.getRandomStringUUID();
-		newPost.put(MConstants.kPostID, sRandomUUID);
+		if (!isEditPost) {
+			newPost.put(MConstants.kUserIdPost, MData.userInfo.getObjID());
+			sRandomUUID = UtilDroid.getRandomStringUUID();
+			newPost.put(MConstants.kPostID, sRandomUUID);
+		}
 		newPost.saveInBackground(new SaveCallback() {
 
 			@Override
@@ -321,26 +324,36 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 					postActicleDelegate.onSuccess(newPost);
 					finish();
 				} else {
-					dialog.ShowDialog(getResources().getString(R.string.post_title), getResources().getString(R.string.post_error));
+					if (isEditPost) {
+						dialog.ShowDialog(getResources().getString(R.string.edit_option), getResources().getString(R.string.request_fail));
+					} else {
+						dialog.ShowDialog(getResources().getString(R.string.post_title), getResources().getString(R.string.post_error));
+					}
 				}
 			}
 		});
 
 		for (ImageDTO imgDTO : listImgDTO) {
-			ParseFile file = new ParseFile(imgDTO.getFileNameLocal() + ".png", imgDTO.getByteArrDataLocal());
-			// Upload the image into Parse Cloud
-			file.saveInBackground();
+			// If the file get from Server -> Not add.
+			if (imgDTO.getIsFileLocal()) {
+				ParseFile file = new ParseFile(imgDTO.getFileNameLocal() + ".png", imgDTO.getByteArrDataLocal());
+				// Upload the image into Parse Cloud
+				file.saveInBackground();
 
-			// Create a New Class called "ImageUpload" in Parse
-			ParseObject imgupload = new ParseObject(MConstants.kTableImage);
+				ImageDTO imgupload = new ImageDTO();
 
-			// Create a column named "ImageName" and set the string
-			imgupload.put(MConstants.kImgName, imgDTO.getFileNameLocal() + ".png");
-			imgupload.put(MConstants.kPostID, sRandomUUID);
-			// Create a column named "ImageFile" and insert the image
-			imgupload.put(MConstants.kImgFile, file);
+				// Create a column named "ImageName" and set the string
+				imgupload.put(MConstants.kImgName, imgDTO.getFileNameLocal() + ".png");
+				if (isEditPost) {
+					imgupload.put(MConstants.kPostID, MData.postInfo.getPostID());
+				} else {
+					imgupload.put(MConstants.kPostID, sRandomUUID);
+				}
+				// Create a column named "ImageFile" and insert the image
+				imgupload.put(MConstants.kImgFile, file);
 
-			imgupload.saveInBackground();
+				imgupload.saveInBackground();
+			}
 		}
 	}
 
@@ -384,13 +397,11 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 			iNumFile = imgDTOs.size();
 			listImgDTO.clear();
 			for (ImageDTO imgDto : imgDTOs) {
-				imgDto.setIsDeleteAccepted(true);				
+				imgDto.setIsDeleteAccepted(true);
 				listImgDTO.add(imgDto);
 			}
 			onAddFile.InitView(listImgDTO, false);
 			llFileAttach.addView(onAddFile);
-			MData.postInfo.setIsFileLoaded(true);
-			MData.postInfo.setListImageDTO(imgDTOs);
 		}
 	}
 }
