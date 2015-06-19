@@ -5,7 +5,9 @@ import java.util.List;
 import android.content.Context;
 
 import com.coolsx.constants.MData;
+import com.coolsx.dto.City;
 import com.coolsx.dto.CityDTO;
+import com.coolsx.dto.District;
 import com.coolsx.dto.DistrictDTO;
 import com.coolsx.utils.MInterfaceNotice.onGetDistrictNotify;
 import com.parse.FindCallback;
@@ -32,9 +34,15 @@ public class GetCityAndDistrict {
 				if (e == null) {
 					getListDistrict();
 					MData.cityDTOs.clear();
-					MData.cityDTOs.addAll(citys);
+					if (citys != null) {
+						for (CityDTO cityDto : citys) {
+							City cityTemp = new City(cityDto.getCityID(), cityDto.getCityName());
+							MData.cityDTOs.add(cityTemp);
+						}
+						MData.mySharePrefs.saveCitys(MData.cityDTOs);
+					}
 				} else {
-					if(_isSplashScreen){
+					if (_isSplashScreen) {
 						actionGetDistrict.onFinishLoadDataFromSplash();
 					} else {
 						actionGetDistrict.onFinishLoadDataFromMain();
@@ -52,9 +60,15 @@ public class GetCityAndDistrict {
 			public void done(List<DistrictDTO> districts, ParseException e) {
 				if (e == null) {
 					MData.districtDTOs.clear();
-					MData.districtDTOs.addAll(districts);
+					if (districts != null) {
+						for (DistrictDTO districtDto : districts) {
+							District districtTemp = new District(districtDto.getDistrictID(), districtDto.getDistrictName(), districtDto.getCityID());
+							MData.districtDTOs.add(districtTemp);
+						}
+						MData.mySharePrefs.saveDistricts(MData.districtDTOs);
+					}
 				}
-				if(_isSplashScreen){
+				if (_isSplashScreen) {
 					actionGetDistrict.onFinishLoadDataFromSplash();
 				} else {
 					actionGetDistrict.onFinishLoadDataFromMain();

@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
-import com.coolsx.dto.DistrictDTO;
+import com.coolsx.dto.District;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.helper.GetAttachFiles;
@@ -53,7 +53,7 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 	private Button btnPost;
 	private ArrayAdapter<String> adapCity;
 	private ArrayAdapter<String> adapDistrict;
-	private List<DistrictDTO> districtAddNewDTOs = new ArrayList<DistrictDTO>();
+	private List<District> districtAddNewDTOs = new ArrayList<District>();
 	List<ImageDTO> listImgDTO = new ArrayList<ImageDTO>();
 	OnAddFileImage onAddFile;
 	int iNumFile = 0;

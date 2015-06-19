@@ -28,7 +28,8 @@
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/SplashTheem" >
+            android:theme="@style/SplashTheem"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,23 +38,30 @@
         </activity>
         <activity
             android:name=".MainRentRoom"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignInActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddNewPostActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".MyPageActivity" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MyPageActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PostDetail"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ChangePassword"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

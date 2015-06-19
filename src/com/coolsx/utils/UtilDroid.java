@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,9 +23,8 @@ import android.widget.ArrayAdapter;
 
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
-import com.coolsx.dto.CityDTO;
-import com.coolsx.dto.DistrictDTO;
-import java.util.UUID;
+import com.coolsx.dto.City;
+import com.coolsx.dto.District;
 
 public class UtilDroid {
 
@@ -48,7 +48,7 @@ public class UtilDroid {
 	
 	public static ArrayAdapter<String> getAdapterCity(Context context) {
 		MData.sAdapterCity.clear();
-		for (CityDTO city : MData.cityDTOs) {
+		for (City city : MData.cityDTOs) {
 			MData.sAdapterCity.add(city.getCityName());
 		}
 
@@ -58,12 +58,12 @@ public class UtilDroid {
 		return MData.adapterCity;
 	}
 
-	public static ArrayAdapter<String> getAdapterDistrictFromKey(final Context context, CityDTO city, List<DistrictDTO> districtDTOsTemp) {
+	public static ArrayAdapter<String> getAdapterDistrictFromKey(final Context context, City city, List<District> districtDTOsTemp) {
 		List<String> sAdapterDistrict = new ArrayList<String>();
 		ArrayAdapter<String> adapterDistrict = null;
 		districtDTOsTemp.clear();
 		sAdapterDistrict.clear();
-		for (DistrictDTO districtObj : MData.districtDTOs) {
+		for (District districtObj : MData.districtDTOs) {
 			if (districtObj.getCityID().equals(city.getCityID())) {
 				sAdapterDistrict.add(districtObj.getDistrictName());
 				districtDTOsTemp.add(districtObj);

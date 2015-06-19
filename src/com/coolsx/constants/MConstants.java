@@ -51,4 +51,7 @@ public class MConstants {
 	public static final String kContentComment = "content";
 	
 	public static final String kIsEdit = "EditPost";
+	
+	public static final String pCityPrefs = "CityPrefs";
+	public static final String pDistrictPrefs = "DistrictPrefs";
 }

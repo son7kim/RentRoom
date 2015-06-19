@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.coolsx.constants.MConstants;
 import com.coolsx.constants.MData;
-import com.coolsx.dto.DistrictDTO;
+import com.coolsx.dto.District;
 import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.helper.GetCityAndDistrict;
 import com.coolsx.utils.DialogNotice;
@@ -46,7 +46,7 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 	Button btnSearch;
 	Button btnSignUp;
 	LinearLayout llSignInUp;
-	private List<DistrictDTO> districtDTOsHome = new ArrayList<DistrictDTO>();
+	private List<District> districtDTOsHome = new ArrayList<District>();
 	private List<PostArticleDTO> listPost = new ArrayList<PostArticleDTO>();
 	private ListPostAdapter listPostadapters;
 	private ListView lvPost;
