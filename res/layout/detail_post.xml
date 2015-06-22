@@ -118,7 +118,7 @@
                 android:layout_marginLeft="@dimen/pad_left_right"
                 android:layout_marginStart="@dimen/pad_left_right"
                 android:layout_marginTop="@dimen/pad_top_ed_add_new_post"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
             </LinearLayout>
 
             <TextView

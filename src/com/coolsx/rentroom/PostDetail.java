@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.coolsx.constants.MConstants;
@@ -21,13 +23,14 @@ import com.coolsx.dto.CommentDTO;
 import com.coolsx.dto.ImageDTO;
 import com.coolsx.helper.GetAttachFiles;
 import com.coolsx.utils.DialogNotice;
-import com.coolsx.utils.MInterfaceNotice.onDeleteFileNotify;
 import com.coolsx.utils.MInterfaceNotice.onGetAttachFile;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGetAttachFile {
+public class PostDetail extends BaseActivity implements onGetAttachFile {
 
 	TextView tvDescription;
 	TextView tvCost;
@@ -43,7 +46,9 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 	OnAddFileImage onAddFile;
 	DialogNotice dialog;
 	List<CommentDTO> _comments;
-	String strTextComment="";
+	String strTextComment = "";
+	ImageLoader imgLoader;
+	LinearLayout.LayoutParams param;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,11 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle(R.string.detail_header_title);
-		
+
+		imgLoader = ImageLoader.getInstance();
+		imgLoader.init(ImageLoaderConfiguration.createDefault(PostDetail.this));
+		param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 200, 1.0f);
+
 		tvDescription = (TextView) findViewById(R.id.tvDescriptionDetail);
 		tvCost = (TextView) findViewById(R.id.tvCostDetail);
 		tvArea = (TextView) findViewById(R.id.tvAreaDetail);
@@ -62,11 +71,9 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 		tvPhone = (TextView) findViewById(R.id.tvPhoneDetail);
 		tvName = (TextView) findViewById(R.id.tvNameDetail);
 		llFileAttach = (LinearLayout) findViewById(R.id.llFileAttachDetail);
-		tvComments = (TextView)findViewById(R.id.tvComments);
+		tvComments = (TextView) findViewById(R.id.tvComments);
 		edComment = (EditText) findViewById(R.id.edit_comment);
 		btnComment = (Button) findViewById(R.id.btn_comment);
-
-		onAddFile = new OnAddFileImage(this, this, false);
 		dialog = new DialogNotice(this);
 		_comments = new ArrayList<CommentDTO>();
 
@@ -74,14 +81,13 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 		setActionToView();
 		if (MData.postInfo.getIsFileLoaded()) {
 			if (MData.postInfo.getListImageDTO() != null) {
-				onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
-				llFileAttach.addView(onAddFile);
+				handleEventsImageRoom(MData.postInfo.getListImageDTO());
 			}
 		} else {
 			GetAttachFiles getAttach = new GetAttachFiles(this);
 			getAttach.getFileAttach(MData.postInfo.getPostID());
 		}
-		
+
 		getComment();
 	}
 
@@ -134,7 +140,7 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 						cmtDTO.put(MConstants.kPostID, MData.postInfo.getPostID());
 						cmtDTO.put(MConstants.kContentComment, MData.userInfo.getUserName() + ": " + edComment.getText().toString().trim());
 						cmtDTO.saveInBackground();
-						
+
 						// set content for view
 						strTextComment += MData.userInfo.getUserName() + ": " + edComment.getText().toString().trim() + "\n";
 						tvComments.setText(strTextComment);
@@ -145,37 +151,26 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 		});
 	}
 
-	private void getComment(){
+	private void getComment() {
 		ParseQuery<CommentDTO> query = CommentDTO.getQuery();
 		query.whereEqualTo(MConstants.kPostID, MData.postInfo.getPostID());
 		query.orderByDescending(MConstants.kUpdatedAt);
 		query.findInBackground(new FindCallback<CommentDTO>() {
-			
+
 			@Override
 			public void done(List<CommentDTO> comments, ParseException e) {
 				// TODO Auto-generated method stub
-				if(e == null){
+				if (e == null) {
 					_comments.addAll(comments);
-					for(CommentDTO comment:_comments){
-						strTextComment += comment.getContentComment() + "\n";						
+					for (CommentDTO comment : _comments) {
+						strTextComment += comment.getContentComment() + "\n";
 					}
 					tvComments.setText(strTextComment);
 				}
 			}
 		});
 	}
-	
-	@Override
-	public void onSendingDeleteFile(){}
-	
-	@Override
-	public void onDeleteFileSuccess(List<ImageDTO> listImgAfterDelete) {
-		MData.postInfo.setListImageDTO(listImgAfterDelete);
-		onAddFile.InitView(MData.postInfo.getListImageDTO(), false);
-		llFileAttach.removeAllViews();
-		llFileAttach.addView(onAddFile);
-	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
@@ -185,16 +180,46 @@ public class PostDetail extends BaseActivity implements onDeleteFileNotify, onGe
 	@Override
 	public void onSendingGetFile() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSuccessGetFile(List<ImageDTO> imgDTOs) {
-		if(imgDTOs != null){
-			onAddFile.InitView(imgDTOs, false);
-			llFileAttach.addView(onAddFile);
+		if (imgDTOs != null) {
 			MData.postInfo.setIsFileLoaded(true);
 			MData.postInfo.setListImageDTO(imgDTOs);
+			handleEventsImageRoom(imgDTOs);
+		}
+	}
+
+	private void handleEventsImageRoom(List<ImageDTO> imgDTOs) {
+		final String[] imgLinks = new String[3];
+		for (int i = 0; i < imgDTOs.size(); i++) {
+			ImageDTO img = imgDTOs.get(i);
+			imgLinks[i] = img.getFile().getUrl();
+			final ImageView ivRoom = new ImageView(PostDetail.this);
+			ivRoom.setLayoutParams(param);
+			ivRoom.setId(i);
+			if(i == 1){
+				ivRoom.setPadding(10, 0, 0, 0);
+			}
+			if(i == 2){
+				ivRoom.setPadding(10, 0, 0, 0);
+			}
+
+			imgLoader.displayImage(img.getFile().getUrl(), ivRoom);
+			llFileAttach.addView(ivRoom);
+
+			ivRoom.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PostDetail.this, ImagePagerActivity.class);
+					intent.putExtra(MConstants.pExtraImageLinks, imgLinks);
+					intent.putExtra(MConstants.pExtraImagePos, ivRoom.getId());
+					startActivity(intent);
+				}
+			});
 		}
 	}
 }

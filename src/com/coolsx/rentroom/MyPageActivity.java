@@ -154,6 +154,7 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 	private void getMyPosts() {
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		query.whereEqualTo(MConstants.kUserIdPost, MData.userInfo.getObjID());
+		query.orderByDescending(MConstants.kUpdatedAt);
 		query.findInBackground(new FindCallback<PostArticleDTO>() {
 
 			@Override

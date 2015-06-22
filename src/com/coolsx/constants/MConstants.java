@@ -54,4 +54,7 @@ public class MConstants {
 	
 	public static final String pCityPrefs = "CityPrefs";
 	public static final String pDistrictPrefs = "DistrictPrefs";
+	
+	public static final String pExtraImageLinks = "ExtraImageLinks";
+	public static final String pExtraImagePos = "ExtraImagePos";
 }
