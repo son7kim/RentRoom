@@ -14,7 +14,6 @@
     <string name="remember">Đăng nhập lần sau?</string>
     <string name="error_login">Tên đăng nhập hoặc mật khẩu không đúng</string>
     <string name="signin_title">Đăng nhập</string>
-    <string name="forgot_pass"><u>Forgotten your password?</u></string>
     <string name="register_yet">Chưa đăng ký,</string>
     <string name="or">Hoặc</string>
     <string name="username_pass_required">Tên đăng nhập và mật khẩu không được trống</string>
@@ -167,5 +166,6 @@
     <string name="max_file_upload_notice">Bạn chỉ được đăng tối đa 3 hình</string>
     <string name="choose_img_err">Đã có lỗi xảy ra. Vui lòng thử lại hoặc chọn hình khác</string>
 
-    <string name="data_error">Không thể lấy dữ liệu từ sever. Vui lòng kiểm tra kết nối mạng và thử lại.</string>
+    <string name="data_error">Không thể lấy dữ liệu từ máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại.</string>
+    <string name="internet_error">Không có kết nối mạng. Vui lòng kiểm tra kết nối và thử lại sau.</string>
 </resources>

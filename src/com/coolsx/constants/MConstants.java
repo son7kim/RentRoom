@@ -57,4 +57,8 @@ public class MConstants {
 	
 	public static final String pExtraImageLinks = "ExtraImageLinks";
 	public static final String pExtraImagePos = "ExtraImagePos";
+	
+	public static final String pRemeberMe = "RememberMe"; 
+	public static final String pUser = "UserName";
+	public static final String pPass = "Pass";
 }

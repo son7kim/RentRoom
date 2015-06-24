@@ -42,6 +42,7 @@ public class SignInActivity extends BaseActivity {
 		edPass = (EditText) findViewById(R.id.edit_pass_sign_in);
 		btnLogIn = (Button) findViewById(R.id.btn_sign_in);
 		tvError = (TextView) findViewById(R.id.tv_error_login);
+		checkBoxRemember = (CheckBox)findViewById(R.id.checkbox_remember);
 
 		llProgress = (LinearLayout)findViewById(R.id.llProgressBar);
 		llProgress.setVisibility(View.GONE);
@@ -50,7 +51,7 @@ public class SignInActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				String username = edUserName.getText().toString().trim();
+				final String username = edUserName.getText().toString().trim();
 				final String password = edPass.getText().toString().trim();
 
 				if (username.isEmpty() && password.isEmpty()) {
@@ -71,6 +72,11 @@ public class SignInActivity extends BaseActivity {
 							if (e == null) {
 								MData.strPass = password;
 								MData.userInfo = new UserDTO(user.getObjectId(), user.getUsername(), user.getEmail());
+								if(checkBoxRemember.isChecked()){
+									MData.mySharePrefs.setRememberMe(true);
+									MData.mySharePrefs.setUserName(username);
+									MData.mySharePrefs.setPassWord(password);
+								}
 								finish();
 							} else {
 								// Fail

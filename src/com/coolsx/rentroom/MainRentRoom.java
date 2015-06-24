@@ -146,6 +146,10 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 	}
 
 	private void getListPost(boolean isSearch, int iLimit) {
+		if (!UtilDroid.checkInternet()) {
+			notice.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
+			return;
+		}
 		llProgress.setVisibility(View.VISIBLE);
 
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
@@ -196,7 +200,7 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 					listPostadapters = new ListPostAdapter(MainRentRoom.this, listPost);
 					lvPost.setAdapter(listPostadapters);
 				} else {
-					notice.ShowDialog("Error", e.getMessage());
+					notice.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.data_error));
 				}
 			}
 		});
@@ -209,6 +213,13 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 			this._menu = menu;
 			menu.setGroupVisible(0, false);
 			llSignInUp.setVisibility(View.VISIBLE);
+
+			if (MData.userInfo != null) {
+				if (this._menu != null) {
+					this._menu.setGroupVisible(0, true);
+					llSignInUp.setVisibility(View.GONE);
+				}
+			}
 		}
 		return true;
 	}

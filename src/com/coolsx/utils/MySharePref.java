@@ -52,4 +52,30 @@ public class MySharePref {
 		return gson.fromJson(strJson, type);
 	}
 
+	public void setRememberMe(boolean isRemember){
+		prefsEditor.putBoolean(MConstants.pRemeberMe, isRemember);
+		prefsEditor.commit();
+	}
+	
+	public boolean getRememberMe(){
+		return mPrefs.getBoolean(MConstants.pRemeberMe, false);
+	}
+	
+	public void setUserName(String sUser){
+		prefsEditor.putString(MConstants.pUser, sUser);
+		prefsEditor.commit();
+	}
+	
+	public String getUserName(){
+		return mPrefs.getString(MConstants.pUser, null);
+	}
+	
+	public void setPassWord(String sPass){
+		prefsEditor.putString(MConstants.pPass, sPass);
+		prefsEditor.commit();
+	}
+	
+	public String getPassWord(){
+		return mPrefs.getString(MConstants.pPass, null);
+	}
 }
