@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -149,64 +150,8 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 
 			@Override
 			public void onClick(View v) {
-				tvError.setVisibility(View.GONE);
-
-				// Check validate
-				if (edFullName.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_full_name);
-					return;
-				}
-
-				if (edPhone.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_phone_number);
-					return;
-				}
-
-				if (edAddress.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_address);
-					return;
-				}
-
-				if (edNumRoom.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_num_room);
-					return;
-				}
-
-				if (edAreaMin.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_area);
-					return;
-				}
-
-				if (!edAreaMax.getText().toString().trim().isEmpty() && (Integer.parseInt(edAreaMax.getText().toString()) < Integer.parseInt(edAreaMin.getText().toString()))) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.incorrect_area);
-					return;
-				}
-
-				if (edCostMin.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_cost);
-					return;
-				}
-
-				if (!edCostMax.getText().toString().trim().isEmpty() && (Integer.parseInt(edCostMax.getText().toString()) < Integer.parseInt(edCostMin.getText().toString()))) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.incorrect_cost);
-					return;
-				}
-
-				if (edDescription.getText().toString().trim().isEmpty()) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.empty_disctiption);
-					return;
-				}
-
-				addEditPost();
+				UtilDroid.hideSoftKeyboard(AddNewPostActivity.this);
+				doAddOrUpdatePost();
 			}
 		});
 
@@ -279,6 +224,70 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 
 	PostArticleDTO newPost = new PostArticleDTO();
 
+	private void doAddOrUpdatePost(){
+		tvError.setVisibility(View.GONE);
+
+		// Check validate
+		if (edFullName.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_full_name);
+			return;
+		}
+
+		if (edPhone.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_phone_number);
+			return;
+		}
+
+		if (edAddress.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_address);
+			return;
+		}
+
+		if (edNumRoom.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_num_room);
+			return;
+		}
+
+		if (edAreaMin.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_area);
+			return;
+		}
+
+		if (!edAreaMax.getText().toString().trim().isEmpty() && (Integer.parseInt(edAreaMax.getText().toString()) < Integer.parseInt(edAreaMin.getText().toString()))) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.incorrect_area);
+			return;
+		}
+
+		if (edCostMin.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_cost);
+			return;
+		}
+
+		if (!edCostMax.getText().toString().trim().isEmpty() && (Integer.parseInt(edCostMax.getText().toString()) < Integer.parseInt(edCostMin.getText().toString()))) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.incorrect_cost);
+			return;
+		}
+
+		if (edDescription.getText().toString().trim().isEmpty()) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.empty_disctiption);
+			return;
+		}
+		if (!UtilDroid.checkInternet()) {
+			dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
+			return;
+		}
+		addEditPost();
+	}
+	
 	private void addEditPost() {
 		llProgress.setVisibility(View.VISIBLE);
 		if (isEditPost) {
@@ -403,5 +412,13 @@ public class AddNewPostActivity extends BaseActivity implements onDeleteFileNoti
 			onAddFile.InitView(listImgDTO, false);
 			llFileAttach.addView(onAddFile);
 		}
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_ENTER){
+			doAddOrUpdatePost();
+		}
+		return super.onKeyUp(keyCode, event);
 	}
 }

@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 
 import com.coolsx.constants.MConstants;
@@ -27,6 +28,15 @@ import com.coolsx.dto.City;
 import com.coolsx.dto.District;
 
 public class UtilDroid {
+
+	public static void hideSoftKeyboard(Activity activity) {
+		try {
+			InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static boolean checkInternet() {
 		Runtime runtime = Runtime.getRuntime();
@@ -45,7 +55,7 @@ public class UtilDroid {
 		}
 		return false;
 	}
-	
+
 	public static ArrayAdapter<String> getAdapterCity(Context context) {
 		MData.sAdapterCity.clear();
 		for (City city : MData.cityDTOs) {

@@ -24,6 +24,7 @@ import com.coolsx.dto.PostArticleDTO;
 import com.coolsx.helper.DeleteCommentsPost;
 import com.coolsx.helper.DeleteImagesPost;
 import com.coolsx.utils.DialogNotice;
+import com.coolsx.utils.UtilDroid;
 import com.coolsx.utils.MInterfaceNotice.onPostActicle;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -152,6 +153,10 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 	}
 
 	private void getMyPosts() {
+		if (!UtilDroid.checkInternet()) {
+			dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
+			return;
+		}
 		ParseQuery<PostArticleDTO> query = PostArticleDTO.getQuery();
 		query.whereEqualTo(MConstants.kUserIdPost, MData.userInfo.getObjID());
 		query.orderByDescending(MConstants.kUpdatedAt);
@@ -165,6 +170,8 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 					listPost.addAll(listMyPost);
 					myPostadapters = new ListPostAdapter(MyPageActivity.this, listPost);
 					lvMyPost.setAdapter(myPostadapters);
+				} else{
+					dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.data_error));
 				}
 			}
 		});
@@ -173,7 +180,6 @@ public class MyPageActivity extends BaseActivity implements onPostActicle {
 	@Override
 	public void onSuccess(PostArticleDTO postActicle) {
 		if (!isEdit) {
-			// listPost.add(postActicle);
 			getMyPosts();
 		} else {
 			myPostadapters = new ListPostAdapter(MyPageActivity.this, listPost);

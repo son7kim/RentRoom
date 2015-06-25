@@ -1,6 +1,7 @@
 package com.coolsx.rentroom;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +39,8 @@ public class SignUpActivity extends BaseActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle(R.string.sign_up_title);
 
+		dialog = new DialogNotice(SignUpActivity.this);
+		
 		edUsername = (EditText) findViewById(R.id.edit_username_sign_up);
 		edPass = (EditText) findViewById(R.id.edit_pass_sign_up);
 		edConfirmPass = (EditText) findViewById(R.id.edit_pass_confirm_sign_up);
@@ -53,78 +56,94 @@ public class SignUpActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				tvErrorSignUp.setVisibility(View.GONE);
-
-				if (edUsername.getText().toString().trim().length() <= 5) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_lenght_username);
-					return;
-				}
-
-				if (!UtilDroid.isValidUsername_Pass(edUsername.getText().toString().trim())) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_username);
-					return;
-				}
-
-				if (edPass.getText().toString().trim().length() <= 5) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_lenght_pass);
-					return;
-				}
-
-				if (!UtilDroid.isValidUsername_Pass(edPass.getText().toString().trim())) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_pass);
-					return;
-				}
-
-				if (!edPass.getText().toString().trim().equals(edConfirmPass.getText().toString().trim())) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_confirm_pass);
-					return;
-				}
-
-				if (!UtilDroid.isValidEmail(edEmail.getText().toString().trim())) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_email);
-					return;
-				}
-
-				if (!edEmail.getText().toString().trim().equals(edConfirmEmail.getText().toString().trim())) {
-					tvErrorSignUp.setVisibility(View.VISIBLE);
-					tvErrorSignUp.setText(R.string.invalid_confirm_email);
-					return;
-				}
-
-				// Registry
-				llProgress.setVisibility(View.VISIBLE);
-				ParseUser newUser = new ParseUser();
-				newUser.put(MConstants.kUsername, edUsername.getText().toString().trim());
-				newUser.put(MConstants.kPassword, edPass.getText().toString().trim());
-				newUser.put(MConstants.kEmail, edEmail.getText().toString().trim());
-				newUser.signUpInBackground(new SignUpCallback() {
-
-					@Override
-					public void done(ParseException ex) {
-						llProgress.setVisibility(View.GONE);
-						if (ex == null) {
-							finish();
-						} else {
-							if (dialog == null) {
-								dialog = new DialogNotice(SignUpActivity.this);
-							}
-							dialog.ShowDialog(getResources().getString(R.string.sign_up_title), getResources().getString(R.string.sign_up_not_success));
-						}
-					}
-				});
+				UtilDroid.hideSoftKeyboard(SignUpActivity.this);
+				doSignUp();				
 			}
 		});
 	}
 
+	private void doSignUp(){
+		tvErrorSignUp.setVisibility(View.GONE);
+		if (edUsername.getText().toString().trim().length() <= 5) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_lenght_username);
+			return;
+		}
+
+		if (!UtilDroid.isValidUsername_Pass(edUsername.getText().toString().trim())) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_username);
+			return;
+		}
+
+		if (edPass.getText().toString().trim().length() <= 5) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_lenght_pass);
+			return;
+		}
+
+		if (!UtilDroid.isValidUsername_Pass(edPass.getText().toString().trim())) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_pass);
+			return;
+		}
+
+		if (!edPass.getText().toString().trim().equals(edConfirmPass.getText().toString().trim())) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_confirm_pass);
+			return;
+		}
+
+		if (!UtilDroid.isValidEmail(edEmail.getText().toString().trim())) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_email);
+			return;
+		}
+
+		if (!edEmail.getText().toString().trim().equals(edConfirmEmail.getText().toString().trim())) {
+			tvErrorSignUp.setVisibility(View.VISIBLE);
+			tvErrorSignUp.setText(R.string.invalid_confirm_email);
+			return;
+		}
+
+		if (!UtilDroid.checkInternet()) {
+			dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
+			return;
+		}
+		// Registry
+		llProgress.setVisibility(View.VISIBLE);
+		ParseUser newUser = new ParseUser();
+		newUser.put(MConstants.kUsername, edUsername.getText().toString().trim());
+		newUser.put(MConstants.kPassword, edPass.getText().toString().trim());
+		newUser.put(MConstants.kEmail, edEmail.getText().toString().trim());
+		newUser.signUpInBackground(new SignUpCallback() {
+
+			@Override
+			public void done(ParseException ex) {
+				llProgress.setVisibility(View.GONE);
+				if (ex == null) {
+					finish();
+				} else {
+					if (dialog == null) {
+						dialog = new DialogNotice(SignUpActivity.this);
+					}
+					dialog.ShowDialog(getResources().getString(R.string.sign_up_title), getResources().getString(R.string.sign_up_not_success));
+				}
+			}
+		});
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
 		return true;
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_ENTER){
+			doSignUp();
+		}
+		return super.onKeyUp(keyCode, event);
 	}
 }

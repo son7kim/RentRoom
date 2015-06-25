@@ -8,7 +8,7 @@
     <string name="action_change_pass">Đổi mật khẩu</string>
     <string name="text_description_all">Rent room</string>
     <string name="error">Lỗi</string>
-    <string name="sign_in">ĐĂNG NHẬp</string>
+    <string name="sign_in">ĐĂNG NHẬP</string>
     <string name="username">Tên đăng nhập</string>
     <string name="pass">Mật khẩu</string>
     <string name="remember">Đăng nhập lần sau?</string>
@@ -46,57 +46,8 @@
     </string-array>
 
     <string name="cost_title">Giá:</string>
-    <string name="cost_prompt">Chọn giá phòng</string>
-
-    <string-array name="cost_arrays">
-        <item>Chon gia</item>
-        <item>500k</item>
-        <item>1tr</item>
-        <item>1.5tr</item>
-        <item>2tr</item>
-        <item>2.5tr</item>
-        <item>3tr</item>
-        <item>3.5tr</item>
-        <item>4tr</item>
-        <item>4.5tr</item>
-        <item>5tr</item>
-        <item>5.5tr</item>
-        <item>6tr</item>
-        <item>6.5tr</item>
-        <item>7tr</item>
-        <item>7.5tr</item>
-        <item>8tr</item>
-        <item>8.5tr</item>
-        <item>9tr</item>
-        <item>9.5tr</item>
-        <item>10tr</item>
-    </string-array>
 
     <string name="area_title">DT:</string>
-    <string name="area_prompt">Chọn giá phòng</string>
-
-    <string-array name="area_arrays">
-        <item>Chon dien tich</item>
-        <item>10m2</item>
-        <item>15m2</item>
-        <item>20m2</item>
-        <item>25m2</item>
-        <item>30m2</item>
-        <item>35m2</item>
-        <item>40m2</item>
-        <item>45m2</item>
-        <item>50m2</item>
-        <item>55m2</item>
-        <item>60m2</item>
-        <item>65m2</item>
-        <item>70m2</item>
-        <item>75m2</item>
-        <item>80m2</item>
-        <item>85m2</item>
-        <item>9m2</item>
-        <item>95m2</item>
-        <item>100m2</item>
-    </string-array>
 
     <string name="search_title">Tìm ngay</string>
     <string name="add_new_room_title">Thêm bài đăng</string>
@@ -168,4 +119,5 @@
 
     <string name="data_error">Không thể lấy dữ liệu từ máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại.</string>
     <string name="internet_error">Không có kết nối mạng. Vui lòng kiểm tra kết nối và thử lại sau.</string>
+    <string name="cannot_sign_in">Đăng nhập không thành công. Vui lòng kiểm tra lại tên đăng nhập/mật khẩu hoặc kết nối mạng.</string>
 </resources>

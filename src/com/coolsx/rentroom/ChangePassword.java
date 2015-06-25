@@ -1,6 +1,7 @@
 package com.coolsx.rentroom;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,56 +55,72 @@ public class ChangePassword extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				tvError.setVisibility(View.GONE);
-				if (!MData.strPass.equals(edOldPass.getText().toString().trim())) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.invalid_old_pass);
-					return;
-				}
-				
-				if (edNewPass.getText().toString().trim().length() <= 5) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.invalid_lenght_pass);
-					return;
-				}
-				
-				if (!UtilDroid.isValidUsername_Pass(edNewPass.getText().toString().trim())) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.invalid_new_pass);
-					return;
-				}
-
-				if (!edNewPass.getText().toString().trim().equals(edConfirmNewPass.getText().toString().trim())) {
-					tvError.setVisibility(View.VISIBLE);
-					tvError.setText(R.string.invalid_confirm_pass);
-					return;
-				}
-
-				llProgress.setVisibility(View.VISIBLE);
-				
-				ParseUser currentUser = ParseUser.getCurrentUser();
-				currentUser.setPassword(edNewPass.getText().toString().trim());
-				currentUser.saveInBackground(new SaveCallback() {
-
-					@Override
-					public void done(ParseException e) {
-						llProgress.setVisibility(View.GONE);
-						if (e == null) {
-							MData.strPass = edNewPass.getText().toString().trim();
-							dialog.ShowDialog(getResources().getString(R.string.change_pass_title), getResources().getString(R.string.request_success));
-						} else {
-							dialog.ShowDialog(getResources().getString(R.string.change_pass_title), getResources().getString(R.string.request_fail));
-						}
-
-					}
-				});
+				UtilDroid.hideSoftKeyboard(ChangePassword.this);
+				doChangePassword();
 			}
 		});
 	}
 
+	private void doChangePassword(){
+		tvError.setVisibility(View.GONE);
+		if (!MData.strPass.equals(edOldPass.getText().toString().trim())) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.invalid_old_pass);
+			return;
+		}
+
+		if (edNewPass.getText().toString().trim().length() <= 5) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.invalid_lenght_pass);
+			return;
+		}
+
+		if (!UtilDroid.isValidUsername_Pass(edNewPass.getText().toString().trim())) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.invalid_new_pass);
+			return;
+		}
+
+		if (!edNewPass.getText().toString().trim().equals(edConfirmNewPass.getText().toString().trim())) {
+			tvError.setVisibility(View.VISIBLE);
+			tvError.setText(R.string.invalid_confirm_pass);
+			return;
+		}
+		if (!UtilDroid.checkInternet()) {
+			dialog.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
+			return;
+		}
+		llProgress.setVisibility(View.VISIBLE);
+
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		currentUser.setPassword(edNewPass.getText().toString().trim());
+		currentUser.saveInBackground(new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				llProgress.setVisibility(View.GONE);
+				if (e == null) {
+					MData.strPass = edNewPass.getText().toString().trim();
+					dialog.ShowDialog(getResources().getString(R.string.change_pass_title), getResources().getString(R.string.request_success));
+				} else {
+					dialog.ShowDialog(getResources().getString(R.string.change_pass_title), getResources().getString(R.string.request_fail));
+				}
+
+			}
+		});
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
 		return true;
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_ENTER){
+			doChangePassword();
+		}
+		return super.onKeyUp(keyCode, event);
 	}
 }
