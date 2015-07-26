@@ -29,6 +29,10 @@ import com.coolsx.utils.DialogNotice;
 import com.coolsx.utils.MInterfaceNotice.onGetDistrictNotify;
 import com.coolsx.utils.MInterfaceNotice.onOkLoadData;
 import com.coolsx.utils.UtilDroid;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -55,6 +59,12 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 	GetCityAndDistrict getCityDistrict;
 	DialogNotice noticeLoadData;
 	LinearLayout llProgress;
+	private InterstitialAd interstitial;
+	private AdView adView;
+	/**
+	 * Check first time to show ads when click into listview item
+	 */
+	private boolean isShowAdsWhenFistClickListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,42 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 		setContentView(R.layout.rentroom_main);
 
 		getActionBar().setDisplayShowHomeEnabled(false);
+		
+		isShowAdsWhenFistClickListView = true;
+
+		// Locate the Banner Ad in activity_main.xml
+		adView = (AdView) this.findViewById(R.id.adView);
+		adView.setVisibility(View.GONE);
+
+		// Prepare the Interstitial Ad
+		interstitial = new InterstitialAd(MainRentRoom.this);
+		// Insert the Ad Unit ID
+		interstitial.setAdUnitId(getString(R.string.ads_id));
+
+		requestNewInterstitial();
+
+		// Prepare an Interstitial Ad Listener
+		interstitial.setAdListener(new AdListener() {
+			public void onAdLoaded() {
+				adView.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAdClosed() {
+				requestNewInterstitial();
+				if(isShowAdsWhenFistClickListView){
+					isShowAdsWhenFistClickListView = false;
+					startDetailActivity();
+				} else {
+					startHomeScreen();
+				}
+			}
+
+			@Override
+			public void onAdLeftApplication() {
+				super.onAdLeftApplication();
+			}
+		});
 
 		notice = new DialogNotice(MainRentRoom.this);
 		noticeLoadData = new DialogNotice(MainRentRoom.this, MainRentRoom.this);
@@ -87,11 +133,32 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 		setActionToView();
 	}
 
+	private void requestNewInterstitial() {
+		// Request for Ads
+		AdRequest adRequest = new AdRequest.Builder()
+		// Add a test device to show Test Ads
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("E5B4F6C9EBE17DB37112945C713374A3")
+				.build();
+
+		// Load ads into Banner Ads
+		adView.loadAd(adRequest);
+
+		// Load ads into Interstitial Ads
+		interstitial.loadAd(adRequest);
+	}
+
+	public void displayInterstitial() {
+		// If Ads are loaded, show Interstitial else show nothing.
+		if (interstitial.isLoaded()) {
+			interstitial.show();
+		}
+	}
+
 	private void setDataToSpinner() {
 		if (MData.districtDTOs.size() > 0 && MData.cityDTOs.size() > 0) {
 			spCity.setAdapter(UtilDroid.getAdapterCity(this));
 			spDistrict.setAdapter(UtilDroid.getAdapterDistrictFromKey(MainRentRoom.this, MData.cityDTOs.get(0), districtDTOsHome));
-			getListPost(false, 150);
+			getListPost(false, 50);
 		} else {
 			noticeLoadData.ShowDialogRequestData(getResources().getString(R.string.notice_title), getResources().getString(R.string.data_error));
 		}
@@ -139,12 +206,23 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				MData.postInfo = listPost.get(position);
-				Intent i = new Intent(MainRentRoom.this, PostDetail.class);
-				startActivity(i);
+				if(isShowAdsWhenFistClickListView){
+					displayInterstitial();
+				} else {
+					startDetailActivity();
+				}				
 			}
 		});
 	}
 
+	/**
+	 * Start Detail Post Activity.
+	 */
+	private void startDetailActivity(){
+		Intent i = new Intent(MainRentRoom.this, PostDetail.class);
+		startActivity(i);
+	}
+	
 	private void getListPost(boolean isSearch, int iLimit) {
 		if (!UtilDroid.checkInternet()) {
 			notice.ShowDialog(getResources().getString(R.string.notice_title), getResources().getString(R.string.internet_error));
@@ -232,8 +310,6 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 			Intent i = new Intent(MainRentRoom.this, MyPageActivity.class);
 			startActivity(i);
 			break;
-		case R.id.action_favorite:
-			break;
 		case R.id.action_change_pass:
 			Intent intent = new Intent(MainRentRoom.this, ChangePassword.class);
 			startActivity(intent);
@@ -243,6 +319,8 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 			MData.userInfo = null;
 			_menu.setGroupVisible(0, false);
 			llSignInUp.setVisibility(View.VISIBLE);
+			break;
+		default:
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -262,12 +340,20 @@ public class MainRentRoom extends BaseActivity implements onOkLoadData, onGetDis
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Intent i = new Intent(Intent.ACTION_MAIN);
-			i.addCategory(Intent.CATEGORY_HOME);
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(i);
+			isShowAdsWhenFistClickListView = false;
+			displayInterstitial();
 		}
 		return true;
+	}
+
+	/**
+	 * Start home when user click key Back.
+	 */
+	private void startHomeScreen() {
+		Intent i = new Intent(Intent.ACTION_MAIN);
+		i.addCategory(Intent.CATEGORY_HOME);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(i);
 	}
 
 	@Override

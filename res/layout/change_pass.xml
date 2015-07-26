@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/pad_top_btn_signin"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/custom_border_select"
                 android:minHeight="@dimen/min_height_button"
                 android:minWidth="@dimen/min_height_button"

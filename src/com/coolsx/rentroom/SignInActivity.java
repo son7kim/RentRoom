@@ -54,6 +54,10 @@ public class SignInActivity extends BaseActivity {
 		llProgress = (LinearLayout)findViewById(R.id.llProgressBar);
 		llProgress.setVisibility(View.GONE);
 		
+		if(MData.mySharePrefs.getRememberMe()){
+			checkBoxRemember.setChecked(true);
+		}
+		
 		edUserName.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -145,6 +149,8 @@ public class SignInActivity extends BaseActivity {
 							MData.mySharePrefs.setRememberMe(true);
 							MData.mySharePrefs.setUserName(username);
 							MData.mySharePrefs.setPassWord(password);
+						} else {
+							MData.mySharePrefs.setRememberMe(false);
 						}
 						finish();
 					} else {

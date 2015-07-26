@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="ads_id">ca-app-pub-2765661723676290/8681206366</string>
     <string name="app_name">RentRoom</string>
     <string name="action_my_page">Quản lý trang</string>
     <string name="action_favorite">Bài lưu trữ</string>
