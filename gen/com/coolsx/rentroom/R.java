@@ -1377,7 +1377,7 @@ containing a value of this type.
         public static final int bg_blue_btn=0x7f020057;
         public static final int bg_dark_blue_btn=0x7f020058;
         public static final int bg_gray_btn=0x7f020059;
-        public static final int bg_page=0x7f02005a;
+        public static final int bg_loading=0x7f02005a;
         public static final int common_signin_btn_icon_dark=0x7f02005b;
         public static final int common_signin_btn_icon_disabled_dark=0x7f02005c;
         public static final int common_signin_btn_icon_disabled_focus_dark=0x7f02005d;
@@ -1419,11 +1419,10 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f020081;
         public static final int ic_selected_actionbar=0x7f020082;
         public static final int ic_user=0x7f020083;
-        public static final int logo=0x7f020084;
-        public static final int powered_by_google_dark=0x7f020085;
-        public static final int powered_by_google_light=0x7f020086;
-        public static final int selectable_background_actionbar=0x7f020087;
-        public static final int translucent_background=0x7f020088;
+        public static final int powered_by_google_dark=0x7f020084;
+        public static final int powered_by_google_light=0x7f020085;
+        public static final int selectable_background_actionbar=0x7f020086;
+        public static final int translucent_background=0x7f020087;
     }
     public static final class id {
         public static final int action_bar=0x7f0b002e;

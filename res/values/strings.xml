@@ -2,22 +2,22 @@
 <resources>
 
     <string name="ads_id">ca-app-pub-2765661723676290/8681206366</string>
-    <string name="app_name">RentRoom</string>
+    <string name="app_name">Phòng trọ</string>
     <string name="action_my_page">Quản lý trang</string>
     <string name="action_favorite">Bài lưu trữ</string>
-    <string name="action_sign_out">Thoát</string>
+    <string name="action_sign_out">Đăng xuất</string>
     <string name="action_change_pass">Đổi mật khẩu</string>
-    <string name="text_description_all">Rent room</string>
+    <string name="text_description_all">Phòng trọ</string>
     <string name="error">Lỗi</string>
     <string name="sign_in">ĐĂNG NHẬP</string>
     <string name="username">Tên đăng nhập</string>
     <string name="pass">Mật khẩu</string>
     <string name="remember">Đăng nhập lần sau?</string>
-    <string name="error_login">Tên đăng nhập hoặc mật khẩu không đúng</string>
+    <string name="error_login">Tên đăng nhập hoặc mật khẩu không đúng.</string>
     <string name="signin_title">Đăng nhập</string>
     <string name="register_yet">Chưa đăng ký,</string>
     <string name="or">Hoặc</string>
-    <string name="username_pass_required">Tên đăng nhập và mật khẩu không được trống</string>
+    <string name="username_pass_required">Tên đăng nhập và mật khẩu không được trống.</string>
     <string name="username_required">Tên đăng nhập không được trống</string>
     <string name="pass_required">Mật khẩu không được trống</string>
     <string name="username_sign_up">Tên đăng nhập</string>
